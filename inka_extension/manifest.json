@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.4.1",
-  "description": "InkaTech Studio ⚡ v4.4.1: Anti-Duplicate Prompting & Strictly Sequential DALL-E Wait Gate, Real-Time Sync & Autopilot.",
+  "version": "4.5.0",
+  "description": "InkaTech Studio ⚡ v4.5.0: Modular Architecture, Strict Turn-Scoped Visible DOM Scanner, Real-Time Sync & Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

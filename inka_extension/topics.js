@@ -1,4 +1,3 @@
-// 20 Ide Konten Teknologi Santai @inka.tech
 const INKA_TOPICS = [
   {
     "id": 1,

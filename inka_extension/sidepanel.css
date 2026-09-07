@@ -1,12 +1,8 @@
-/* InkaTech ChatGPT Studio - Chrome Native Side Panel (Tema Terang / Light Mode) */
-/* Standar: ui-ux-text & precision-card-button-ui */
-
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: #F8FAFC;
@@ -19,8 +15,6 @@ body {
   overflow: hidden;
   user-select: none;
 }
-
-/* Header */
 .inka-header {
   height: 48px;
   padding: 0 16px;
@@ -31,7 +25,6 @@ body {
   justify-content: space-between;
   flex-shrink: 0;
 }
-
 .inka-brand-title {
   display: flex;
   align-items: center;
@@ -40,12 +33,10 @@ body {
   font-size: 13px;
   color: #0F172A;
 }
-
 .inka-brand-icon {
   color: #10B981;
   font-size: 14px;
 }
-
 .inka-badge {
   font-size: 10px;
   font-weight: 700;
@@ -55,8 +46,6 @@ body {
   padding: 2px 6px;
   border-radius: 4px;
 }
-
-/* Main Container */
 .inka-container {
   flex: 1;
   overflow-y: auto;
@@ -65,7 +54,6 @@ body {
   flex-direction: column;
   gap: 12px;
 }
-
 .inka-container::-webkit-scrollbar {
   width: 5px;
 }
@@ -76,8 +64,6 @@ body {
   background: #CBD5E1;
   border-radius: 3px;
 }
-
-/* Labels */
 .inka-label {
   font-size: 11px;
   font-weight: 700;
@@ -89,8 +75,6 @@ body {
   align-items: center;
   margin-bottom: 4px;
 }
-
-/* Select Form Control */
 .inka-select {
   background: #FFFFFF;
   color: #0F172A;
@@ -108,8 +92,6 @@ body {
 .inka-select:focus {
   border-color: #10B981;
 }
-
-/* Card Geometry (precision-card-button-ui standard) */
 .inka-card {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
@@ -120,14 +102,12 @@ body {
   gap: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
-
 .inka-hook-text {
   font-size: 12px;
   font-weight: 700;
   color: #0F172A;
   line-height: 1.35;
 }
-
 .inka-progress-row {
   display: flex;
   justify-content: space-between;
@@ -135,7 +115,6 @@ body {
   color: #64748B;
   margin-top: 2px;
 }
-
 .inka-progress-bar {
   width: 100%;
   height: 5px;
@@ -144,20 +123,16 @@ body {
   overflow: hidden;
   margin-top: 3px;
 }
-
 .inka-progress-fill {
   height: 100%;
   background: #10B981;
   transition: width 0.3s ease;
 }
-
-/* Slide Strip (6 Compact Pills) */
 .inka-slide-strip {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
 }
-
 .inka-slide-pill {
   background: #FFFFFF;
   border: 1px solid #CBD5E1;
@@ -174,25 +149,20 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   transition: all 0.15s ease;
 }
-
 .inka-slide-pill:hover {
   border-color: #94A3B8;
   color: #0F172A;
 }
-
 .inka-slide-pill.active {
   background: #10B981;
   color: #FFFFFF;
   border-color: #10B981;
 }
-
 .inka-slide-pill.done {
   background: #ECFDF5;
   color: #059669;
   border-color: #A7F3D0;
 }
-
-/* Prompt Box */
 .inka-outline-tag {
   font-size: 11px;
   font-style: italic;
@@ -200,7 +170,6 @@ body {
   line-height: 1.3;
   margin-bottom: 3px;
 }
-
 .inka-prompt-preview {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
@@ -215,20 +184,16 @@ body {
   word-break: break-word;
   user-select: text;
 }
-
-/* Buttons (Non-Pill, Precision 34px) */
 .inka-btn-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-
 .inka-btn-grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 6px;
 }
-
 .inka-btn {
   height: 34px;
   padding: 0 10px;
@@ -244,11 +209,9 @@ body {
   transition: all 0.15s ease;
   user-select: none;
 }
-
 .inka-btn:active {
   transform: scale(0.98);
 }
-
 .inka-btn-primary {
   background: #10B981;
   color: #FFFFFF;
@@ -257,7 +220,6 @@ body {
 .inka-btn-primary:hover {
   background: #059669;
 }
-
 .inka-btn-secondary {
   background: #FFFFFF;
   color: #0F172A;
@@ -268,7 +230,6 @@ body {
   background: #F1F5F9;
   border-color: #94A3B8;
 }
-
 .inka-btn-accent {
   background: #0284C7;
   color: #FFFFFF;
@@ -277,19 +238,15 @@ body {
 .inka-btn-accent:hover {
   background: #0369A1;
 }
-
 .inka-btn-autopilot-running {
   background: #0284C7 !important;
   color: #FFFFFF !important;
   animation: inka-pulse-glow 1.5s infinite;
 }
-
 @keyframes inka-pulse-glow {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.85; }
 }
-
-/* Automation Card */
 .inka-auto-card {
   background: #F0FDF4;
   border: 1px solid #BBF7D0;
@@ -299,7 +256,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
 .inka-auto-info {
   font-size: 11px;
   font-weight: 600;
@@ -308,8 +264,6 @@ body {
   align-items: center;
   gap: 6px;
 }
-
-/* Footer Status Bar */
 .inka-footer-status {
   height: 32px;
   padding: 0 16px;
@@ -325,14 +279,11 @@ body {
   text-overflow: ellipsis;
   flex-shrink: 0;
 }
-
-/* Checkbox & Options */
 .inka-checkbox-row {
   display: flex;
   align-items: center;
   gap: 14px;
 }
-
 .inka-checkbox-label {
   display: inline-flex;
   align-items: center;
@@ -343,14 +294,12 @@ body {
   cursor: pointer;
   user-select: none;
 }
-
 .inka-checkbox-label input[type="checkbox"] {
   accent-color: #10B981;
   width: 14px;
   height: 14px;
   cursor: pointer;
 }
-
 .inka-badge-blue {
   font-size: 10px;
   font-weight: 700;
@@ -360,14 +309,11 @@ body {
   padding: 1px 6px;
   border-radius: 4px;
 }
-
-/* CDN List & Items */
 .inka-cdn-container {
   border-top: 1px solid #E2E8F0;
   padding-top: 8px;
   margin-top: 4px;
 }
-
 .inka-cdn-list {
   display: flex;
   flex-direction: column;
@@ -376,7 +322,6 @@ body {
   overflow-y: auto;
   padding-right: 2px;
 }
-
 .inka-cdn-item {
   display: flex;
   align-items: center;
@@ -387,7 +332,6 @@ body {
   padding: 6px 10px;
   gap: 8px;
 }
-
 .inka-cdn-info {
   display: flex;
   align-items: center;
@@ -395,7 +339,6 @@ body {
   min-width: 0;
   flex: 1;
 }
-
 .inka-cdn-title {
   font-size: 11.5px;
   font-weight: 600;
@@ -405,7 +348,6 @@ body {
   text-overflow: ellipsis;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
-
 .inka-cdn-badge-verified {
   font-size: 9px;
   background: #E2E8F0;
@@ -415,7 +357,6 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-
 .inka-badge-downloaded {
   font-size: 9px;
   background: #DCFCE7;
@@ -425,7 +366,6 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-
 .inka-badge-not-downloaded {
   font-size: 9px;
   background: #FEF3C7;
@@ -435,7 +375,6 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-
 .inka-btn-dl-mini {
   background: #FFFFFF;
   border: 1px solid #CBD5E1;
@@ -451,26 +390,21 @@ body {
   gap: 3px;
   transition: all 0.15s ease;
 }
-
 .inka-btn-dl-mini:hover {
   background: #10B981;
   color: #FFFFFF;
   border-color: #10B981;
 }
-
 .inka-btn-dl-mini.downloaded {
   background: #F1F5F9;
   color: #64748B;
   border-color: #E2E8F0;
 }
-
 .inka-btn-dl-mini.downloaded:hover {
   background: #10B981;
   color: #FFFFFF;
   border-color: #10B981;
 }
-
-/* 12-Layer Engine State Badges */
 .inka-engine-status {
   display: flex;
   align-items: center;
@@ -480,7 +414,6 @@ body {
   border-top: 1px solid #F1F5F9;
   font-size: 11px;
 }
-
 .inka-badge-idle {
   background: #F1F5F9;
   color: #64748B;
@@ -490,7 +423,6 @@ body {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .inka-badge-active {
   background: #E0F2FE;
   color: #0284C7;
@@ -500,7 +432,6 @@ body {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .inka-badge-generating {
   background: #FEF3C7;
   color: #D97706;
@@ -510,7 +441,6 @@ body {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .inka-badge-success {
   background: #DCFCE7;
   color: #15803D;
@@ -520,7 +450,6 @@ body {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .inka-badge-error {
   background: #FEE2E2;
   color: #B91C1C;
@@ -530,7 +459,6 @@ body {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .inka-engine-text {
   color: #475569;
   font-size: 11px;
@@ -538,11 +466,9 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .inka-btn-dl-mini:active {
   transform: scale(0.96);
 }
-
 .inka-empty-hint {
   font-size: 11px;
   color: #94A3B8;
@@ -550,7 +476,6 @@ body {
   text-align: center;
   padding: 10px 0;
 }
-
 .inka-btn-reset-mini {
   background: transparent;
   border: 1px solid #CBD5E1;
@@ -563,13 +488,11 @@ body {
   transition: all 0.15s ease;
   user-select: none;
 }
-
 .inka-btn-reset-mini:hover {
   background: #FEE2E2;
   border-color: #FCA5A5;
   color: #DC2626;
 }
-
 .inka-btn-reset-mini:active {
   transform: scale(0.96);
 }

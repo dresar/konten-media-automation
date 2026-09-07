@@ -6,18 +6,15 @@
   <link rel="stylesheet" href="sidepanel.css">
 </head>
 <body>
-  <!-- Header -->
   <header class="inka-header">
     <div class="inka-brand-title">
       <span class="inka-brand-icon">⚡</span>
       <span>Inka Studio</span>
     </div>
-    <span class="inka-badge">v4.4.1</span>
+    <span class="inka-badge">v4.5.0</span>
   </header>
 
-  <!-- Main Body Content -->
   <main class="inka-container">
-    <!-- Account Batch Selector (Multi-Akun) -->
     <div>
       <div class="inka-label">
         <span>Profil Akun</span>
@@ -30,7 +27,6 @@
       </select>
     </div>
 
-    <!-- Topic Selector -->
     <div>
       <div class="inka-label">
         <span>Topik</span>
@@ -42,7 +38,6 @@
       <select id="selTopic" class="inka-select"></select>
     </div>
 
-    <!-- Content Info Card -->
     <div class="inka-card">
       <div id="txtHook" class="inka-hook-text">Memuat topik...</div>
       <div class="inka-progress-row">
@@ -52,26 +47,22 @@
       <div class="inka-progress-bar">
         <div id="barFill" class="inka-progress-fill" style="width: 0%;"></div>
       </div>
-      <!-- 12-Layer Engine State Indicator -->
       <div class="inka-engine-status">
         <span id="badgeEngineState" class="inka-badge-idle">● IDLE</span>
         <span id="txtEngineDetail" class="inka-engine-text">Menunggu instruksi</span>
       </div>
     </div>
 
-    <!-- Slide Strip Pills (1 - 6) -->
     <div>
       <div class="inka-label">Slide</div>
       <div id="stripSlides" class="inka-slide-strip"></div>
     </div>
 
-    <!-- Prompt Box -->
     <div>
       <div id="txtOutline" class="inka-outline-tag"></div>
       <div id="boxPrompt" class="inka-prompt-preview"></div>
     </div>
 
-    <!-- Action Buttons (Row 1) -->
     <div class="inka-btn-grid">
       <button id="btnAutopilot" class="inka-btn inka-btn-primary">
         ⚡ Autopilot
@@ -81,7 +72,6 @@
       </button>
     </div>
 
-    <!-- Action Buttons (Row 2) -->
     <div class="inka-btn-grid-3">
       <button id="btnCopy" class="inka-btn inka-btn-secondary">
         Salin
@@ -94,7 +84,6 @@
       </button>
     </div>
 
-    <!-- Card Unduh Gambar (100% Manual User Control, Zero Auto-Download) -->
     <div class="inka-card" style="padding: 10px;">
       <div class="inka-label" style="margin-bottom: 8px;">
         <span>Unduh Gambar (DALL-E)</span>
@@ -105,7 +94,6 @@
         </div>
       </div>
 
-      <!-- Action Row: Pindai Tab & Unduh Semua -->
       <div class="inka-btn-grid" style="margin-bottom: 8px;">
         <button id="btnScanTab" class="inka-btn inka-btn-secondary" title="Pindai gambar DALL-E yang sudah selesai di tab ChatGPT">
           🔍 Pindai Tab
@@ -115,7 +103,6 @@
         </button>
       </div>
 
-      <!-- Scanned Image List with Clean Filenames & 1-Click Download -->
       <div class="inka-cdn-container">
         <div id="listDownloadItems" class="inka-cdn-list">
           <div class="inka-empty-hint">Klik '🔍 Pindai Tab' untuk mendeteksi gambar.</div>
@@ -124,12 +111,16 @@
     </div>
   </main>
 
-  <!-- Status Bar Toast -->
   <footer id="txtStatus" class="inka-footer-status">
     Siap
   </footer>
 
   <script src="topics.js"></script>
+  <script src="state.js"></script>
+  <script src="dom_scanner.js"></script>
+  <script src="ui_controller.js"></script>
+  <script src="downloader.js"></script>
+  <script src="autopilot.js"></script>
   <script src="sidepanel.js"></script>
 </body>
 </html>
