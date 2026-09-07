@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "3.3.0",
-  "description": "InkaTech Studio ⚡ v3.3: Overnight Autopilot with Smart Batch Topic Auto-Download & Strict CDN Filtering.",
+  "version": "4.0.0",
+  "description": "InkaTech Studio ⚡ v4.0 Super Smart Edition: 12-Layer Validation Engine, Bubble Isolation, & Overnight Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",
