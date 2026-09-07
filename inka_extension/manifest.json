@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.3.0",
-  "description": "InkaTech Studio ⚡ v4.3: Real-Time Tab Image Sync (Otomatis Deteksi & Hijau), Multi-Account Batching & Overnight Autopilot.",
+  "version": "4.4.0",
+  "description": "InkaTech Studio ⚡ v4.4: Omni-Channel DALL-E CDN Scanner (Estuary/OAI/Network Timing/DOM Regex), Real-Time Sync & Overnight Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

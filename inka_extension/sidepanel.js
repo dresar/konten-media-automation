@@ -638,15 +638,18 @@ async function checkRenderStatus() {
     const isStopBtnPresent = !!stopBtn;
     const isShimmerPresent = !!document.querySelector('.animate-pulse, [data-testid*="generating"], svg.animate-spin');
 
-    // Kumpulkan seluruh URL gambar DALL-E asli di tab secara berurutan
+    // Kumpulkan seluruh URL gambar DALL-E asli di tab secara OMNI-CHANNEL
     const list = [];
+    const seenFileIds = new Set();
+
     function isGenuineDalleUrl(u) {
       if (!u || typeof u !== "string") return false;
-      let clean = u.trim();
+      let clean = u.trim().replace(/&amp;/g, "&");
       if (clean.startsWith("/")) clean = window.location.origin + clean;
       if (!clean.startsWith("http")) return false;
 
       const lower = clean.toLowerCase();
+      // Tolak avatar / icon / profile
       if (
         lower.includes("avatar") ||
         lower.includes("profile") ||
@@ -668,28 +671,50 @@ async function checkRenderStatus() {
     }
 
     function addUrl(u) {
-      if (isGenuineDalleUrl(u) && !list.includes(u.trim())) {
-        list.push(u.trim());
+      if (!isGenuineDalleUrl(u)) return;
+      let clean = u.trim().replace(/&amp;/g, "&");
+      if (clean.startsWith("/")) clean = window.location.origin + clean;
+
+      // Ekstrak file ID unik agar tidak ada duplikasi
+      const m = clean.match(/id=(file_[a-zA-Z0-9]+)/i);
+      const fileId = m ? m[1] : clean.split("?")[0];
+
+      if (!seenFileIds.has(fileId)) {
+        seenFileIds.add(fileId);
+        list.push(clean);
       }
     }
 
-    const assistantMsgs = document.querySelectorAll('[data-message-author-role="assistant"]');
-    assistantMsgs.forEach(msg => {
-      // 1. Tag a pembungkus
-      msg.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
-        addUrl(a.href || a.getAttribute("href"));
-      });
+    // 1. Tag anchor pembungkus gambar di SELURUH DOKUMEN
+    document.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
+      addUrl(a.href || a.getAttribute("href"));
+    });
 
-      // 2. Elemen img di dalam pesan asisten
-      msg.querySelectorAll("img").forEach(im => {
-        const isBig = (im.naturalWidth >= 300 || im.width >= 300 || !im.complete || (im.src && im.src.includes("backend-api/estuary")));
-        if (isBig) {
-          const parentA = im.closest("a");
-          const targetUrl = parentA ? (parentA.href || parentA.getAttribute("href")) : (im.currentSrc || im.src || im.getAttribute("src"));
-          addUrl(targetUrl);
+    // 2. Seluruh elemen <img> di SELURUH DOKUMEN
+    document.querySelectorAll("img").forEach(im => {
+      addUrl(im.currentSrc || im.src || im.getAttribute("src"));
+      const p = im.closest("a");
+      if (p) addUrl(p.href || p.getAttribute("href"));
+    });
+
+    // 3. Performance Resource Entries (TANGKAP LANGSUNG STREAM RESMI DARI BROWSER)
+    try {
+      performance.getEntriesByType("resource").forEach(r => {
+        if (r.name && (r.name.includes("backend-api/estuary/content") || r.name.includes("oaiusercontent.com"))) {
+          addUrl(r.name);
         }
       });
-    });
+    } catch (e) {}
+
+    // 4. Regex Scanner Pamungkas di innerHTML halaman
+    try {
+      const pageHtml = document.body.innerHTML || "";
+      const regex = /https?:\/\/[^\s"'<>]+backend-api\/estuary\/content\?[^\s"'<>]+/gi;
+      let match;
+      while ((match = regex.exec(pageHtml)) !== null) {
+        addUrl(match[0]);
+      }
+    } catch (e) {}
 
     // Cek teks pesan error ChatGPT
     let detectedError = null;
