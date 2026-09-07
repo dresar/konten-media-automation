@@ -5,6 +5,7 @@
 let activeContentId = 1;
 let activeSlideIdx = 1;
 let isAutopilot = false;
+let isAutoDownload = true;
 let processedImgs = new Set();
 let dbProgress = {};
 let cdnDatabase = {};
@@ -70,40 +71,21 @@ function getSlideFilename(contentId, slideIdx) {
 // 1. Inisialisasi Database
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_seeded_v3"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_seeded_v3", "inka_auto_dl"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_active_c) activeContentId = data.inka_active_c;
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
+    if (data.inka_auto_dl !== undefined) isAutoDownload = data.inka_auto_dl;
 
-    // Pra-isi hanya sekali saat pertama kali instalasi (tidak akan menimpa jika user melakukan reset)
-    if (!data.inka_seeded_v3 && !cdnDatabase["c1_s1"]) {
-      const defaultTopic1Links = [
-        "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097a482118ef9e0c19e3d752d&ts=496885&p=fs&cid=1&sig=319b424a2db5cd2a284562063c7cd0a3d2f87bc2bb731c08ee203e674d8e6d6d&v=0",
-        "https://chatgpt.com/backend-api/estuary/content?id=file_000000002c6c821185d10ac3fca30ef6&ts=496885&p=fs&cid=1&sig=74197e404ee72aab7ad3879ec94c58ce6fc891a6143e3d0bbf6900c3cb6acd93&v=0",
-        "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097788209875887d3448c1760&ts=496885&p=fs&cid=1&sig=6981f4e66de03085627872d14549c9a7008c9b68c95cd3919554ecdc5250bde6&v=0",
-        "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb9c8208a142555a25fa81a7&ts=496885&p=fs&cid=1&sig=f91729ef0f10c7c3afda777e52feb764e490091e8e2a4288e2bb721a63fd922a&v=0",
-        "https://chatgpt.com/backend-api/estuary/content?id=file_000000008cec8211b8211938d89c01be&ts=496885&p=fs&cid=1&sig=c0daa7940aff86d8b2df80b107b15aca7679eaa64ed280c6bf44d1a658ac3c31&v=0",
-        "https://chatgpt.com/backend-api/estuary/content?id=file_00000000080c8207a6231b7605b40ba0&ts=496885&p=fs&cid=1&sig=1d614b402adf6dc54617527a8b38e0b7f8d7e40250fedf0748386abefb3c57ef&v=0"
-      ];
-
-      defaultTopic1Links.forEach((url, idx) => {
-        const s = idx + 1;
-        const key = `c1_s${s}`;
-        cdnDatabase[key] = {
-          id: key,
-          content_id: 1,
-          topic: "Juice Jacking & Cas HP Sembarangan",
-          slug: "01-juice-jacking",
-          slide: s,
-          name: `01-juice-jacking_${String(s).padStart(2, "0")}.png`,
-          cdn_url: url,
-          timestamp: new Date().toISOString()
-        };
-        dbProgress[key] = true;
+    const chk = document.getElementById("chkAutoDownload");
+    if (chk) {
+      chk.checked = isAutoDownload;
+      chk.addEventListener("change", (e) => {
+        isAutoDownload = e.target.checked;
+        chrome.storage.local.set({ inka_auto_dl: isAutoDownload });
+        toast(isAutoDownload ? "⚡ Auto-Unduh AKTIF" : "Auto-Unduh NONAKTIF");
       });
-      await chrome.storage.local.set({ inka_seeded_v3: true });
-      await saveDatabase();
     }
 
     // Auto resume ke slide yang belum selesai
@@ -126,15 +108,32 @@ async function saveDatabase() {
       inka_db: dbProgress,
       inka_active_c: activeContentId,
       inka_active_s: activeSlideIdx,
-      inka_cdn_db: cdnDatabase
+      inka_cdn_db: cdnDatabase,
+      inka_auto_dl: isAutoDownload
     });
   } catch (e) {}
 }
 
 function renderDownloadCount() {
-  const el = document.getElementById("txtImageCount");
-  const count = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`)).length;
-  if (el) el.innerText = `${count} Gambar`;
+  const elCount = document.getElementById("txtImageCount");
+  const elSummary = document.getElementById("txtDownloadedSummary");
+  const btnDlAll = document.getElementById("btnDownloadAll");
+
+  const keys = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`));
+  const total = keys.length;
+  const dlCount = keys.filter(k => cdnDatabase[k].downloaded).length;
+  const pendingCount = total - dlCount;
+
+  if (elCount) elCount.innerText = `${total} Gambar`;
+  if (elSummary) elSummary.innerText = `${dlCount}/${total} Terunduh`;
+
+  if (btnDlAll) {
+    if (pendingCount > 0) {
+      btnDlAll.innerText = `📥 Unduh (${pendingCount} Belum)`;
+    } else {
+      btnDlAll.innerText = "📥 Unduh Semua";
+    }
+  }
 }
 
 function renderDownloadList() {
@@ -153,6 +152,7 @@ function renderDownloadList() {
   keys.forEach(k => {
     const rec = cdnDatabase[k];
     const fileName = rec.name || getSlideFilename(rec.content_id, rec.slide);
+    const isDl = !!rec.downloaded;
 
     const item = document.createElement("div");
     item.className = "inka-cdn-item";
@@ -160,37 +160,45 @@ function renderDownloadList() {
     const info = document.createElement("div");
     info.className = "inka-cdn-info";
 
-    const badge = document.createElement("span");
-    badge.className = "inka-cdn-badge-verified";
-    badge.innerText = `S${rec.slide}`;
+    const badgeSlide = document.createElement("span");
+    badgeSlide.className = "inka-cdn-badge-verified";
+    badgeSlide.innerText = `S${rec.slide}`;
+
+    const badgeStatus = document.createElement("span");
+    badgeStatus.className = isDl ? "inka-badge-downloaded" : "inka-badge-not-downloaded";
+    badgeStatus.innerText = isDl ? "✓ Terunduh" : "⏳ Belum";
 
     const title = document.createElement("span");
     title.className = "inka-cdn-title";
     title.innerText = fileName;
     title.title = fileName;
 
-    info.appendChild(badge);
+    info.appendChild(badgeSlide);
+    info.appendChild(badgeStatus);
     info.appendChild(title);
 
     const btn = document.createElement("button");
-    btn.className = "inka-btn-dl-mini";
-    btn.innerHTML = "📥 Unduh";
-    btn.title = `Unduh diam-diam ${fileName}`;
+    btn.className = `inka-btn-dl-mini ${isDl ? "downloaded" : ""}`;
+    btn.innerHTML = isDl ? "↺ Unduh" : "📥 Unduh";
+    btn.title = isDl ? `Unduh ulang ${fileName}` : `Unduh diam-diam ${fileName}`;
     btn.addEventListener("click", async () => {
       btn.innerText = "⏳...";
       btn.disabled = true;
       const ok = await downloadSilentImage(rec.cdn_url, fileName);
       if (ok) {
-        btn.innerText = "✓";
+        rec.downloaded = true;
+        await saveDatabase();
+        renderDownloadCount();
+        renderDownloadList();
         toast(`Tersimpan: ${fileName}`);
       } else {
         btn.innerText = "Gagal";
         toast(`Gagal mengunduh ${fileName}`);
+        setTimeout(() => {
+          btn.innerHTML = isDl ? "↺ Unduh" : "📥 Unduh";
+          btn.disabled = false;
+        }, 1600);
       }
-      setTimeout(() => {
-        btn.innerHTML = "📥 Unduh";
-        btn.disabled = false;
-      }, 1600);
     });
 
     item.appendChild(info);
@@ -328,27 +336,47 @@ async function sendPromptToChatGpt(autoSend = true) {
       document.querySelectorAll('div.fixed.inset-0.z-50').forEach(el => el.remove());
     } catch (e) {}
 
-    const textarea = document.querySelector("#prompt-textarea");
-    if (!textarea) return false;
+    // Cari elemen input (ProseMirror paragraph, textarea, atau contenteditable)
+    let target = document.querySelector("#prompt-textarea p");
+    if (!target) target = document.querySelector("#prompt-textarea");
+    if (!target) target = document.querySelector('div[contenteditable="true"]');
+    if (!target) target = document.querySelector('textarea');
+    if (!target) return false;
 
-    textarea.focus();
+    target.focus();
+
     try {
-      textarea.innerHTML = "";
-      document.execCommand("insertText", false, text);
-      textarea.dispatchEvent(new Event("input", { bubbles: true }));
-      textarea.dispatchEvent(new Event("change", { bubbles: true }));
+      if (target.tagName.toLowerCase() === "textarea") {
+        target.value = text;
+        target.dispatchEvent(new Event("input", { bubbles: true }));
+      } else {
+        document.execCommand("selectAll", false, null);
+        document.execCommand("delete", false, null);
+        if (!document.execCommand("insertText", false, text)) {
+          target.innerText = text;
+        }
+        target.dispatchEvent(new Event("input", { bubbles: true }));
+        target.dispatchEvent(new Event("change", { bubbles: true }));
+      }
     } catch (e) {
-      textarea.innerText = text;
-      textarea.dispatchEvent(new Event("input", { bubbles: true }));
+      target.innerText = text;
+      target.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
     if (send) {
       setTimeout(() => {
-        const sendBtn = document.querySelector('button[data-testid="send-button"]');
+        const sendBtn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Send"], button[aria-label*="Kirim"]');
         if (sendBtn && !sendBtn.disabled) {
           sendBtn.click();
         } else {
-          textarea.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, cancelable: true, key: "Enter", keyCode: 13 }));
+          const enterEvent = new KeyboardEvent("keydown", {
+            bubbles: true,
+            cancelable: true,
+            key: "Enter",
+            code: "Enter",
+            keyCode: 13
+          });
+          target.dispatchEvent(enterEvent);
         }
       }, 500);
     }
@@ -361,6 +389,7 @@ async function sendPromptToChatGpt(autoSend = true) {
     toast("Gagal mengisi chatbox. Pastikan ChatGPT terbuka.");
   }
 }
+
 
 function copyPrompt() {
   const p = getCurrentPrompt();
@@ -472,6 +501,7 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
   const fileName = getSlideFilename(contentId, slideIdx);
   const recordKey = `c${contentId}_s${slideIdx}`;
 
+  const existing = cdnDatabase[recordKey];
   cdnDatabase[recordKey] = {
     id: recordKey,
     content_id: contentId,
@@ -480,14 +510,27 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
     slide: slideIdx,
     name: fileName,
     cdn_url: imgUrl,
+    downloaded: existing ? !!existing.downloaded : false,
     timestamp: new Date().toISOString()
   };
 
   dbProgress[recordKey] = true;
+
+  // AUTO-DOWNLOAD: Jika fitur auto-download aktif, langsung unduh diam-diam saat ini juga!
+  if (isAutoDownload) {
+    toast(`📥 Mengunduh otomatis ${fileName}...`);
+    const ok = await downloadSilentImage(imgUrl, fileName);
+    if (ok) {
+      cdnDatabase[recordKey].downloaded = true;
+      toast(`✓ ${fileName} selesai & langsung terunduh!`);
+    }
+  } else {
+    toast(`✓ ${fileName} selesai render!`);
+  }
+
   await saveDatabase();
-  renderCdnCount();
-  renderCdnList();
-  toast(`✓ ${fileName} tercatat!`);
+  renderDownloadCount();
+  renderDownloadList();
   updateView();
 
   const total = currTopic.total_slides || 6;
@@ -497,20 +540,20 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
     updateView();
 
     if (isAutopilot) {
-      toast(`Autopilot: Menyiapkan Slide ${activeSlideIdx} dalam 2.5 detik...`);
+      toast(`⚡ Autopilot: Menyiapkan Slide ${activeSlideIdx} dalam 2.5 detik...`);
       setTimeout(() => {
         if (isAutopilot) sendPromptToChatGpt(true);
       }, 2500);
     }
   } else {
-    toast(`🎉 Konten #${contentId} Selesai Semua!`);
+    toast(`🎉 Konten #${contentId} Selesai Semua (6 Slide)!`);
     if (isAutopilot && activeContentId < window.INKA_TOPICS.length) {
       activeContentId++;
       activeSlideIdx = 1;
       await saveDatabase();
       renderTopicSelect();
       updateView();
-      toast(`Autopilot: Membuka New Chat untuk Konten #${activeContentId}...`);
+      toast(`⚡ Autopilot: Membuka New Chat untuk Konten #${activeContentId}...`);
       setTimeout(async () => {
         await triggerNewChat();
         setTimeout(() => {
@@ -536,12 +579,10 @@ async function scanActiveTabForCdnImages() {
       if (!clean.startsWith("http")) return false;
 
       const lower = clean.toLowerCase();
-      // Filter ketat: buang avatar, ikon UI, profil, dan SVG
       if (lower.includes("avatar") || lower.includes("profile") || lower.includes("icon") || lower.includes("logo") || lower.includes(".svg")) {
         return false;
       }
 
-      // Wajib format asli CDN backend ChatGPT DALL-E
       const isEstuary = lower.includes("backend-api/estuary/content");
       const isOaiCdn = lower.includes("oaiusercontent.com") && !lower.includes("user-");
       const isDalle = lower.includes("dalle");
@@ -555,7 +596,7 @@ async function scanActiveTabForCdnImages() {
       }
     }
 
-    // 1. Tag anchor pembungkus gambar (biasanya link download/open asli)
+    // 1. Tag anchor pembungkus gambar
     document.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
       addUrl(a.href || a.getAttribute("href"));
     });
@@ -595,6 +636,7 @@ async function scanActiveTabForCdnImages() {
     const key = `c${activeContentId}_s${slideNum}`;
     const fileName = `${slug}_${String(slideNum).padStart(2, "0")}.png`;
 
+    const existing = cdnDatabase[key];
     cdnDatabase[key] = {
       id: key,
       content_id: activeContentId,
@@ -603,6 +645,7 @@ async function scanActiveTabForCdnImages() {
       slide: slideNum,
       name: fileName,
       cdn_url: url,
+      downloaded: existing ? !!existing.downloaded : false,
       timestamp: new Date().toISOString()
     };
     dbProgress[key] = true;
@@ -613,7 +656,7 @@ async function scanActiveTabForCdnImages() {
   renderDownloadCount();
   renderDownloadList();
   updateView();
-  toast(`✓ ${added} gambar (${slug}) terverifikasi & siap unduh!`);
+  toast(`✓ ${added} gambar (${slug}) terverifikasi!`);
 }
 
 // 8. Eksekusi Unduh Diam-diam (Silent Download Langsung Tanpa Dialog)
@@ -675,29 +718,42 @@ async function downloadAllImages() {
     return;
   }
 
+  // Prioritas unduh yang statusnya BELUM terunduh
+  let targets = keys.filter(k => !cdnDatabase[k].downloaded);
+  if (targets.length === 0) {
+    // Jika semua sudah diunduh, unduh ulang semua
+    targets = keys;
+  }
+
   const btn = document.getElementById("btnDownloadAll");
   if (btn) {
     btn.disabled = true;
     btn.innerText = "⏳ Mengunduh...";
   }
 
-  toast(`Mengunduh ${keys.length} gambar diam-diam...`);
+  toast(`Mengunduh ${targets.length} gambar diam-diam...`);
   let downloaded = 0;
 
-  for (const k of keys) {
+  for (const k of targets) {
     const rec = cdnDatabase[k];
     if (rec && rec.cdn_url) {
       const fileName = rec.name || getSlideFilename(rec.content_id, rec.slide);
-      toast(`Mengunduh (${downloaded + 1}/${keys.length}): ${fileName}...`);
+      toast(`Mengunduh (${downloaded + 1}/${targets.length}): ${fileName}...`);
       const ok = await downloadSilentImage(rec.cdn_url, fileName);
-      if (ok) downloaded++;
+      if (ok) {
+        rec.downloaded = true;
+        downloaded++;
+      }
       await new Promise(r => setTimeout(r, 500));
     }
   }
 
+  await saveDatabase();
+  renderDownloadCount();
+  renderDownloadList();
+
   if (btn) {
     btn.disabled = false;
-    btn.innerText = "📥 Unduh Semua";
   }
 
   toast(`Selesai! ${downloaded} gambar berhasil diunduh diam-diam ✓`);

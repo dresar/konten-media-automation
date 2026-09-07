@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "3.0.0",
-  "description": "Side Panel Otomasi DALL-E @inka.tech v3.0: Silent Direct Downloader, Verified CDN & Auto-Naming.",
+  "version": "3.1.0",
+  "description": "InkaTech Studio ⚡ v3.1: Full Autopilot & Auto-Download on Finish with Download Tracking.",
   "permissions": [
     "sidePanel",
     "storage",

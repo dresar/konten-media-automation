@@ -408,8 +408,28 @@ body {
 
 .inka-cdn-badge-verified {
   font-size: 9px;
+  background: #E2E8F0;
+  color: #334155;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.inka-badge-downloaded {
+  font-size: 9px;
   background: #DCFCE7;
   color: #15803D;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.inka-badge-not-downloaded {
+  font-size: 9px;
+  background: #FEF3C7;
+  color: #B45309;
   padding: 1px 5px;
   border-radius: 3px;
   font-weight: 700;
@@ -433,6 +453,18 @@ body {
 }
 
 .inka-btn-dl-mini:hover {
+  background: #10B981;
+  color: #FFFFFF;
+  border-color: #10B981;
+}
+
+.inka-btn-dl-mini.downloaded {
+  background: #F1F5F9;
+  color: #64748B;
+  border-color: #E2E8F0;
+}
+
+.inka-btn-dl-mini.downloaded:hover {
   background: #10B981;
   color: #FFFFFF;
   border-color: #10B981;
