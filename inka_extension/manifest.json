@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.2.0",
-  "description": "InkaTech Studio ⚡ v4.2: Robust Multi-Strategy Send Click, Multi-Account Batching & 12-Layer Engine.",
+  "version": "4.3.0",
+  "description": "InkaTech Studio ⚡ v4.3: Real-Time Tab Image Sync (Otomatis Deteksi & Hijau), Multi-Account Batching & Overnight Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

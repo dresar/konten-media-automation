@@ -1,16 +1,14 @@
-// InkaTech Studio - Native Side Panel Controller (v4.1 Multi-Account Edition)
+// InkaTech Studio - Native Side Panel Controller (v4.3 Image-Driven Sync Edition)
 // Standar Desain: ui-ux-text & precision-card-button-ui
-// Fitur: Multi-Account Batching (20 Topik / Akun), 12-Layer Smart Validation Engine,
-// Explicit State Machine, Clean ProseMirror Paste, Bubble Isolation & Overnight Autopilot
+// Fitur: Real-Time Tab Image Sync (Deteksi gambar langsung dari tab ChatGPT tanpa menunggu prompting),
+// Otomatis Hijau & Tampil di List, Robust Send Click, Multi-Account Batching & Overnight Autopilot
 
 // 1. STATE MACHINE DEFINITION
 const State = {
   IDLE: "IDLE",
   INJECTING: "INJECTING",
-  SUBMITTING: "SUBMITTING",
   AWAITING_GENERATION: "AWAITING_GENERATION",
   GENERATING: "GENERATING",
-  VALIDATING_12_LAYERS: "VALIDATING_12_LAYERS",
   SLIDE_SUCCESS: "SLIDE_SUCCESS",
   DOWNLOADING_TOPIC: "DOWNLOADING_TOPIC",
   SWITCHING_CHAT: "SWITCHING_CHAT",
@@ -24,18 +22,9 @@ let isAutopilot = false;
 let accountMode = "acc1"; // "acc1" (01-20), "acc2" (21-40), "all" (01-40)
 let dbProgress = {};
 let cdnDatabase = {};
-let knownFileIds = new Set(); // Kumpulan ID file gambar yang sudah pernah tercatat
-
-// Tracking sesi generasi aktif (Anti-Ghosting & Anti-Replay)
-let activeSession = {
-  contentId: 1,
-  slideIdx: 1,
-  userCountBefore: 0,
-  submitTime: 0,
-  renderStartTime: 0,
-  hasSeenRenderActive: false,
-  validationAttempts: 0
-};
+let knownFileIds = new Set();
+let isDownloadingBatch = false;
+let lastPromptSubmitTime = 0;
 
 // Pemetaan Rentang Topik Per Akun (Multi-Akun Isolation)
 function getAccountTopicRange() {
@@ -134,7 +123,7 @@ function updateEngineStatus(state, detail = "") {
 
   if (!badge || !txtDetail) return;
 
-  badge.className = ""; // Reset class
+  badge.className = "";
 
   switch (state) {
     case State.IDLE:
@@ -143,10 +132,9 @@ function updateEngineStatus(state, detail = "") {
       txtDetail.innerText = detail || "Menunggu instruksi";
       break;
     case State.INJECTING:
-    case State.SUBMITTING:
       badge.className = "inka-badge-active";
       badge.innerText = "● MENGIRIM";
-      txtDetail.innerText = detail || "Menyiapkan chatbox...";
+      txtDetail.innerText = detail || "Mengirim prompt...";
       break;
     case State.AWAITING_GENERATION:
       badge.className = "inka-badge-active";
@@ -158,15 +146,10 @@ function updateEngineStatus(state, detail = "") {
       badge.innerText = "● MERENDER";
       txtDetail.innerText = detail || "DALL-E sedang merender...";
       break;
-    case State.VALIDATING_12_LAYERS:
-      badge.className = "inka-badge-active";
-      badge.innerText = "● VALIDASI";
-      txtDetail.innerText = detail || "Memeriksa 12 lapis validasi...";
-      break;
     case State.SLIDE_SUCCESS:
       badge.className = "inka-badge-success";
       badge.innerText = "✓ LOLOS";
-      txtDetail.innerText = detail || "Slide tervalidasi sempurna";
+      txtDetail.innerText = detail || "Gambar terdeteksi di tab";
       break;
     case State.DOWNLOADING_TOPIC:
       badge.className = "inka-badge-generating";
@@ -199,7 +182,6 @@ async function initDatabase() {
     if (data.inka_account_mode) accountMode = data.inka_account_mode;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
 
-    // Pastikan activeContentId masuk dalam rentang akun aktif
     const range = getAccountTopicRange();
     if (!data.inka_active_c || data.inka_active_c < range.min || data.inka_active_c > range.max) {
       activeContentId = range.min;
@@ -209,7 +191,6 @@ async function initDatabase() {
 
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
 
-    // Kumpulkan seluruh File ID yang sudah pernah tercatat (Anti-Replay Layer 10)
     knownFileIds.clear();
     Object.values(cdnDatabase).forEach(rec => {
       if (rec && rec.cdn_url) {
@@ -274,7 +255,7 @@ function renderDownloadList() {
   keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
 
   if (keys.length === 0) {
-    container.innerHTML = '<div class="inka-empty-hint">Belum ada gambar. Jalankan Autopilot atau klik Pindai Tab.</div>';
+    container.innerHTML = '<div class="inka-empty-hint">Belum ada gambar terdeteksi di tab.</div>';
     return;
   }
 
@@ -423,7 +404,7 @@ function updateView() {
   document.getElementById("txtPercent").innerText = `${pct}%`;
   document.getElementById("barFill").style.width = `${pct}%`;
 
-  // Render Slide Strip
+  // Render Slide Strip (1 s/d 6)
   const strip = document.getElementById("stripSlides");
   strip.innerHTML = "";
   for (let i = 1; i <= total; i++) {
@@ -434,10 +415,6 @@ function updateView() {
     pill.className = `inka-slide-pill ${isActive ? "active" : ""} ${isDone ? "done" : ""}`;
     pill.innerText = isDone ? `${i} ✓` : String(i);
     pill.addEventListener("click", () => {
-      if (currentState !== State.IDLE && currentState !== State.SLIDE_SUCCESS) {
-        toast(`⚠️ Tidak bisa pindah slide saat: ${currentState}`);
-        return;
-      }
       activeSlideIdx = i;
       saveDatabase();
       updateView();
@@ -464,22 +441,11 @@ function getCurrentPrompt() {
   return window.buildSuperMegaPrompt(currTopic.topic, outline, activeSlideIdx, total, currTopic.hook_title || currTopic.topic);
 }
 
-// 6. VALIDASI LAYER 2 & 3: Injeksi Chatbox Bersih & Pengiriman Terverifikasi
+// 6. INJEKSI CHATBOX BERSIH & KLIK TOMBOL BIRU TANGGUH
 async function sendPromptToChatGpt(autoSend = true) {
-  // VALIDASI 1: State Guard (Hanya kirim saat IDLE atau transisi teratur)
-  if (
-    currentState !== State.IDLE &&
-    currentState !== State.SLIDE_SUCCESS &&
-    currentState !== State.SWITCHING_CHAT
-  ) {
-    toast(`⏳ Sedang sibuk di state: ${currentState}`);
-    return;
-  }
-
   updateEngineStatus(State.INJECTING, `Mengisi chatbox Slide ${activeSlideIdx}...`);
   const promptText = getCurrentPrompt();
 
-  // Eksekusi in-tab injection secara asinkron dengan multi-strategy robust click
   const res = await executeInTab(async (text, send) => {
     try {
       document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
@@ -487,8 +453,6 @@ async function sendPromptToChatGpt(autoSend = true) {
 
     const textarea = document.querySelector("#prompt-textarea");
     if (!textarea) return { ok: false, error: "Chatbox (#prompt-textarea) tidak ditemukan" };
-
-    const userTurnsBefore = document.querySelectorAll('[data-message-author-role="user"]').length;
 
     // 1. Bersihkan chatbox secara total
     textarea.focus();
@@ -522,30 +486,25 @@ async function sendPromptToChatGpt(autoSend = true) {
       textarea.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    // Validasi isi chatbox
     curText = (textarea.innerText || textarea.value || "").trim();
     if (curText.length < 20) {
-      return { ok: false, error: "Chatbox gagal diisi teks (teks terlalu pendek)" };
+      return { ok: false, error: "Chatbox gagal diisi teks" };
     }
 
     if (!send) {
-      return { ok: true, submitted: false, userTurnsBefore };
+      return { ok: true, submitted: false };
     }
 
-    // 3. MULTI-STRATEGY ROBUST SEND BUTTON CLICK (ANTI-MISS)
-    // Tunggu 400ms agar React selesai mengaktifkan tombol kirim (menjadi warna biru aktif)
+    // 3. JEDA ASINKRON 400ms AGAR TOMBOL BIRU MENYALA
     await new Promise(r => setTimeout(r, 400));
 
     function findSendButton() {
-      // Prioritas 1: data-testid send-button
       let b = document.querySelector('button[data-testid="send-button"]');
       if (b) return b;
 
-      // Prioritas 2: aria-label Kirim / Send
       b = document.querySelector('button[aria-label*="Kirim" i], button[aria-label*="Send" i]');
       if (b) return b;
 
-      // Prioritas 3: Tombol bulat biru dengan SVG panah ke atas (seperti di UI ChatGPT)
       const allButtons = Array.from(document.querySelectorAll('button'));
       for (const btn of allButtons) {
         if (btn.getAttribute('data-testid')?.includes('speech') || btn.getAttribute('aria-label')?.toLowerCase().includes('suara')) continue;
@@ -557,7 +516,6 @@ async function sendPromptToChatGpt(autoSend = true) {
         }
       }
 
-      // Prioritas 4: Form submit button
       const form = textarea.closest('form');
       if (form) {
         const sub = form.querySelector('button[type="submit"]');
@@ -568,8 +526,6 @@ async function sendPromptToChatGpt(autoSend = true) {
     }
 
     let isSubmitted = false;
-
-    // Strategi A: Polling klik tombol kirim hingga 5x (jeda 200ms) sampai enabled
     for (let attempt = 1; attempt <= 5; attempt++) {
       const btn = findSendButton();
       if (btn && !btn.disabled) {
@@ -581,7 +537,6 @@ async function sendPromptToChatGpt(autoSend = true) {
       await new Promise(r => setTimeout(r, 200));
     }
 
-    // Strategi B: Form native requestSubmit
     if (!isSubmitted) {
       const form = textarea.closest('form');
       if (form && typeof form.requestSubmit === 'function') {
@@ -592,7 +547,6 @@ async function sendPromptToChatGpt(autoSend = true) {
       }
     }
 
-    // Strategi C: Native Enter Keyboard Event pada target ProseMirror
     if (!isSubmitted) {
       const targetP = textarea.querySelector('p') || textarea;
       ['keydown', 'keypress', 'keyup'].forEach(type => {
@@ -608,7 +562,7 @@ async function sendPromptToChatGpt(autoSend = true) {
       isSubmitted = true;
     }
 
-    return { ok: true, submitted: isSubmitted, userTurnsBefore };
+    return { ok: true, submitted: isSubmitted };
   }, [promptText, autoSend]);
 
   if (!res || !res.ok) {
@@ -618,19 +572,11 @@ async function sendPromptToChatGpt(autoSend = true) {
   }
 
   if (autoSend) {
-    activeSession = {
-      contentId: activeContentId,
-      slideIdx: activeSlideIdx,
-      userCountBefore: res.userTurnsBefore,
-      submitTime: Date.now(),
-      renderStartTime: 0,
-      hasSeenRenderActive: false,
-      validationAttempts: 0
-    };
+    lastPromptSubmitTime = Date.now();
     updateEngineStatus(State.AWAITING_GENERATION, `Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
-    toast(`[Layer 3/12] Slide ${activeSlideIdx} terkirim. Menunggu DALL-E mulai...`);
+    toast(`Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
   } else {
-    updateEngineStatus(State.IDLE, "Prompt siap dikirim");
+    updateEngineStatus(State.IDLE, "Prompt siap di chatbox");
     toast(`✓ Prompt Slide ${activeSlideIdx} siap di chatbox`);
   }
 }
@@ -667,9 +613,7 @@ function toggleAutopilot() {
     btn.classList.add("inka-btn-autopilot-running");
     btn.innerText = "⚡ Autopilot AKTIF";
     toast("Autopilot berjalan...");
-    if (currentState === State.IDLE || currentState === State.SLIDE_SUCCESS) {
-      sendPromptToChatGpt(true);
-    }
+    runAutopilotStep();
   } else {
     btn.classList.remove("inka-btn-autopilot-running");
     btn.innerText = "⚡ Autopilot";
@@ -678,289 +622,224 @@ function toggleAutopilot() {
   }
 }
 
-// 7. SENSOR DALL-E DENGAN 12-LAYER VALIDATION ENGINE
+// 7. SENSOR REAL-TIME & SINKRONISASI GAMBAR LANGSUNG DARI TAB
 function startRenderSensor() {
   setInterval(async () => {
     await checkRenderStatus();
-  }, 1600);
+  }, 1800);
 }
 
 async function checkRenderStatus() {
-  if (
-    currentState !== State.AWAITING_GENERATION &&
-    currentState !== State.GENERATING &&
-    currentState !== State.VALIDATING_12_LAYERS
-  ) {
-    return;
-  }
-
   const tab = await getChatGptTab();
   if (!tab) return;
 
-  const status = await executeInTab((knownIds) => {
+  const inspection = await executeInTab(() => {
     const stopBtn = document.querySelector('button[data-testid="stop-button"], button[aria-label*="Stop generating"], button[aria-label*="Stop"]');
     const isStopBtnPresent = !!stopBtn;
-
     const isShimmerPresent = !!document.querySelector('.animate-pulse, [data-testid*="generating"], svg.animate-spin');
 
-    const assistantTurns = document.querySelectorAll('[data-message-author-role="assistant"]');
-    if (assistantTurns.length === 0) {
-      return {
-        isStopBtnPresent,
-        isShimmerPresent,
-        hasAssistantTurn: false,
-        errorDetected: null,
-        candidateImg: null
-      };
-    }
+    // Kumpulkan seluruh URL gambar DALL-E asli di tab secara berurutan
+    const list = [];
+    function isGenuineDalleUrl(u) {
+      if (!u || typeof u !== "string") return false;
+      let clean = u.trim();
+      if (clean.startsWith("/")) clean = window.location.origin + clean;
+      if (!clean.startsWith("http")) return false;
 
-    // BUBBLE ASISTEN TERAKHIR (ISOLASI MURNI - VALIDASI 6)
-    const latestTurn = assistantTurns[assistantTurns.length - 1];
-
-    // Deteksi Error / Penolakan ChatGPT (VALIDASI 7)
-    const turnText = latestTurn.innerText || "";
-    const lowerText = turnText.toLowerCase();
-    const errorKeywords = [
-      "i cannot generate",
-      "unable to generate",
-      "violate our content",
-      "against our content policy",
-      "content policy",
-      "rate limit reached",
-      "something went wrong"
-    ];
-    let detectedError = null;
-    for (const kw of errorKeywords) {
-      if (lowerText.includes(kw)) {
-        detectedError = kw;
-        break;
-      }
-    }
-
-    // Cari gambar di bubble asisten terakhir (VALIDASI 8, 9, 10, 11)
-    let candidateImg = null;
-    const imgs = latestTurn.querySelectorAll("img");
-    for (const im of imgs) {
-      const src = im.currentSrc || im.src || im.getAttribute("src") || "";
-      const p = im.closest("a");
-      const href = p ? (p.href || p.getAttribute("href") || "") : "";
-      const testUrl = (href && href.includes("http")) ? href : src;
-
-      if (!testUrl || !testUrl.startsWith("http")) continue;
-
-      const lowerUrl = testUrl.toLowerCase();
-      // Filter ketat blacklist (VALIDASI 9)
+      const lower = clean.toLowerCase();
       if (
-        lowerUrl.includes("avatar") ||
-        lowerUrl.includes("profile") ||
-        lowerUrl.includes("icon") ||
-        lowerUrl.includes("logo") ||
-        lowerUrl.includes(".svg") ||
-        lowerUrl.includes("sprites") ||
-        lowerUrl.includes("emoji") ||
-        lowerUrl.includes("user-")
+        lower.includes("avatar") ||
+        lower.includes("profile") ||
+        lower.includes("icon") ||
+        lower.includes("logo") ||
+        lower.includes(".svg") ||
+        lower.includes("sprites") ||
+        lower.includes("emoji") ||
+        lower.includes("user-")
       ) {
-        continue;
+        return false;
       }
 
-      // Validasi origin CDN (VALIDASI 9)
-      const isEstuary = lowerUrl.includes("backend-api/estuary/content");
-      const isOaiCdn = lowerUrl.includes("oaiusercontent.com");
-      const isDalle = lowerUrl.includes("dalle");
+      const isEstuary = lower.includes("backend-api/estuary/content");
+      const isOaiCdn = lower.includes("oaiusercontent.com");
+      const isDalle = lower.includes("dalle");
 
-      if (!isEstuary && !isOaiCdn && !isDalle) continue;
+      return isEstuary || isOaiCdn || isDalle;
+    }
 
-      // Validasi dimensi gambar (Bukan thumbnail/icon - VALIDASI 8)
-      const isBig = (im.naturalWidth >= 400 && im.naturalHeight >= 400) || isEstuary;
-      const isComplete = im.complete;
-
-      // Ekstrak File ID untuk anti-replay (VALIDASI 10)
-      let fileId = "";
-      const m1 = testUrl.match(/id=(file_[a-zA-Z0-9]+)/i);
-      if (m1) fileId = m1[1];
-      const m2 = testUrl.match(/(file-[a-zA-Z0-9_-]+)/i);
-      if (m2) fileId = m2[1];
-
-      const isKnown = fileId && knownIds.includes(fileId);
-
-      if (isBig && !isKnown) {
-        candidateImg = {
-          url: testUrl,
-          fileId: fileId,
-          width: im.naturalWidth,
-          height: im.naturalHeight,
-          complete: isComplete
-        };
-        break;
+    function addUrl(u) {
+      if (isGenuineDalleUrl(u) && !list.includes(u.trim())) {
+        list.push(u.trim());
       }
     }
+
+    const assistantMsgs = document.querySelectorAll('[data-message-author-role="assistant"]');
+    assistantMsgs.forEach(msg => {
+      // 1. Tag a pembungkus
+      msg.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
+        addUrl(a.href || a.getAttribute("href"));
+      });
+
+      // 2. Elemen img di dalam pesan asisten
+      msg.querySelectorAll("img").forEach(im => {
+        const isBig = (im.naturalWidth >= 300 || im.width >= 300 || !im.complete || (im.src && im.src.includes("backend-api/estuary")));
+        if (isBig) {
+          const parentA = im.closest("a");
+          const targetUrl = parentA ? (parentA.href || parentA.getAttribute("href")) : (im.currentSrc || im.src || im.getAttribute("src"));
+          addUrl(targetUrl);
+        }
+      });
+    });
+
+    // Cek teks pesan error ChatGPT
+    let detectedError = null;
+    if (assistantMsgs.length > 0) {
+      const latestTurn = assistantMsgs[assistantMsgs.length - 1];
+      const lowerText = (latestTurn.innerText || "").toLowerCase();
+      const errorKeywords = [
+        "i cannot generate",
+        "unable to generate",
+        "violate our content",
+        "against our content policy",
+        "rate limit reached",
+        "something went wrong"
+      ];
+      for (const kw of errorKeywords) {
+        if (lowerText.includes(kw)) {
+          detectedError = kw;
+          break;
+        }
+      }
+    }
+
+    // Cek apakah ada teks yang belum terkirim di chatbox
+    const curChatboxText = (document.querySelector("#prompt-textarea")?.innerText || "").trim();
 
     return {
       isStopBtnPresent,
       isShimmerPresent,
-      hasAssistantTurn: true,
+      dalleImages: list,
       errorDetected: detectedError,
-      candidateImg: candidateImg
+      chatboxLength: curChatboxText.length
     };
-  }, [Array.from(knownFileIds)]);
+  });
 
-  if (!status) return;
+  if (!inspection) return;
 
-  // VALIDASI 7: Deteksi Error ChatGPT
-  if (status.errorDetected) {
-    updateEngineStatus(State.PAUSED_ERROR, `ChatGPT Menolak: ${status.errorDetected}`);
-    isAutopilot = false;
-    const btn = document.getElementById("btnAutopilot");
-    if (btn) {
-      btn.classList.remove("inka-btn-autopilot-running");
-      btn.innerText = "⚡ Autopilot";
+  // Jika ada error ChatGPT: Pause autopilot
+  if (inspection.errorDetected) {
+    updateEngineStatus(State.PAUSED_ERROR, `ChatGPT Menolak: ${inspection.errorDetected}`);
+    if (isAutopilot) {
+      isAutopilot = false;
+      const btn = document.getElementById("btnAutopilot");
+      if (btn) {
+        btn.classList.remove("inka-btn-autopilot-running");
+        btn.innerText = "⚡ Autopilot";
+      }
+      toast(`⚠️ ChatGPT Error: "${inspection.errorDetected}". Autopilot dijeda.`);
     }
-    toast(`⚠️ ChatGPT Error: "${status.errorDetected}". Autopilot dijeda aman.`);
     return;
   }
 
-  // TAHAP 1: Menunggu Generasi Dimulai (AWAITING_GENERATION)
-  if (currentState === State.AWAITING_GENERATION) {
-    if (status.isStopBtnPresent || status.isShimmerPresent) {
-      activeSession.hasSeenRenderActive = true;
-      activeSession.renderStartTime = Date.now();
-      updateEngineStatus(State.GENERATING, `DALL-E aktif merender Slide ${activeSession.slideIdx}...`);
-      toast(`[Layer 4/12] 🎨 DALL-E mulai merender Slide ${activeSession.slideIdx}...`);
-      return;
-    }
+  // SINKRONISASI GAMBAR TAB KE DATABASE REAL-TIME
+  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === activeContentId)) || { topic: "konten" };
+  const total = currTopic.total_slides || 6;
+  const slug = getTopicSlug(activeContentId);
 
-    // Auto-Recovery: Jika dalam 3 detik belum mulai render, periksa apakah teks masih ada di chatbox dan klik lagi!
-    const elapsedSubmit = Date.now() - activeSession.submitTime;
-    if (elapsedSubmit >= 2500 && elapsedSubmit <= 12000) {
+  let hasNewSync = false;
+  if (inspection.dalleImages && inspection.dalleImages.length > 0) {
+    const countToSync = Math.min(inspection.dalleImages.length, total);
+    for (let i = 0; i < countToSync; i++) {
+      const slideNum = i + 1;
+      const key = `c${activeContentId}_s${slideNum}`;
+      const url = inspection.dalleImages[i];
+      const fileName = `${slug}_${String(slideNum).padStart(2, "0")}.png`;
+
+      const existing = cdnDatabase[key];
+      if (!existing || existing.cdn_url !== url) {
+        cdnDatabase[key] = {
+          id: key,
+          content_id: activeContentId,
+          topic: currTopic.topic,
+          slug: slug,
+          slide: slideNum,
+          name: fileName,
+          cdn_url: url,
+          downloaded: existing ? !!existing.downloaded : false,
+          timestamp: new Date().toISOString()
+        };
+        dbProgress[key] = true;
+        hasNewSync = true;
+      }
+    }
+  }
+
+  if (hasNewSync) {
+    await saveDatabase();
+    renderDownloadCount();
+    renderDownloadList();
+    updateView();
+  }
+
+  // Update Status Tampilan
+  const currentImagesCount = inspection.dalleImages ? Math.min(inspection.dalleImages.length, total) : 0;
+  if (inspection.isStopBtnPresent || inspection.isShimmerPresent) {
+    updateEngineStatus(State.GENERATING, `Merender Slide ${Math.min(currentImagesCount + 1, total)}...`);
+    toast(`🎨 Sedang merender Slide ${Math.min(currentImagesCount + 1, total)}...`);
+    return;
+  }
+
+  // Auto-recovery klik tombol kirim jika teks masih tertahan di chatbox saat awaiting
+  if (currentState === State.AWAITING_GENERATION && inspection.chatboxLength > 20) {
+    const elapsed = Date.now() - lastPromptSubmitTime;
+    if (elapsed >= 3000 && elapsed <= 15000) {
       await executeInTab(() => {
-        const ta = document.querySelector("#prompt-textarea");
-        const cur = (ta?.innerText || ta?.value || "").trim();
-        if (cur.length > 20) {
-          const btn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Kirim" i], button[aria-label*="Send" i]') || 
-                      Array.from(document.querySelectorAll('button')).find(b => b.classList.contains('rounded-full') && b.querySelector('svg'));
-          if (btn && !btn.disabled) {
-            btn.click();
-          } else {
-            ta.closest('form')?.requestSubmit();
-          }
-        }
+        const btn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Kirim" i], button[aria-label*="Send" i]') ||
+                    Array.from(document.querySelectorAll('button')).find(b => b.classList.contains('rounded-full') && b.querySelector('svg'));
+        if (btn && !btn.disabled) btn.click();
       });
     }
-
-    if (elapsedSubmit > 35000) {
-      updateEngineStatus(State.IDLE, "Timeout menunggu respon");
-      toast(`⚠️ Timeout menunggu respon Slide ${activeSession.slideIdx}.`);
-      return;
-    }
-    return;
   }
 
-  // TAHAP 2: Sedang Merender (GENERATING)
-  if (currentState === State.GENERATING) {
-    if (status.isStopBtnPresent || status.isShimmerPresent) {
-      const renderSec = Math.round((Date.now() - activeSession.renderStartTime) / 1000);
-      updateEngineStatus(State.GENERATING, `Merender Slide ${activeSession.slideIdx} (${renderSec}s)...`);
-      toast(`[Layer 5/12] 🎨 Merender Slide ${activeSession.slideIdx} (${renderSec}s)...`);
-      return;
-    }
-
-    const renderDuration = Date.now() - activeSession.renderStartTime;
-    if (renderDuration >= 6000) {
-      activeSession.validationAttempts = 0;
-      updateEngineStatus(State.VALIDATING_12_LAYERS, `Memvalidasi gambar Slide ${activeSession.slideIdx}...`);
-      toast(`[Layer 6/12] Render selesai. Memverifikasi 12 layer validasi...`);
-    }
-    return;
+  if (currentImagesCount >= total) {
+    updateEngineStatus(State.SLIDE_SUCCESS, `${total}/${total} Slide Selesai!`);
+  } else if (currentImagesCount > 0) {
+    updateEngineStatus(State.SLIDE_SUCCESS, `${currentImagesCount}/${total} Slide Terdeteksi di Tab`);
+  } else if (currentState !== State.INJECTING && currentState !== State.AWAITING_GENERATION) {
+    updateEngineStatus(State.IDLE, "Siap. Menunggu perintah.");
   }
 
-  // TAHAP 3: Validasi 12 Layer Terhadap Gambar (VALIDATING_12_LAYERS)
-  if (currentState === State.VALIDATING_12_LAYERS) {
-    if (!status.candidateImg) {
-      activeSession.validationAttempts++;
-      if (activeSession.validationAttempts > 15) {
-        updateEngineStatus(State.IDLE, "Gambar belum siap di DOM");
-        toast(`⚠️ Gambar Slide ${activeSession.slideIdx} belum siap di DOM.`);
-      } else {
-        toast(`[Layer 8/12] Menunggu gambar DALL-E terpasang (${activeSession.validationAttempts}/15)...`);
-      }
-      return;
-    }
-
-    const img = status.candidateImg;
-    if (!img.complete && img.width === 0) {
-      toast(`[Layer 8/12] Menunggu gambar selesai di-load...`);
-      return;
-    }
-
-    if (img.fileId && knownFileIds.has(img.fileId)) {
-      toast(`[Layer 10/12] Mengabaikan gambar lama (${img.fileId})...`);
-      return;
-    }
-
-    // SEMUA 12 LAYER VALIDASI LOLOS!
-    if (img.fileId) knownFileIds.add(img.fileId);
-    updateEngineStatus(State.SLIDE_SUCCESS, `Slide ${activeSession.slideIdx} Lolos 12 Validasi!`);
-
-    await handleConfirmedSlide(img.url, activeSession.contentId, activeSession.slideIdx);
+  // LOGIKA AUTOPILOT
+  if (isAutopilot && !isDownloadingBatch && !inspection.isStopBtnPresent && !inspection.isShimmerPresent) {
+    await handleAutopilotProgression(currentImagesCount, total);
   }
 }
 
-// 8. Penanganan Slide Terkonfirmasi Sukses & Auto-Unduh Batch Per Topik
-async function handleConfirmedSlide(imgUrl, contentId, slideIdx) {
-  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === contentId)) || { topic: "konten" };
-  const slug = getTopicSlug(contentId);
-  const fileName = getSlideFilename(contentId, slideIdx);
-  const recordKey = `c${contentId}_s${slideIdx}`;
-
-  const existing = cdnDatabase[recordKey];
-  cdnDatabase[recordKey] = {
-    id: recordKey,
-    content_id: contentId,
-    topic: currTopic.topic,
-    slug: slug,
-    slide: slideIdx,
-    name: fileName,
-    cdn_url: imgUrl,
-    downloaded: existing ? !!existing.downloaded : false,
-    timestamp: new Date().toISOString()
-  };
-
-  dbProgress[recordKey] = true;
-  await saveDatabase();
-  renderDownloadCount();
-  renderDownloadList();
-  updateView();
-
-  toast(`✓ [12/12 Lolos] Slide ${slideIdx} (${slug}) Terverifikasi Sempurna!`);
-
-  const total = currTopic.total_slides || 6;
-  if (slideIdx < total) {
-    activeSlideIdx = slideIdx + 1;
-    await saveDatabase();
+// 8. LOGIKA AUTOPILOT BERBASIS JUMLAH GAMBAR NYATA DI TAB
+async function handleAutopilotProgression(currentImagesCount, total) {
+  if (currentImagesCount < total) {
+    const nextSlide = currentImagesCount + 1;
+    activeSlideIdx = nextSlide;
     updateView();
 
-    if (isAutopilot) {
-      updateEngineStatus(State.IDLE, `Cooldown 4s sebelum Slide ${activeSlideIdx}...`);
-      toast(`⚡ Autopilot: Cooldown 4 detik sebelum Slide ${activeSlideIdx}...`);
-      setTimeout(() => {
-        if (isAutopilot) {
-          sendPromptToChatGpt(true);
-        }
-      }, 4000);
-    } else {
-      updateEngineStatus(State.IDLE, `Slide ${slideIdx} selesai. Siap lanjut.`);
+    const elapsed = Date.now() - lastPromptSubmitTime;
+    // Jeda minimal 4 detik sejak pengiriman terakhir
+    if (elapsed > 4000 && currentState !== State.INJECTING && currentState !== State.AWAITING_GENERATION) {
+      toast(`⚡ Autopilot: Mengirim Slide ${activeSlideIdx}...`);
+      await sendPromptToChatGpt(true);
     }
   } else {
-    // 1 KONTEN (6 SLIDE) SELESAI SEMUA!
-    toast(`🎉 Topik #${contentId} Selesai 6/6 Slide! Memulai Auto-Unduh...`);
-    updateEngineStatus(State.DOWNLOADING_TOPIC, `Auto-Unduh 6 slide Topik #${contentId}...`);
+    // SEMUA 6 SLIDE LENGKAP DI TAB!
+    isDownloadingBatch = true;
+    updateEngineStatus(State.DOWNLOADING_TOPIC, `Auto-Unduh 6 slide Topik #${activeContentId}...`);
+    toast(`🎉 Topik #${activeContentId} Selesai 6/6 Slide! Mengunduh semua gambar...`);
 
-    const dlCount = await downloadTopicImages(contentId);
-    toast(`✓ ${dlCount} gambar Topik #${contentId} tersimpan ke folder Unduhan.`);
+    const dlCount = await downloadTopicImages(activeContentId);
+    toast(`✓ ${dlCount} gambar Topik #${activeContentId} berhasil disimpan!`);
+    isDownloadingBatch = false;
 
     const range = getAccountTopicRange();
-    // Beralih ke topik berikutnya hanya jika belum mencapai batas maksimum akun aktif!
-    if (isAutopilot && activeContentId < range.max) {
+    if (activeContentId < range.max) {
       activeContentId++;
       activeSlideIdx = 1;
       await saveDatabase();
@@ -972,7 +851,7 @@ async function handleConfirmedSlide(imgUrl, contentId, slideIdx) {
 
       setTimeout(async () => {
         await triggerNewChat();
-        toast(`⚡ Autopilot: Menunggu halaman baru siap (5 detik)...`);
+        toast(`⚡ Autopilot: Menunggu chat baru siap (5 detik)...`);
         setTimeout(() => {
           if (isAutopilot) {
             updateEngineStatus(State.IDLE, `Memulai Slide 1 Topik #${activeContentId}...`);
@@ -981,13 +860,30 @@ async function handleConfirmedSlide(imgUrl, contentId, slideIdx) {
           }
         }, 5000);
       }, 3500);
-    } else if (isAutopilot) {
+    } else {
       toggleAutopilot();
       updateEngineStatus(State.IDLE, `Semua 20 konten ${range.label} selesai!`);
       toast(`🎉 SELESAI! Seluruh konten ${range.label} berhasil digenerate & diunduh.`);
-    } else {
-      updateEngineStatus(State.IDLE, `Topik #${contentId} selesai.`);
     }
+  }
+}
+
+function runAutopilotStep() {
+  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === activeContentId)) || { topic: "konten" };
+  const total = currTopic.total_slides || 6;
+  const done = countDone(activeContentId, total);
+
+  if (done < total) {
+    for (let i = 1; i <= total; i++) {
+      if (!dbProgress[`c${activeContentId}_s${i}`]) {
+        activeSlideIdx = i;
+        break;
+      }
+    }
+    updateView();
+    sendPromptToChatGpt(true);
+  } else {
+    handleAutopilotProgression(done, total);
   }
 }
 
@@ -1002,8 +898,8 @@ async function downloadSilentImage(url, filename) {
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       const blob = await resp.blob();
 
-      if (blob.size < 30000) {
-        throw new Error("Blob terlalu kecil (" + blob.size + " bytes), bukan gambar DALL-E valid.");
+      if (blob.size < 20000) {
+        throw new Error("Blob terlalu kecil (" + blob.size + " bytes)");
       }
 
       const blobUrl = URL.createObjectURL(blob);
@@ -1091,7 +987,7 @@ async function downloadAllImages() {
   keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
 
   if (keys.length === 0) {
-    toast("Belum ada gambar. Jalankan Autopilot atau Pindai Tab!");
+    toast("Belum ada gambar. Klik '🔍 Pindai Tab' dulu!");
     return;
   }
 
@@ -1134,101 +1030,11 @@ async function downloadAllImages() {
   toast(`Selesai! ${downloaded} gambar berhasil diunduh diam-diam ✓`);
 }
 
-// 11. Pindai Tab Aktif Secara Manual
+// 11. Pindai Tab Aktif Secara Manual (Klik Tombol 🔍 Pindai Tab)
 async function scanActiveTabForCdnImages() {
-  toast("Memindai gambar DALL-E di tab...");
-  const imgs = await executeInTab(() => {
-    const list = [];
-    function isGenuineCdn(u) {
-      if (!u || typeof u !== "string") return false;
-      let clean = u.trim();
-      if (clean.startsWith("/")) clean = window.location.origin + clean;
-      if (!clean.startsWith("http")) return false;
-
-      const lower = clean.toLowerCase();
-      if (
-        lower.includes("avatar") ||
-        lower.includes("profile") ||
-        lower.includes("icon") ||
-        lower.includes("logo") ||
-        lower.includes(".svg") ||
-        lower.includes("sprites") ||
-        lower.includes("emoji") ||
-        lower.includes("user-")
-      ) {
-        return false;
-      }
-
-      const isEstuary = lower.includes("backend-api/estuary/content");
-      const isOaiCdn = lower.includes("oaiusercontent.com");
-      const isDalle = lower.includes("dalle");
-
-      return isEstuary || isOaiCdn || isDalle;
-    }
-
-    function addUrl(u) {
-      if (isGenuineCdn(u) && !list.includes(u.trim())) {
-        list.push(u.trim());
-      }
-    }
-
-    document.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
-      addUrl(a.href || a.getAttribute("href"));
-    });
-
-    const assistantMsgs = document.querySelectorAll('[data-message-author-role="assistant"]');
-    assistantMsgs.forEach(msg => {
-      msg.querySelectorAll("img").forEach(im => {
-        const isBig = (im.naturalWidth >= 400 || im.width >= 400 || !im.complete || (im.src && im.src.includes("backend-api/estuary")));
-        if (isBig) {
-          addUrl(im.currentSrc || im.src || im.getAttribute("src"));
-          const parentA = im.closest("a");
-          if (parentA) addUrl(parentA.href || parentA.getAttribute("href"));
-        }
-      });
-    });
-
-    return list;
-  });
-
-  if (!imgs || imgs.length === 0) {
-    toast("Belum ada gambar DALL-E terverifikasi di tab");
-    return;
-  }
-
-  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === activeContentId)) || { topic: "konten" };
-  const slug = getTopicSlug(activeContentId);
-  let added = 0;
-
-  imgs.forEach((url, idx) => {
-    const slideNum = idx + 1;
-    const key = `c${activeContentId}_s${slideNum}`;
-    const fileName = `${slug}_${String(slideNum).padStart(2, "0")}.png`;
-
-    const fid = extractFileId(url);
-    if (fid) knownFileIds.add(fid);
-
-    const existing = cdnDatabase[key];
-    cdnDatabase[key] = {
-      id: key,
-      content_id: activeContentId,
-      topic: currTopic.topic,
-      slug: slug,
-      slide: slideNum,
-      name: fileName,
-      cdn_url: url,
-      downloaded: existing ? !!existing.downloaded : false,
-      timestamp: new Date().toISOString()
-    };
-    dbProgress[key] = true;
-    added++;
-  });
-
-  await saveDatabase();
-  renderDownloadCount();
-  renderDownloadList();
-  updateView();
-  toast(`✓ ${added} gambar (${slug}) terverifikasi di tab!`);
+  toast("Memindai seluruh gambar di tab ChatGPT...");
+  await checkRenderStatus();
+  toast("✓ Pemindaian tab selesai!");
 }
 
 // 12. Fitur Reset
@@ -1238,10 +1044,6 @@ async function resetCurrentTopic() {
 
   for (let i = 1; i <= total; i++) {
     const key = `c${activeContentId}_s${i}`;
-    if (cdnDatabase[key] && cdnDatabase[key].cdn_url) {
-      const fid = extractFileId(cdnDatabase[key].cdn_url);
-      if (fid) knownFileIds.delete(fid);
-    }
     delete dbProgress[key];
     delete cdnDatabase[key];
   }
@@ -1262,10 +1064,6 @@ async function resetCurrentTopicImages() {
 
   for (let i = 1; i <= total; i++) {
     const key = `c${activeContentId}_s${i}`;
-    if (cdnDatabase[key] && cdnDatabase[key].cdn_url) {
-      const fid = extractFileId(cdnDatabase[key].cdn_url);
-      if (fid) knownFileIds.delete(fid);
-    }
     delete cdnDatabase[key];
   }
 
@@ -1323,7 +1121,7 @@ document.getElementById("btnResetImages").addEventListener("click", resetCurrent
 async function boot() {
   await initDatabase();
   renderUI();
-  updateEngineStatus(State.IDLE, "Siap. Klik '⚡ Autopilot' atau 'Kirim'");
+  updateEngineStatus(State.IDLE, "Siap. Memindai tab...");
   startRenderSensor();
 }
 
