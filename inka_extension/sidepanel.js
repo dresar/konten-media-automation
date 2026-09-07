@@ -1,7 +1,7 @@
-// InkaTech Studio - Native Side Panel Controller (v4.0 Super Smart Edition)
+// InkaTech Studio - Native Side Panel Controller (v4.1 Multi-Account Edition)
 // Standar Desain: ui-ux-text & precision-card-button-ui
-// Fitur: 12-Layer Smart Validation Engine, Explicit State Machine, Clean ProseMirror Paste,
-// Anti-Replay Unique File ID, Bubble Isolation, Overnight Batch Auto-Download & Zero Clutter
+// Fitur: Multi-Account Batching (20 Topik / Akun), 12-Layer Smart Validation Engine,
+// Explicit State Machine, Clean ProseMirror Paste, Bubble Isolation & Overnight Autopilot
 
 // 1. STATE MACHINE DEFINITION
 const State = {
@@ -21,6 +21,7 @@ let currentState = State.IDLE;
 let activeContentId = 1;
 let activeSlideIdx = 1;
 let isAutopilot = false;
+let accountMode = "acc1"; // "acc1" (01-20), "acc2" (21-40), "all" (01-40)
 let dbProgress = {};
 let cdnDatabase = {};
 let knownFileIds = new Set(); // Kumpulan ID file gambar yang sudah pernah tercatat
@@ -35,6 +36,23 @@ let activeSession = {
   hasSeenRenderActive: false,
   validationAttempts: 0
 };
+
+// Pemetaan Rentang Topik Per Akun (Multi-Akun Isolation)
+function getAccountTopicRange() {
+  if (accountMode === "acc1") {
+    return { min: 1, max: 20, label: "Akun 1 (Topik 01 - 20)" };
+  } else if (accountMode === "acc2") {
+    return { min: 21, max: 40, label: "Akun 2 (Topik 21 - 40)" };
+  } else {
+    return { min: 1, max: 40, label: "Semua Akun (Topik 01 - 40)" };
+  }
+}
+
+function getAvailableTopics() {
+  if (!window.INKA_TOPICS) return [];
+  const range = getAccountTopicRange();
+  return window.INKA_TOPICS.filter(t => t.id >= range.min && t.id <= range.max);
+}
 
 // Pemetaan Nama Bersih Singkat (/ui-ux-text) Topik 01 s/d 40
 const TOPIC_SLUGS = {
@@ -176,11 +194,20 @@ function toast(msg) {
 // 3. Database Initialization & Sync
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode"]);
     if (data.inka_db) dbProgress = data.inka_db;
-    if (data.inka_active_c) activeContentId = data.inka_active_c;
-    if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
+    if (data.inka_account_mode) accountMode = data.inka_account_mode;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
+
+    // Pastikan activeContentId masuk dalam rentang akun aktif
+    const range = getAccountTopicRange();
+    if (!data.inka_active_c || data.inka_active_c < range.min || data.inka_active_c > range.max) {
+      activeContentId = range.min;
+    } else {
+      activeContentId = data.inka_active_c;
+    }
+
+    if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
 
     // Kumpulkan seluruh File ID yang sudah pernah tercatat (Anti-Replay Layer 10)
     knownFileIds.clear();
@@ -211,7 +238,8 @@ async function saveDatabase() {
       inka_db: dbProgress,
       inka_active_c: activeContentId,
       inka_active_s: activeSlideIdx,
-      inka_cdn_db: cdnDatabase
+      inka_cdn_db: cdnDatabase,
+      inka_account_mode: accountMode
     });
   } catch (e) {}
 }
@@ -347,11 +375,21 @@ function renderUI() {
 }
 
 function renderTopicSelect() {
+  const selAcc = document.getElementById("selAccountMode");
+  const tagAcc = document.getElementById("txtAccountTag");
+  const range = getAccountTopicRange();
+
+  if (selAcc) selAcc.value = accountMode;
+  if (tagAcc) {
+    tagAcc.innerText = range.min === 1 && range.max === 20 ? "01 - 20" : range.min === 21 ? "21 - 40" : "01 - 40";
+  }
+
   const sel = document.getElementById("selTopic");
   if (!sel || !window.INKA_TOPICS) return;
   sel.innerHTML = "";
 
-  window.INKA_TOPICS.forEach((t) => {
+  const available = getAvailableTopics();
+  available.forEach((t) => {
     const opt = document.createElement("option");
     opt.value = t.id;
     const total = t.total_slides || 6;
@@ -444,7 +482,6 @@ async function sendPromptToChatGpt(autoSend = true) {
   // Eksekusi in-tab injection
   const res = await executeInTab((text, send) => {
     try {
-      // 1. Bersihkan modal rate-limit
       document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
     } catch (e) {}
 
@@ -523,7 +560,6 @@ async function sendPromptToChatGpt(autoSend = true) {
   }
 
   if (autoSend) {
-    // Masuk ke tahap menunggu tanda generasi
     activeSession = {
       contentId: activeContentId,
       slideIdx: activeSlideIdx,
@@ -592,7 +628,6 @@ function startRenderSensor() {
 }
 
 async function checkRenderStatus() {
-  // VALIDASI 1: Sensor HANYA bekerja jika state aktif menunggu atau merender!
   if (
     currentState !== State.AWAITING_GENERATION &&
     currentState !== State.GENERATING &&
@@ -604,16 +639,12 @@ async function checkRenderStatus() {
   const tab = await getChatGptTab();
   if (!tab) return;
 
-  // Lakukan inspeksi DOM mendalam pada tab ChatGPT
   const status = await executeInTab((knownIds) => {
-    // 1. Cek tombol Stop Generating (VALIDASI 4 & 5)
     const stopBtn = document.querySelector('button[data-testid="stop-button"], button[aria-label*="Stop generating"], button[aria-label*="Stop"]');
     const isStopBtnPresent = !!stopBtn;
 
-    // 2. Cek apakah ada shimmer / loading indicator DALL-E
     const isShimmerPresent = !!document.querySelector('.animate-pulse, [data-testid*="generating"], svg.animate-spin');
 
-    // 3. Ambil seluruh bubble asisten
     const assistantTurns = document.querySelectorAll('[data-message-author-role="assistant"]');
     if (assistantTurns.length === 0) {
       return {
@@ -628,7 +659,7 @@ async function checkRenderStatus() {
     // BUBBLE ASISTEN TERAKHIR (ISOLASI MURNI - VALIDASI 6)
     const latestTurn = assistantTurns[assistantTurns.length - 1];
 
-    // 4. Deteksi Error / Penolakan ChatGPT (VALIDASI 7)
+    // Deteksi Error / Penolakan ChatGPT (VALIDASI 7)
     const turnText = latestTurn.innerText || "";
     const lowerText = turnText.toLowerCase();
     const errorKeywords = [
@@ -648,7 +679,7 @@ async function checkRenderStatus() {
       }
     }
 
-    // 5. Cari gambar di bubble asisten terakhir (VALIDASI 8, 9, 10, 11)
+    // Cari gambar di bubble asisten terakhir (VALIDASI 8, 9, 10, 11)
     let candidateImg = null;
     const imgs = latestTurn.querySelectorAll("img");
     for (const im of imgs) {
@@ -692,7 +723,6 @@ async function checkRenderStatus() {
       const m2 = testUrl.match(/(file-[a-zA-Z0-9_-]+)/i);
       if (m2) fileId = m2[1];
 
-      // Periksa apakah fileId sudah pernah dipakai sebelumnya
       const isKnown = fileId && knownIds.includes(fileId);
 
       if (isBig && !isKnown) {
@@ -734,7 +764,6 @@ async function checkRenderStatus() {
   // TAHAP 1: Menunggu Generasi Dimulai (AWAITING_GENERATION)
   if (currentState === State.AWAITING_GENERATION) {
     if (status.isStopBtnPresent || status.isShimmerPresent) {
-      // Terkonfirmasi render DALL-E dimulai! (VALIDASI 4 LOLOS)
       activeSession.hasSeenRenderActive = true;
       activeSession.renderStartTime = Date.now();
       updateEngineStatus(State.GENERATING, `DALL-E aktif merender Slide ${activeSession.slideIdx}...`);
@@ -742,7 +771,6 @@ async function checkRenderStatus() {
       return;
     }
 
-    // Timeout safety: Jika 35 detik tidak ada respon
     const elapsedSubmit = Date.now() - activeSession.submitTime;
     if (elapsedSubmit > 35000) {
       updateEngineStatus(State.IDLE, "Timeout menunggu respon");
@@ -761,7 +789,6 @@ async function checkRenderStatus() {
       return;
     }
 
-    // Tombol stop sudah hilang! Pastikan waktu render minimal 6 detik (VALIDASI 5 LOLOS)
     const renderDuration = Date.now() - activeSession.renderStartTime;
     if (renderDuration >= 6000) {
       activeSession.validationAttempts = 0;
@@ -785,13 +812,11 @@ async function checkRenderStatus() {
     }
 
     const img = status.candidateImg;
-    // Layer 8: Gambar harus complete
     if (!img.complete && img.width === 0) {
       toast(`[Layer 8/12] Menunggu gambar selesai di-load...`);
       return;
     }
 
-    // Layer 10: Anti-replay
     if (img.fileId && knownFileIds.has(img.fileId)) {
       toast(`[Layer 10/12] Mengabaikan gambar lama (${img.fileId})...`);
       return;
@@ -858,7 +883,9 @@ async function handleConfirmedSlide(imgUrl, contentId, slideIdx) {
     const dlCount = await downloadTopicImages(contentId);
     toast(`✓ ${dlCount} gambar Topik #${contentId} tersimpan ke folder Unduhan.`);
 
-    if (isAutopilot && activeContentId < window.INKA_TOPICS.length) {
+    const range = getAccountTopicRange();
+    // Beralih ke topik berikutnya hanya jika belum mencapai batas maksimum akun aktif!
+    if (isAutopilot && activeContentId < range.max) {
       activeContentId++;
       activeSlideIdx = 1;
       await saveDatabase();
@@ -881,8 +908,8 @@ async function handleConfirmedSlide(imgUrl, contentId, slideIdx) {
       }, 3500);
     } else if (isAutopilot) {
       toggleAutopilot();
-      updateEngineStatus(State.IDLE, "Semua 40 konten selesai!");
-      toast("🎉 SELESAI! Seluruh 40 Konten Berhasil Digenerate & Diunduh.");
+      updateEngineStatus(State.IDLE, `Semua 20 konten ${range.label} selesai!`);
+      toast(`🎉 SELESAI! Seluruh konten ${range.label} berhasil digenerate & diunduh.`);
     } else {
       updateEngineStatus(State.IDLE, `Topik #${contentId} selesai.`);
     }
@@ -894,14 +921,12 @@ async function downloadSilentImage(url, filename) {
   if (!url || typeof url !== "string" || !url.startsWith("http")) return false;
   const pureFilename = filename.split("/").pop();
 
-  // Metode 1: In-tab fetch dengan cookie aktif ChatGPT + click
   const tabRes = await executeInTab(async (targetUrl, fname) => {
     try {
       const resp = await fetch(targetUrl, { credentials: "include" });
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       const blob = await resp.blob();
 
-      // Filter ketat ukuran: Gambar DALL-E asli pasti > 30KB
       if (blob.size < 30000) {
         throw new Error("Blob terlalu kecil (" + blob.size + " bytes), bukan gambar DALL-E valid.");
       }
@@ -925,7 +950,6 @@ async function downloadSilentImage(url, filename) {
     return true;
   }
 
-  // Metode 2: Fallback chrome.downloads API
   if (chrome.downloads && chrome.downloads.download) {
     return new Promise((resolve) => {
       chrome.downloads.download({
@@ -956,7 +980,6 @@ async function downloadTopicImages(contentId) {
     topicKeys.push(`c${contentId}_s${s}`);
   }
 
-  // Filter ketat: Hanya unduh yang valid dan belum terunduh
   const pendingKeys = topicKeys.filter(k => {
     const rec = cdnDatabase[k];
     return rec && rec.cdn_url && !rec.downloaded;
@@ -999,7 +1022,7 @@ async function downloadAllImages() {
 
   let targets = keys.filter(k => !cdnDatabase[k].downloaded);
   if (targets.length === 0) {
-    targets = keys; // Unduh ulang semua jika sudah terunduh
+    targets = keys;
   }
 
   const btn = document.getElementById("btnDownloadAll");
@@ -1179,6 +1202,20 @@ async function resetCurrentTopicImages() {
 }
 
 // 13. Event Listeners & Boot
+const selAcc = document.getElementById("selAccountMode");
+if (selAcc) {
+  selAcc.addEventListener("change", async (e) => {
+    accountMode = e.target.value;
+    const range = getAccountTopicRange();
+    activeContentId = range.min;
+    activeSlideIdx = 1;
+    await saveDatabase();
+    renderTopicSelect();
+    updateView();
+    toast(`Mode diubah ke: ${range.label}`);
+  });
+}
+
 document.getElementById("selTopic").addEventListener("change", (e) => {
   activeContentId = parseInt(e.target.value);
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
