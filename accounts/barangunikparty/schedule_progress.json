@@ -1,0 +1,77 @@
+{
+  "account": "barangunikparty",
+  "date": "2026-09-08",
+  "videos": {
+    "1": {
+      "status": "scheduled",
+      "time": "00:00",
+      "date": "2026-09-08",
+      "timestamp": 1788770280,
+      "note": "Pre-scheduled successfully"
+    },
+    "3": {
+      "status": "scheduled",
+      "time": "00:20",
+      "date": "2026-09-08",
+      "timestamp": 1788770675,
+      "note": "Scheduled via debug script - confirmed on dashboard"
+    },
+    "2": {
+      "status": "scheduled",
+      "time": "00:10",
+      "date": "2026-09-08",
+      "timestamp": 1788770798,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_002.png"
+    },
+    "4": {
+      "status": "skipped",
+      "time": "00:30",
+      "date": "2026-09-08",
+      "timestamp": 1788772713,
+      "error": "TikTok restricted modal - no Posting sekarang button. Handle manually.",
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_004.png",
+      "note": "debug_004_modal.py berhasil. Re-run manual nanti."
+    },
+    "5": {
+      "status": "scheduled",
+      "time": "00:40",
+      "date": "2026-09-08",
+      "timestamp": 1788773169,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_005.png"
+    },
+    "6": {
+      "status": "scheduled",
+      "time": "00:50",
+      "date": "2026-09-08",
+      "timestamp": 1788773217,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_006.png"
+    },
+    "7": {
+      "status": "scheduled",
+      "time": "01:00",
+      "date": "2026-09-08",
+      "timestamp": 1788773308,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_007.png"
+    },
+    "8": {
+      "status": "scheduled",
+      "time": "01:10",
+      "date": "2026-09-08",
+      "timestamp": 1788773403,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_008.png"
+    },
+    "9": {
+      "status": "scheduled",
+      "time": "01:20",
+      "date": "2026-09-08",
+      "timestamp": 1788773481,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\schedule_proof\\schedule_009.png"
+    }
+  }
+}

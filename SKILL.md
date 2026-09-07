@@ -103,30 +103,134 @@ Buka chat baru di ChatGPT, lalu masukkan kelima prompt satu demi satu:
 
 ---
 
-## 4. Cara Menjalankan CLI
+## 4. Alur Kerja Otomasi Video TikTok Studio (`upload_tiktok_video.py`)
+
+TikTok Studio (`https://www.tiktok.com/tiktokstudio/upload?from=webapp&tab=video`) menyediakan dua mode unggah video: **Posting Langsung (Instant Post)** dan **Penjadwalan (Scheduled Post)**.
+
+### A. Pola Selector DOM & Navigasi Kunci
+
+1. **Upload File Video**:
+   - Selector: `input[type='file']`
+   - Method: `file_input.set_input_files(video_path)`
+   - Tunggu editor muncul: `div.public-DraftEditor-content, div[contenteditable='true']`.
+
+2. **Pengisian Caption & Hashtags**:
+   - Focus editor: click `div.public-DraftEditor-content`.
+   - Bersihkan teks default: `Control+A` lalu `Backspace`.
+   - Ketik caption: `editor.type(caption_text, delay=8)`.
+   - Tekan `Space` & `Escape` agar suggestions hashtag/mention tertutup rapi.
+
+3. **Fallback Error Teks Terlalu Panjang (Draft Fallback)**:
+   - Jika karakter caption melebihi limit (terdeteksi teks *"terlalu panjang"*, *"karakter"*, atau error batas teks):
+   - Klik tombol **`Simpan draf`**:
+     ```javascript
+     const btns = Array.from(document.querySelectorAll("button"));
+     const draftBtn = btns.find(b => (b.innerText || '').toLowerCase().includes('simpan draf'));
+     if (draftBtn) draftBtn.click();
+     ```
+
+4. **Mode Posting Langsung (Instant Post)**:
+   - Pilih radio "Posting sekarang":
+     `page.evaluate("() => document.querySelector(\"input[value='direct']\").click()")`
+   - Pastikan Section 4 diceklis (lihat poin 6).
+   - Klik tombol **`Posting`**:
+     ```javascript
+     const postBtn = Array.from(document.querySelectorAll("button")).find(b => 
+         (b.innerText || '').trim().toLowerCase() === 'posting' && b.className.includes('primary')
+     );
+     if (postBtn) postBtn.click();
+     ```
+   - Handle modal konfirmasi: Klik `Posting sekarang`.
+
+5. **Mode Penjadwalan (Scheduled Post)**:
+   - **Radio Jadwalkan**:
+     `page.evaluate("() => document.querySelector(\"input[value='schedule']\").click()")`
+     *(Catatan: Jangan klik lewat Playwright locator biasa karena intercepted oleh .Radio__innerCircle; gunakan page.evaluate)*.
+   - **Date Picker (Pilih Tanggal)**:
+     - Cari input dengan nilai tanggal: `inputs.find(i => i.value && i.value.includes('-'))` lalu klik untuk buka kalender.
+     - Pilih tanggal target pada span: `span.day.valid, span.day` yang teksnya sesuai (misal `'8'`).
+   - **Time Picker (Pilih Jam & Menit)**:
+     - Cari input waktu: `inputs.find(i => i.value && i.value.includes(':'))` lalu klik untuk buka picker.
+     - Scroll & pilih Jam (2 digit, misal `'00'` s/d `'23'`): `span.tiktok-timepicker-left`.
+     - Scroll & pilih Menit (kelipatan 5, misal `'00'`, `'10'`, `'20'`, dll): `span.tiktok-timepicker-right`.
+     - Tutup dropdown dengan `document.body.click()`.
+   - **Klik Tombol Jadwal**:
+     - Cari tombol primary dengan teks `'jadwal'`.
+   - **Konfirmasi Modal Peringatan Hak Cipta**:
+     - TikTok sering menampilkan modal *"Lanjut posting? Kami masih memeriksa video Anda..."*.
+     - WAJIB klik tombol konfirmasi: `button:has-text('Posting sekarang')` atau teks mengandung `'posting sekarang'`.
+
+6. **Pengaturan Hak Akses & Privasi (Section 4 - Wajib Centang)**:
+   - Buka menu dropdown: Klik elemen berisi teks `'Tampilkan lebih banyak'`.
+   - Verifikasi checkbox `Komentar` dan `Penggunaan ulang konten` (duet/stitch):
+     ```javascript
+     const labels = Array.from(document.querySelectorAll("label.Checkbox__root"));
+     labels.forEach(l => {
+         const isChecked = l.getAttribute('data-checked') === 'true' || l.getAttribute('aria-checked') === 'true';
+         if (!isChecked) {
+             l.click();
+         }
+     });
+     ```
+
+7. **Verifikasi Sukses**:
+   - Pantau redirect URL ke `https://www.tiktok.com/tiktokstudio/content` atau deteksi teks *"dijadwalkan"*, *"berhasil"*, *"kelola video"*.
+
+---
+
+## 5. Cara Menjalankan CLI
 
 Buka PowerShell di folder `C:\Users\NCN0C\Videos\konten`:
 
-1. **Jalankan Full Pipeline (Otomatis dari ChatGPT hingga TikTok Live)**:
+1. **Upload Video Terjadwal Tunggal**:
+   ```powershell
+   py -3 upload_tiktok_video.py --video "path/ke/video.mp4" --caption "Caption video" --schedule "2026-09-08 00:00"
+   ```
+
+2. **Upload Video Langsung (Instant Post)**:
+   ```powershell
+   py -3 upload_tiktok_video.py --video "path/ke/video.mp4" --caption "Caption video"
+   ```
+
+3. **Jalankan Full Pipeline Foto Carousel (Otomatis ChatGPT -> TikTok Live)**:
    ```powershell
    py -3 run.py --topic "5 Teknologi Masa Depan yang Mengubah Dunia"
    ```
 
-2. **Jalankan Tanpa Upload (Hanya Buat Gambar & Postprocess)**:
+4. **Batch Scheduling Video dengan Random Detik**:
    ```powershell
-   py -3 run.py --topic "Tips Keamanan Password Akun" --no-upload
+   py -3 batch_schedule_tema01.py --start 2 --end 50 --date "2026-09-08" --interval 10
    ```
 
-3. **Upload Saja Gambar yang Sudah Jadi**:
-   ```powershell
-   py -3 run.py --upload-only "outputs/konten/tips_keamanan_1788760000/processed" --title "Tips Keamanan Akun Penting!"
-   ```
-
-4. **Sinkronisasi Otomatis ke Cloud via Rclone**:
+5. **Sinkronisasi Otomatis ke Cloud via Rclone**:
    ```powershell
    py -3 run.py --sync-rclone
    ```
-   Atau gabungkan langsung saat generate:
-   ```powershell
-   py -3 run.py --topic "Robot AI Masa Depan" --sync-rclone
-   ```
+
+---
+
+## 6. Aturan Mutlak Workspace Hygiene & Larangan File Sampah (Zero Leftover Policy)
+
+**PERINGATAN KERAS UNTUK SELURUH AGEN AI**:
+1. **DILARANG KERAS MENUMPUK SCRIPT TEST / COBA-COBA / DEBUG DI WORKSPACE**:
+   - Agen **TIDAK BOLEH** membuat file script sementara (`test_*.py`, `check_*.py`, `debug_*.py`, `inspect_*.py`, `sniff_*.py`, `download_*.py`, `wait_*.py`, `build_*.py`, `run_*.py` selain `run.py`, dll.) lalu meninggalkannya menumpuk di root project.
+2. **PROTOKOL SETELAH BUAT WAJIB LANGSUNG HAPUS**:
+   - Jika membutuhkan script pengujian satu kali jalan (scratch / one-off inspection / test runner), script tersebut **WAJIB LANGSUNG DIHAPUS DETIK ITU JUGA** setelah selesai dieksekusi. Dilarang menumpuk kode tidak resmi!
+3. **ZERO LOOSE ARTIFACTS DI ROOT**:
+   - Dilarang menyimpan file tangkapan layar (`.png`, `.jpg`), file teks (`.txt`), atau output video di root folder `C:\Users\NCN0C\Videos\konten`.
+   - Root folder hanya boleh berisi file arsitektur resmi yang bersih dan teratur.
+4. **FILE RESMI YANG DIIZINKAN DI ROOT**:
+   - `account_login_manager.py`
+   - `captcha_solver.py`
+   - `config.json`
+   - `local_ai_browser.py`
+   - `local_postprocessor.py`
+   - `media_manager.py`
+   - `pipeline_inkatech.py`
+   - `README.md`
+   - `run.py`
+   - `SKILL.md`
+   - `upload_tiktok_photo.py`
+   - `upload_tiktok_video.py`
+   - Folder: `accounts/`, `assets/`
+

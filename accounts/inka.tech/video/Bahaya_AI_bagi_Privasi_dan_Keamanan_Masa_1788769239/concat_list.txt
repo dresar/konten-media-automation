@@ -1,4 +1,0 @@
-file 'C:/Users/NCN0C/Videos/konten/accounts/inka.tech/video/Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239/scene_01_clip.mp4'
-file 'C:/Users/NCN0C/Videos/konten/accounts/inka.tech/video/Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239/scene_02_clip.mp4'
-file 'C:/Users/NCN0C/Videos/konten/accounts/inka.tech/video/Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239/scene_03_clip.mp4'
-file 'C:/Users/NCN0C/Videos/konten/accounts/inka.tech/video/Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239/scene_04_clip.mp4'
