@@ -1,0 +1,57 @@
+{
+  "active_account": "inka.tech",
+  "accounts": {
+    "inka.tech": {
+      "display_name": "Inka.tech",
+      "website": "https://inka.tech/",
+      "tiktok": "@inka.tech",
+      "instagram": "@arif_ex21",
+      "browser_profiles": {
+        "chatgpt_account": "dian",
+        "tiktok_account": "eka"
+      },
+      "colors": {
+        "background": "#FFFFFF",
+        "primary": "#10B981",
+        "text": "#1F2937"
+      },
+      "logo_path": "assets/logo_inkatech.png",
+      "logo_position": "top-right",
+      "gdrive_folder": "KONTEN/inka.tech"
+    },
+    "arif_ex21": {
+      "display_name": "Arif Personal",
+      "tiktok": "@arif_ex21",
+      "instagram": "@arif_ex21",
+      "browser_profiles": {
+        "chatgpt_account": "dian",
+        "tiktok_account": "arif"
+      },
+      "gdrive_folder": "arif_ex21"
+    },
+    "catloversss": {
+      "display_name": "Cat Lovers",
+      "tiktok": "@catloversss",
+      "browser_profiles": {
+        "chatgpt_account": "dian",
+        "tiktok_account": "catloversss"
+      },
+      "gdrive_folder": "catloversss"
+    }
+  },
+  "postprocessing": {
+    "aspect_ratio": "3:4",
+    "width": 1080,
+    "height": 1440,
+    "strip_metadata": true
+  },
+  "tiktok_upload": {
+    "tab": "photo",
+    "select_music": true,
+    "privacy": "public"
+  },
+  "rclone": {
+    "remote_name": "gdrive",
+    "base_folder": "KONTEN"
+  }
+}
