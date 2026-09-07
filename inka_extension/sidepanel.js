@@ -64,10 +64,10 @@ function getTopicSlug(contentId) {
 
 function getSlideFilename(contentId, slideIdx) {
   const slug = getTopicSlug(contentId);
-  return `${slug}_slide_${String(slideIdx).padStart(2, "0")}.png`;
+  return `${slug}_${String(slideIdx).padStart(2, "0")}.png`;
 }
 
-// 1. Inisialisasi Database
+// 1. Inisialisasi Database (Pra-isi 6 Gambar Terverifikasi Konten 1)
 async function initDatabase() {
   try {
     const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db"]);
@@ -75,6 +75,34 @@ async function initDatabase() {
     if (data.inka_active_c) activeContentId = data.inka_active_c;
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
+
+    // Pra-isi database untuk Topik 1 (Juice Jacking) dengan 6 link CDN asli
+    const defaultTopic1Links = [
+      "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097a482118ef9e0c19e3d752d&ts=496885&p=fs&cid=1&sig=319b424a2db5cd2a284562063c7cd0a3d2f87bc2bb731c08ee203e674d8e6d6d&v=0",
+      "https://chatgpt.com/backend-api/estuary/content?id=file_000000002c6c821185d10ac3fca30ef6&ts=496885&p=fs&cid=1&sig=74197e404ee72aab7ad3879ec94c58ce6fc891a6143e3d0bbf6900c3cb6acd93&v=0",
+      "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097788209875887d3448c1760&ts=496885&p=fs&cid=1&sig=6981f4e66de03085627872d14549c9a7008c9b68c95cd3919554ecdc5250bde6&v=0",
+      "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb9c8208a142555a25fa81a7&ts=496885&p=fs&cid=1&sig=f91729ef0f10c7c3afda777e52feb764e490091e8e2a4288e2bb721a63fd922a&v=0",
+      "https://chatgpt.com/backend-api/estuary/content?id=file_000000008cec8211b8211938d89c01be&ts=496885&p=fs&cid=1&sig=c0daa7940aff86d8b2df80b107b15aca7679eaa64ed280c6bf44d1a658ac3c31&v=0",
+      "https://chatgpt.com/backend-api/estuary/content?id=file_00000000080c8207a6231b7605b40ba0&ts=496885&p=fs&cid=1&sig=1d614b402adf6dc54617527a8b38e0b7f8d7e40250fedf0748386abefb3c57ef&v=0"
+    ];
+
+    defaultTopic1Links.forEach((url, idx) => {
+      const s = idx + 1;
+      const key = `c1_s${s}`;
+      if (!cdnDatabase[key] || !cdnDatabase[key].cdn_url) {
+        cdnDatabase[key] = {
+          id: key,
+          content_id: 1,
+          topic: "Juice Jacking & Cas HP Sembarangan",
+          slug: "01-juice-jacking",
+          slide: s,
+          name: `01-juice-jacking_${String(s).padStart(2, "0")}.png`,
+          cdn_url: url,
+          timestamp: new Date().toISOString()
+        };
+        dbProgress[key] = true;
+      }
+    });
 
     // Auto resume ke slide yang belum selesai
     const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
@@ -101,54 +129,66 @@ async function saveDatabase() {
   } catch (e) {}
 }
 
-function renderCdnCount() {
-  const el = document.getElementById("txtCdnCount");
+function renderDownloadCount() {
+  const el = document.getElementById("txtImageCount");
   const count = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`)).length;
-  if (el) el.innerText = `${count} Link`;
+  if (el) el.innerText = `${count} Gambar`;
 }
 
-function renderCdnList() {
-  const container = document.getElementById("listCdnItems");
+function renderDownloadList() {
+  const container = document.getElementById("listDownloadItems");
   if (!container) return;
 
   const keys = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`));
   keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
 
   if (keys.length === 0) {
-    container.innerHTML = '<div class="inka-empty-hint">Belum ada link. Klik \"🔍 Pindai CDN Tab\".</div>';
+    container.innerHTML = '<div class="inka-empty-hint">Klik \'🔍 Pindai Tab\' untuk mendeteksi gambar.</div>';
     return;
   }
 
   container.innerHTML = "";
   keys.forEach(k => {
     const rec = cdnDatabase[k];
+    const fileName = rec.name || getSlideFilename(rec.content_id, rec.slide);
+
     const item = document.createElement("div");
     item.className = "inka-cdn-item";
 
     const info = document.createElement("div");
     info.className = "inka-cdn-info";
 
-    const title = document.createElement("div");
+    const badge = document.createElement("span");
+    badge.className = "inka-cdn-badge-verified";
+    badge.innerText = `S${rec.slide}`;
+
+    const title = document.createElement("span");
     title.className = "inka-cdn-title";
-    title.innerText = `Slide ${rec.slide} • ${rec.name || getSlideFilename(rec.content_id, rec.slide)}`;
+    title.innerText = fileName;
+    title.title = fileName;
 
-    const url = document.createElement("div");
-    url.className = "inka-cdn-url";
-    url.title = rec.cdn_url;
-    url.innerText = rec.cdn_url;
-
+    info.appendChild(badge);
     info.appendChild(title);
-    info.appendChild(url);
 
     const btn = document.createElement("button");
-    btn.className = "inka-btn-copy-mini";
-    btn.innerText = "Salin";
-    btn.title = "Salin URL CDN ini";
-    btn.addEventListener("click", () => {
-      navigator.clipboard.writeText(rec.cdn_url);
-      btn.innerText = "✓";
-      toast(`Link ${rec.name} disalin!`);
-      setTimeout(() => { btn.innerText = "Salin"; }, 1500);
+    btn.className = "inka-btn-dl-mini";
+    btn.innerHTML = "📥 Unduh";
+    btn.title = `Unduh diam-diam ${fileName}`;
+    btn.addEventListener("click", async () => {
+      btn.innerText = "⏳...";
+      btn.disabled = true;
+      const ok = await downloadSilentImage(rec.cdn_url, fileName);
+      if (ok) {
+        btn.innerText = "✓";
+        toast(`Tersimpan: ${fileName}`);
+      } else {
+        btn.innerText = "Gagal";
+        toast(`Gagal mengunduh ${fileName}`);
+      }
+      setTimeout(() => {
+        btn.innerHTML = "📥 Unduh";
+        btn.disabled = false;
+      }, 1600);
     });
 
     item.appendChild(info);
@@ -194,8 +234,8 @@ async function executeInTab(func, args = []) {
 // 3. Render View UI
 function renderUI() {
   renderTopicSelect();
-  renderCdnCount();
-  renderCdnList();
+  renderDownloadCount();
+  renderDownloadList();
   updateView();
 }
 
@@ -264,8 +304,8 @@ function updateView() {
   document.getElementById("boxPrompt").innerText = megaPrompt;
 
   document.getElementById("btnSend").innerText = `Kirim (Slide ${activeSlideIdx})`;
-  renderCdnCount();
-  renderCdnList();
+  renderDownloadCount();
+  renderDownloadList();
 }
 
 function getCurrentPrompt() {
@@ -482,62 +522,65 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
   }
 }
 
-// 7. Pindai Tab Aktif: Ekstrak backend-api/estuary/content & Beri Nama File
+// 7. Pindai Tab Aktif: Verifikasi Wajib Link CDN DALL-E Asli
 async function scanActiveTabForCdnImages() {
-  toast("Memindai backend CDN di tab...");
+  toast("Memindai & memverifikasi gambar DALL-E...");
   const imgs = await executeInTab(() => {
     const list = [];
-    function checkUrl(u) {
-      if (!u || typeof u !== "string") return;
+    function isGenuineCdn(u) {
+      if (!u || typeof u !== "string") return false;
       let clean = u.trim();
       if (clean.startsWith("/")) clean = window.location.origin + clean;
-      if (!clean.startsWith("http")) return;
+      if (!clean.startsWith("http")) return false;
 
-      const isEstuary = clean.includes("backend-api/estuary/content");
-      const isOai = clean.includes("oaiusercontent.com") && !clean.includes("avatar");
-      const isDalle = clean.includes("dalle") && !clean.includes("avatar");
+      const lower = clean.toLowerCase();
+      // Filter ketat: buang avatar, ikon UI, profil, dan SVG
+      if (lower.includes("avatar") || lower.includes("profile") || lower.includes("icon") || lower.includes("logo") || lower.includes(".svg")) {
+        return false;
+      }
 
-      if ((isEstuary || isOai || isDalle) && !list.includes(clean)) {
-        list.push(clean);
+      // Wajib format asli CDN backend ChatGPT DALL-E
+      const isEstuary = lower.includes("backend-api/estuary/content");
+      const isOaiCdn = lower.includes("oaiusercontent.com") && !lower.includes("user-");
+      const isDalle = lower.includes("dalle");
+
+      return isEstuary || isOaiCdn || isDalle;
+    }
+
+    function addUrl(u) {
+      if (isGenuineCdn(u) && !list.includes(u.trim())) {
+        list.push(u.trim());
       }
     }
 
-    // 1. Anchor links
+    // 1. Tag anchor pembungkus gambar (biasanya link download/open asli)
     document.querySelectorAll('a[href*="backend-api"], a[href*="estuary"], a[href*="oaiusercontent"]').forEach(a => {
-      checkUrl(a.href || a.getAttribute("href"));
+      addUrl(a.href || a.getAttribute("href"));
     });
 
-    // 2. Images di assistant messages (urut dari atas ke bawah)
+    // 2. Elemen gambar dalam pesan ChatGPT (hanya ambil resolusi besar >= 300px)
     const assistantMsgs = document.querySelectorAll('[data-message-author-role="assistant"]');
     assistantMsgs.forEach(msg => {
       msg.querySelectorAll("img").forEach(im => {
-        checkUrl(im.currentSrc || im.src || im.getAttribute("src"));
-        const p = im.closest('a');
-        if (p) checkUrl(p.href || p.getAttribute("href"));
+        const isBig = (im.naturalWidth >= 300 || im.width >= 300 || !im.complete);
+        if (isBig) {
+          addUrl(im.currentSrc || im.src || im.getAttribute("src"));
+          const parentA = im.closest("a");
+          if (parentA) addUrl(parentA.href || parentA.getAttribute("href"));
+        }
       });
     });
 
-    // 3. Fallback: semua gambar di dokumen
-    document.querySelectorAll("img").forEach(im => {
-      const src = im.currentSrc || im.src || im.getAttribute("src") || "";
-      const isLarge = (im.naturalWidth >= 200 || im.width >= 200 || !im.complete);
-      if (isLarge) {
-        checkUrl(src);
-        const p = im.closest('a');
-        if (p) checkUrl(p.href || p.getAttribute("href"));
-      }
-    });
-
-    // 4. Performance Timing Resource API
+    // 3. Resource Timing API untuk menangkap estuary stream langsung
     try {
-      performance.getEntriesByType("resource").forEach(r => checkUrl(r.name));
+      performance.getEntriesByType("resource").forEach(r => addUrl(r.name));
     } catch (e) {}
 
     return list;
   });
 
   if (!imgs || imgs.length === 0) {
-    toast("Tidak ada backend CDN ditemukan di tab");
+    toast("Belum ada gambar DALL-E terverifikasi di tab");
     return;
   }
 
@@ -548,7 +591,7 @@ async function scanActiveTabForCdnImages() {
   imgs.forEach((url, idx) => {
     const slideNum = idx + 1;
     const key = `c${activeContentId}_s${slideNum}`;
-    const fileName = `${slug}_slide_${String(slideNum).padStart(2, "0")}.png`;
+    const fileName = `${slug}_${String(slideNum).padStart(2, "0")}.png`;
 
     cdnDatabase[key] = {
       id: key,
@@ -565,144 +608,100 @@ async function scanActiveTabForCdnImages() {
   });
 
   await saveDatabase();
-  renderCdnCount();
-  renderCdnList();
+  renderDownloadCount();
+  renderDownloadList();
   updateView();
-  toast(`✓ ${added} file CDN (${slug}) dipindai & dinamai!`);
+  toast(`✓ ${added} gambar (${slug}) terverifikasi & siap unduh!`);
 }
 
-// 8. Salin Semua Link CDN Bersih & Rapi
-function copyAllCdnLinks() {
-  const keys = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`));
-  keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
+// 8. Eksekusi Unduh Diam-diam (Silent Download Langsung Tanpa Dialog)
+async function downloadSilentImage(url, filename) {
+  const pureFilename = filename.split("/").pop();
 
-  if (keys.length === 0) {
-    toast("Belum ada link CDN untuk disalin.");
-    return;
-  }
-
-  const lines = keys.map(k => {
-    const rec = cdnDatabase[k];
-    return `${rec.name}: ${rec.cdn_url}`;
-  });
-
-  navigator.clipboard.writeText(lines.join("\n"));
-  toast(`✓ ${lines.length} link CDN berhasil disalin!`);
-}
-
-// 9. Ekspor JSON Database CDN
-function exportCdnDatabase() {
-  const keys = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`));
-  keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
-
-  if (keys.length === 0) {
-    toast("Database CDN kosong. Pindai tab dulu!");
-    return;
-  }
-
-  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === activeContentId)) || {};
-  const slug = getTopicSlug(activeContentId);
-
-  const exportData = {
-    exported_at: new Date().toISOString(),
-    topic_id: activeContentId,
-    slug: slug,
-    topic: currTopic.topic,
-    total_links: keys.length,
-    slides: keys.map(k => {
-      const rec = cdnDatabase[k];
-      return {
-        slide: rec.slide,
-        name: rec.name,
-        cdn_url: rec.cdn_url
-      };
-    })
-  };
-
-  const jsonStr = JSON.stringify(exportData, null, 2);
-  const blob = new Blob([jsonStr], { type: "application/json" });
-  const blobUrl = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = blobUrl;
-  a.download = `cdn_${slug}_${Date.now()}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
-  toast(`Ekspor JSON ${slug} berhasil ✓`);
-}
-
-// 10. Unduh File Langsung dari URL CDN (Hanya Jika User Menekan 'Unduh Semua')
-async function downloadFileFromUrl(url, filename) {
-  try {
-    if (chrome.downloads && chrome.downloads.download) {
-      return new Promise((resolve) => {
-        chrome.downloads.download({
-          url: url,
-          filename: filename,
-          conflictAction: "overwrite",
-          saveAs: false
-        }, (id) => {
-          if (chrome.runtime.lastError) {
-            fallbackBlobDownload(url, filename).then(resolve);
-          } else {
-            resolve(id);
-          }
-        });
-      });
+  // Metode 1: Eksekusi in-tab fetch dengan cookie aktif ChatGPT + background click (Paling Handal)
+  const tabRes = await executeInTab(async (targetUrl, fname) => {
+    try {
+      const resp = await fetch(targetUrl, { credentials: "include" });
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      const blob = await resp.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = blobUrl;
+      a.download = fname;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+      return { ok: true, size: blob.size };
+    } catch (err) {
+      return { ok: false, error: err.message };
     }
-    return await fallbackBlobDownload(url, filename);
-  } catch (e) {
-    return await fallbackBlobDownload(url, filename);
-  }
-}
+  }, [url, pureFilename]);
 
-async function fallbackBlobDownload(url, filename) {
-  try {
-    const resp = await fetch(url);
-    const blob = await resp.blob();
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = filename.split("/").pop();
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+  if (tabRes && tabRes.ok) {
     return true;
-  } catch (e) {
-    console.error("fallbackBlobDownload error:", e);
-    return false;
   }
+
+  // Metode 2: Fallback chrome.downloads API dengan saveAs: false (diam-diam)
+  if (chrome.downloads && chrome.downloads.download) {
+    return new Promise((resolve) => {
+      chrome.downloads.download({
+        url: url,
+        filename: pureFilename,
+        conflictAction: "overwrite",
+        saveAs: false
+      }, (id) => {
+        if (chrome.runtime.lastError) {
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  }
+  return false;
 }
 
-// Unduh Semua File CDN (Manual Belakangan Sesuai Permintaan User)
-async function downloadAllSavedCdn() {
+// 9. Unduh Semua Gambar Terdeteksi Sekaligus Secara Diam-diam
+async function downloadAllImages() {
   const keys = Object.keys(cdnDatabase).filter(k => k.startsWith(`c${activeContentId}_`));
   keys.sort((a, b) => (cdnDatabase[a].slide || 0) - (cdnDatabase[b].slide || 0));
 
   if (keys.length === 0) {
-    toast("Database CDN kosong. Pindai tab dulu!");
+    toast("Belum ada gambar. Klik '🔍 Pindai Tab' dulu!");
     return;
   }
 
-  const slug = getTopicSlug(activeContentId);
-  toast(`Mengunduh ${keys.length} file CDN...`);
+  const btn = document.getElementById("btnDownloadAll");
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = "⏳ Mengunduh...";
+  }
+
+  toast(`Mengunduh ${keys.length} gambar diam-diam...`);
   let downloaded = 0;
+
   for (const k of keys) {
     const rec = cdnDatabase[k];
     if (rec && rec.cdn_url) {
-      const filename = `inka_cadangan/${slug}/raw/${rec.name}`;
-      await downloadFileFromUrl(rec.cdn_url, filename);
-      downloaded++;
-      toast(`Mengunduh ${downloaded}/${keys.length}: ${rec.name}...`);
-      await new Promise(r => setTimeout(r, 600));
+      const fileName = rec.name || getSlideFilename(rec.content_id, rec.slide);
+      toast(`Mengunduh (${downloaded + 1}/${keys.length}): ${fileName}...`);
+      const ok = await downloadSilentImage(rec.cdn_url, fileName);
+      if (ok) downloaded++;
+      await new Promise(r => setTimeout(r, 500));
     }
   }
-  toast(`Selesai! ${downloaded} file gambar CDN terunduh ✓`);
+
+  if (btn) {
+    btn.disabled = false;
+    btn.innerText = "📥 Unduh Semua";
+  }
+
+  toast(`Selesai! ${downloaded} gambar berhasil diunduh diam-diam ✓`);
 }
 
-// 11. Event Listeners & Boot
+// 10. Event Listeners & Boot
 document.getElementById("selTopic").addEventListener("change", (e) => {
   activeContentId = parseInt(e.target.value);
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
@@ -726,9 +725,7 @@ document.getElementById("btnNewChat").addEventListener("click", triggerNewChat);
 document.getElementById("btnAutopilot").addEventListener("click", toggleAutopilot);
 
 document.getElementById("btnScanTab").addEventListener("click", scanActiveTabForCdnImages);
-document.getElementById("btnCopyCdn").addEventListener("click", copyAllCdnLinks);
-document.getElementById("btnExportCdn").addEventListener("click", exportCdnDatabase);
-document.getElementById("btnDownloadAllCdn").addEventListener("click", downloadAllSavedCdn);
+document.getElementById("btnDownloadAll").addEventListener("click", downloadAllImages);
 
 async function boot() {
   await initDatabase();

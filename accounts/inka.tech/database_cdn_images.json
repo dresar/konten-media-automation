@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-07 20:37:00",
-  "total_images": 1,
+  "last_updated": "2026-09-07 20:38:00",
+  "total_images": 6,
   "records": {
     "c1_s1": {
       "id": "c1_s1",
@@ -9,8 +9,58 @@
       "slug": "01-juice-jacking",
       "slide": 1,
       "name": "01-juice-jacking_slide_01.png",
-      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb1881f5bcd85fcf4677c6fc&ts=496885&p=fs&cid=1&sig=872f606aa6a23150b89225e34de573f31308b7efe217708a19e9e0fc9633501c&v=0",
-      "timestamp": "2026-09-07T20:37:00.000Z"
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097a482118ef9e0c19e3d752d&ts=496885&p=fs&cid=1&sig=319b424a2db5cd2a284562063c7cd0a3d2f87bc2bb731c08ee203e674d8e6d6d&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
+    },
+    "c1_s2": {
+      "id": "c1_s2",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 2,
+      "name": "01-juice-jacking_slide_02.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_000000002c6c821185d10ac3fca30ef6&ts=496885&p=fs&cid=1&sig=74197e404ee72aab7ad3879ec94c58ce6fc891a6143e3d0bbf6900c3cb6acd93&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
+    },
+    "c1_s3": {
+      "id": "c1_s3",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 3,
+      "name": "01-juice-jacking_slide_03.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097788209875887d3448c1760&ts=496885&p=fs&cid=1&sig=6981f4e66de03085627872d14549c9a7008c9b68c95cd3919554ecdc5250bde6&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
+    },
+    "c1_s4": {
+      "id": "c1_s4",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 4,
+      "name": "01-juice-jacking_slide_04.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb9c8208a142555a25fa81a7&ts=496885&p=fs&cid=1&sig=f91729ef0f10c7c3afda777e52feb764e490091e8e2a4288e2bb721a63fd922a&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
+    },
+    "c1_s5": {
+      "id": "c1_s5",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 5,
+      "name": "01-juice-jacking_slide_05.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_000000008cec8211b8211938d89c01be&ts=496885&p=fs&cid=1&sig=c0daa7940aff86d8b2df80b107b15aca7679eaa64ed280c6bf44d1a658ac3c31&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
+    },
+    "c1_s6": {
+      "id": "c1_s6",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 6,
+      "name": "01-juice-jacking_slide_06.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_00000000080c8207a6231b7605b40ba0&ts=496885&p=fs&cid=1&sig=1d614b402adf6dc54617527a8b38e0b7f8d7e40250fedf0748386abefb3c57ef&v=0",
+      "timestamp": "2026-09-07T20:38:00.000Z"
     }
   }
 }

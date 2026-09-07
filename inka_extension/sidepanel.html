@@ -73,38 +73,27 @@
       </button>
     </div>
 
-    <!-- Database CDN Card (Fokus & Bersih) -->
+    <!-- Card Unduh Gambar (Minimalis, Padat & Diam-diam) -->
     <div class="inka-card" style="padding: 10px;">
       <div class="inka-label" style="margin-bottom: 8px;">
-        <span>Database CDN</span>
-        <span id="txtCdnCount" class="inka-badge-blue">0 Link</span>
+        <span>Unduh Gambar (DALL-E)</span>
+        <span id="txtImageCount" class="inka-badge-blue">0 Gambar</span>
       </div>
 
       <!-- Action Row: Pindai Tab & Unduh Semua -->
-      <div class="inka-btn-grid" style="margin-bottom: 6px;">
-        <button id="btnScanTab" class="inka-btn inka-btn-primary" title="Pindai link backend CDN di tab ChatGPT saat ini">
-          🔍 Pindai CDN Tab
+      <div class="inka-btn-grid" style="margin-bottom: 8px;">
+        <button id="btnScanTab" class="inka-btn inka-btn-secondary" title="Pindai gambar DALL-E yang sudah selesai di tab ChatGPT">
+          🔍 Pindai Tab
         </button>
-        <button id="btnDownloadAllCdn" class="inka-btn inka-btn-secondary" title="Unduh semua file gambar CDN">
+        <button id="btnDownloadAll" class="inka-btn inka-btn-primary" title="Unduh diam-diam semua gambar yang terdeteksi">
           📥 Unduh Semua
         </button>
       </div>
 
-      <!-- Action Row 2: Salin Semua & Ekspor JSON -->
-      <div class="inka-btn-grid" style="margin-bottom: 8px;">
-        <button id="btnCopyCdn" class="inka-btn inka-btn-secondary" title="Salin semua nama & link CDN">
-          Salin Semua
-        </button>
-        <button id="btnExportCdn" class="inka-btn inka-btn-secondary" title="Ekspor file JSON">
-          Ekspor JSON
-        </button>
-      </div>
-
-      <!-- Scanned CDN List with Filenames -->
+      <!-- Scanned Image List with Clean Filenames & 1-Click Download -->
       <div class="inka-cdn-container">
-        <div class="inka-label" style="font-size: 10px; margin-bottom: 4px; color: #64748B;">Daftar File CDN</div>
-        <div id="listCdnItems" class="inka-cdn-list">
-          <div class="inka-empty-hint">Belum ada link. Klik 'Pindai CDN Tab'.</div>
+        <div id="listDownloadItems" class="inka-cdn-list">
+          <div class="inka-empty-hint">Klik '🔍 Pindai Tab' untuk mendeteksi gambar.</div>
         </div>
       </div>
     </div>
