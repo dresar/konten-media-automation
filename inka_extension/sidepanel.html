@@ -12,7 +12,7 @@
       <span class="inka-brand-icon">⚡</span>
       <span>Inka Studio</span>
     </div>
-    <span class="inka-badge">v3.1</span>
+    <span class="inka-badge">v3.2</span>
   </header>
 
   <!-- Main Body Content -->
@@ -76,13 +76,14 @@
       </button>
     </div>
 
-    <!-- Card Unduh Gambar (Minimalis, Padat & Diam-diam) -->
+    <!-- Card Unduh Gambar (100% Manual User Control, Zero Auto-Download) -->
     <div class="inka-card" style="padding: 10px;">
       <div class="inka-label" style="margin-bottom: 8px;">
         <span>Unduh Gambar (DALL-E)</span>
-        <div style="display: flex; gap: 6px; align-items: center;">
+        <div style="display: flex; gap: 5px; align-items: center;">
           <span id="txtImageCount" class="inka-badge-blue">0 Gambar</span>
-          <button id="btnResetImages" class="inka-btn-reset-mini" title="Hapus daftar gambar terdeteksi untuk topik ini">↺ Reset Gambar</button>
+          <span id="txtDownloadedSummary" class="inka-badge-verified">0/0 Terunduh</span>
+          <button id="btnResetImages" class="inka-btn-reset-mini" title="Hapus daftar gambar terdeteksi untuk topik ini">↺ Reset</button>
         </div>
       </div>
 
@@ -91,18 +92,9 @@
         <button id="btnScanTab" class="inka-btn inka-btn-secondary" title="Pindai gambar DALL-E yang sudah selesai di tab ChatGPT">
           🔍 Pindai Tab
         </button>
-        <button id="btnDownloadAll" class="inka-btn inka-btn-primary" title="Unduh diam-diam semua gambar yang belum terunduh">
+        <button id="btnDownloadAll" class="inka-btn inka-btn-primary" title="Unduh gambar yang belum terunduh">
           📥 Unduh Semua
         </button>
-      </div>
-
-      <!-- Auto-Download Toggle & Downloaded Counter -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 4px 6px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; font-size: 11px;">
-        <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none;">
-          <input type="checkbox" id="chkAutoDownload" checked style="accent-color: #10B981; width: 14px; height: 14px; cursor: pointer;">
-          <span style="font-weight: 600; color: #1E293B;">Auto-Unduh saat Selesai</span>
-        </label>
-        <span id="txtDownloadedSummary" style="color: #059669; font-weight: 700; font-size: 10.5px;">0/0 Terunduh</span>
       </div>
 
       <!-- Scanned Image List with Clean Filenames & 1-Click Download -->

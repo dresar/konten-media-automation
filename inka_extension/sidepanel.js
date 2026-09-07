@@ -5,7 +5,6 @@
 let activeContentId = 1;
 let activeSlideIdx = 1;
 let isAutopilot = false;
-let isAutoDownload = true;
 let processedImgs = new Set();
 let dbProgress = {};
 let cdnDatabase = {};
@@ -71,22 +70,11 @@ function getSlideFilename(contentId, slideIdx) {
 // 1. Inisialisasi Database
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_seeded_v3", "inka_auto_dl"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_seeded_v3"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_active_c) activeContentId = data.inka_active_c;
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
-    if (data.inka_auto_dl !== undefined) isAutoDownload = data.inka_auto_dl;
-
-    const chk = document.getElementById("chkAutoDownload");
-    if (chk) {
-      chk.checked = isAutoDownload;
-      chk.addEventListener("change", (e) => {
-        isAutoDownload = e.target.checked;
-        chrome.storage.local.set({ inka_auto_dl: isAutoDownload });
-        toast(isAutoDownload ? "⚡ Auto-Unduh AKTIF" : "Auto-Unduh NONAKTIF");
-      });
-    }
 
     // Auto resume ke slide yang belum selesai
     const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
@@ -108,8 +96,7 @@ async function saveDatabase() {
       inka_db: dbProgress,
       inka_active_c: activeContentId,
       inka_active_s: activeSlideIdx,
-      inka_cdn_db: cdnDatabase,
-      inka_auto_dl: isAutoDownload
+      inka_cdn_db: cdnDatabase
     });
   } catch (e) {}
 }
@@ -515,18 +502,7 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
   };
 
   dbProgress[recordKey] = true;
-
-  // AUTO-DOWNLOAD: Jika fitur auto-download aktif, langsung unduh diam-diam saat ini juga!
-  if (isAutoDownload) {
-    toast(`📥 Mengunduh otomatis ${fileName}...`);
-    const ok = await downloadSilentImage(imgUrl, fileName);
-    if (ok) {
-      cdnDatabase[recordKey].downloaded = true;
-      toast(`✓ ${fileName} selesai & langsung terunduh!`);
-    }
-  } else {
-    toast(`✓ ${fileName} selesai render!`);
-  }
+  toast(`✓ ${fileName} selesai render!`);
 
   await saveDatabase();
   renderDownloadCount();

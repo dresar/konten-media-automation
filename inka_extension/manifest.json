@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "3.1.0",
-  "description": "InkaTech Studio ⚡ v3.1: Full Autopilot & Auto-Download on Finish with Download Tracking.",
+  "version": "3.2.0",
+  "description": "InkaTech Studio ⚡ v3.2: 100% Manual Download Control with Status Tracking & Full Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",
