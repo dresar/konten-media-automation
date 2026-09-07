@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.5.1",
-  "description": "InkaTech Studio ⚡ v4.5.1: Strict Create an image Prefix, Modular Architecture, Real-Time Sync & Autopilot.",
+  "version": "4.5.2",
+  "description": "InkaTech Studio ⚡ v4.5.2: Sequential Clean Tab Transitioning, Anti-Skip Mutex, Real-Time Sync & Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

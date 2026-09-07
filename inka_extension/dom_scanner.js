@@ -24,7 +24,11 @@ async function executeInTab(fn, args = []) {
   return null;
 }
 
-async function checkRenderStatus() {
+async function checkRenderStatus(forceManual = false) {
+  if (!forceManual && (isTransitioningTopic || currentState === State.SWITCHING_CHAT || currentState === State.DOWNLOADING_TOPIC)) {
+    return;
+  }
+
   const tab = await getChatGptTab();
   if (!tab) return;
 
@@ -152,9 +156,13 @@ async function checkRenderStatus() {
   const total = currentTopic.total_slides || 6;
   const slug = getTopicSlug(activeContentId);
 
+  const alreadyDone = countDone(activeContentId, total);
+  const hasStarted = (lastSentTopicId === activeContentId && lastSentSlide > 0) || (alreadyDone > 0);
+
   let hasNewSync = false;
-  if (inspection.dalleImages && inspection.dalleImages.length > 0) {
-    const countToSync = Math.min(inspection.dalleImages.length, total);
+  if ((forceManual || hasStarted) && inspection.dalleImages && inspection.dalleImages.length > 0) {
+    const maxAllowed = forceManual ? inspection.dalleImages.length : Math.max(lastSentSlide, alreadyDone);
+    const countToSync = Math.min(inspection.dalleImages.length, total, maxAllowed);
     for (let index = 0; index < countToSync; index++) {
       const slideNum = index + 1;
       const key = `c${activeContentId}_s${slideNum}`;
@@ -225,7 +233,7 @@ async function checkRenderStatus() {
     updateEngineStatus(State.IDLE, "Siap. Menunggu perintah.");
   }
 
-  if (isAutopilot && !isDownloadingBatch && !inspection.isStopBtnPresent && !inspection.isShimmerPresent) {
+  if (isAutopilot && !isDownloadingBatch && !isTransitioningTopic && !inspection.isStopBtnPresent && !inspection.isShimmerPresent) {
     await handleAutopilotProgression(currentImagesCount, total);
   }
 }

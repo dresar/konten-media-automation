@@ -22,6 +22,7 @@ let lastPromptSubmitTime = 0;
 let lastSentTopicId = 0;
 let lastSentSlide = 0;
 let isSendingPrompt = false;
+let isTransitioningTopic = false;
 
 const TOPIC_SLUGS = {
   1: "01-juice-jacking",

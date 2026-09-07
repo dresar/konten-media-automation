@@ -1,6 +1,6 @@
 async function scanActiveTabForCdnImages() {
   toast("Memindai gambar tab ChatGPT...");
-  await checkRenderStatus();
+  await checkRenderStatus(true);
   toast("✓ Pemindaian tab selesai!");
 }
 

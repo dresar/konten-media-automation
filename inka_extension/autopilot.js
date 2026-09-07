@@ -185,7 +185,73 @@ function toggleAutopilot() {
   }
 }
 
+async function transitionToNextTopic() {
+  if (isTransitioningTopic) return;
+  isTransitioningTopic = true;
+
+  try {
+    updateEngineStatus(State.DOWNLOADING_TOPIC, `Mengunduh semua slide Topik #${activeContentId}...`);
+    toast(`🎉 Topik #${activeContentId} Selesai 6/6 Slide! Mengunduh semua gambar...`);
+
+    const dlCount = await downloadTopicImages(activeContentId);
+    toast(`✓ ${dlCount} gambar Topik #${activeContentId} berhasil disimpan!`);
+
+    const range = getAccountTopicRange();
+    if (activeContentId >= range.max) {
+      toggleAutopilot();
+      updateEngineStatus(State.IDLE, `Semua konten ${range.label} selesai!`);
+      toast(`🎉 SELESAI! Seluruh konten ${range.label} berhasil digenerate & diunduh.`);
+      return;
+    }
+
+    const nextTopicId = activeContentId + 1;
+    updateEngineStatus(State.SWITCHING_CHAT, `Membuka New Chat untuk Topik #${nextTopicId}...`);
+    toast(`⚡ Autopilot: Membuka New Chat untuk Topik #${nextTopicId}...`);
+
+    await triggerNewChat();
+
+    let isTabClean = false;
+    for (let attempt = 1; attempt <= 20; attempt++) {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      const tabInspection = await executeInTab(() => {
+        const mainContainer = document.querySelector("main") || document.body;
+        const turns = mainContainer.querySelectorAll('[data-message-author-role="assistant"], [data-testid*="conversation-turn"], article, div.agent-turn');
+        const textarea = document.querySelector("#prompt-textarea");
+        return {
+          hasNoTurns: (turns.length === 0),
+          hasTextarea: !!textarea
+        };
+      });
+
+      if (tabInspection && tabInspection.hasNoTurns && tabInspection.hasTextarea) {
+        isTabClean = true;
+        break;
+      }
+    }
+
+    activeContentId = nextTopicId;
+    activeSlideIdx = 1;
+    lastSentSlide = 0;
+    lastSentTopicId = activeContentId;
+
+    await saveDatabase();
+    renderTopicSelect();
+    updateView();
+
+    if (isAutopilot) {
+      updateEngineStatus(State.IDLE, `Memulai Slide 1 Topik #${activeContentId}...`);
+      toast(`⚡ Autopilot: Memulai Slide 1 Topik #${activeContentId}...`);
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      await sendPromptToChatGpt(true);
+    }
+  } finally {
+    isTransitioningTopic = false;
+  }
+}
+
 async function handleAutopilotProgression(currentImagesCount, total) {
+  if (isTransitioningTopic) return;
+
   if (currentImagesCount < total) {
     const nextSlide = currentImagesCount + 1;
     activeSlideIdx = nextSlide;
@@ -202,47 +268,13 @@ async function handleAutopilotProgression(currentImagesCount, total) {
       await sendPromptToChatGpt(true);
     }
   } else {
-    isDownloadingBatch = true;
-    updateEngineStatus(State.DOWNLOADING_TOPIC, `Auto-Unduh 6 slide Topik #${activeContentId}...`);
-    toast(`🎉 Topik #${activeContentId} Selesai 6/6 Slide! Mengunduh semua gambar...`);
-
-    const dlCount = await downloadTopicImages(activeContentId);
-    toast(`✓ ${dlCount} gambar Topik #${activeContentId} berhasil disimpan!`);
-    isDownloadingBatch = false;
-
-    const range = getAccountTopicRange();
-    if (activeContentId < range.max) {
-      activeContentId++;
-      activeSlideIdx = 1;
-      lastSentSlide = 0;
-      lastSentTopicId = activeContentId;
-      await saveDatabase();
-      renderTopicSelect();
-      updateView();
-
-      updateEngineStatus(State.SWITCHING_CHAT, `Membuka New Chat Topik #${activeContentId}...`);
-      toast(`⚡ Autopilot: Membuka New Chat untuk Topik #${activeContentId} dalam 3.5 detik...`);
-
-      setTimeout(async () => {
-        await triggerNewChat();
-        toast(`⚡ Autopilot: Menunggu chat baru siap (5 detik)...`);
-        setTimeout(() => {
-          if (isAutopilot) {
-            updateEngineStatus(State.IDLE, `Memulai Slide 1 Topik #${activeContentId}...`);
-            toast(`⚡ Autopilot: Memulai Slide 1 Topik #${activeContentId}...`);
-            sendPromptToChatGpt(true);
-          }
-        }, 5000);
-      }, 3500);
-    } else {
-      toggleAutopilot();
-      updateEngineStatus(State.IDLE, `Semua 20 konten ${range.label} selesai!`);
-      toast(`🎉 SELESAI! Seluruh konten ${range.label} berhasil digenerate & diunduh.`);
-    }
+    await transitionToNextTopic();
   }
 }
 
 function runAutopilotStep() {
+  if (isTransitioningTopic) return;
+
   const currentTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find(item => item.id === activeContentId)) || { topic: "konten" };
   const total = currentTopic.total_slides || 6;
   const done = countDone(activeContentId, total);
