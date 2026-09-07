@@ -191,7 +191,8 @@ function renderDownloadList() {
       btnDl.disabled = true;
       btnDl.innerText = "⏳...";
       const filename = item.name || getSlideFilename(item.content_id, item.slide);
-      const success = await downloadSilentImage(item.cdn_url, filename);
+      const slug = getTopicSlug(item.content_id || activeContentId);
+      const success = await downloadSilentImage(item.cdn_url, filename, slug);
       if (success) {
         item.downloaded = true;
         await saveDatabase();

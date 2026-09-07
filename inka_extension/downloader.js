@@ -1,6 +1,25 @@
-async function downloadSilentImage(url, filename) {
+async function downloadSilentImage(url, filename, slug = "") {
   if (!url || typeof url !== "string" || !url.startsWith("http")) return false;
   const pureFilename = filename.split("/").pop();
+  const subfolderPath = slug ? `cadangan/${slug}/${pureFilename}` : pureFilename;
+
+  if (chrome.downloads && chrome.downloads.download) {
+    const chromeDlOk = await new Promise((resolve) => {
+      chrome.downloads.download({
+        url: url,
+        filename: subfolderPath,
+        conflictAction: "overwrite",
+        saveAs: false
+      }, (downloadId) => {
+        if (chrome.runtime.lastError || !downloadId) {
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+    if (chromeDlOk) return true;
+  }
 
   const tabRes = await executeInTab(async (targetUrl, fname) => {
     try {
@@ -27,27 +46,7 @@ async function downloadSilentImage(url, filename) {
     }
   }, [url, pureFilename]);
 
-  if (tabRes && tabRes.ok) {
-    return true;
-  }
-
-  if (chrome.downloads && chrome.downloads.download) {
-    return new Promise((resolve) => {
-      chrome.downloads.download({
-        url: url,
-        filename: pureFilename,
-        conflictAction: "overwrite",
-        saveAs: false
-      }, () => {
-        if (chrome.runtime.lastError) {
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    });
-  }
-  return false;
+  return !!(tabRes && tabRes.ok);
 }
 
 async function downloadTopicImages(contentId) {
@@ -76,7 +75,7 @@ async function downloadTopicImages(contentId) {
     const fileName = record.name || `${slug}_${String(record.slide).padStart(2, "0")}.png`;
 
     toast(`📥 Unduh (${index + 1}/${pendingKeys.length}): ${fileName}...`);
-    const success = await downloadSilentImage(record.cdn_url, fileName);
+    const success = await downloadSilentImage(record.cdn_url, fileName, slug);
     if (success) {
       record.downloaded = true;
       downloaded++;
@@ -117,8 +116,9 @@ async function downloadAllImages() {
     const record = cdnDatabase[key];
     if (record && record.cdn_url) {
       const fileName = record.name || getSlideFilename(record.content_id, record.slide);
+      const itemSlug = getTopicSlug(record.content_id || activeContentId);
       toast(`Mengunduh (${downloaded + 1}/${targets.length}): ${fileName}...`);
-      const success = await downloadSilentImage(record.cdn_url, fileName);
+      const success = await downloadSilentImage(record.cdn_url, fileName, itemSlug);
       if (success) {
         record.downloaded = true;
         downloaded++;
