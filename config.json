@@ -1,14 +1,55 @@
 {
-  "active_account": "inka.tech",
+  "active_account": "barangunikparty",
+  "global_defaults": {
+    "video": {
+      "privacy": "public",
+      "allow_comments": true,
+      "allow_duet": true,
+      "allow_stitch": true,
+      "timeout_seconds": 300
+    },
+    "photo": {
+      "privacy": "public",
+      "select_music": true,
+      "aspect_ratio": "3:4",
+      "width": 1080,
+      "height": 1440,
+      "strip_metadata": true,
+      "timeout_seconds": 300
+    }
+  },
   "accounts": {
+    "barangunikparty": {
+      "display_name": "Barang Unik Party (ERIKHA MASYA)",
+      "email": "diann8565@gmail.com",
+      "tiktok": "@barangunikparty",
+      "browser_profiles": {
+        "tiktok_account": "dian",
+        "chatgpt_account": "dian"
+      },
+      "video_settings": {
+        "privacy": "public",
+        "default_folder": "C:\\Users\\NCN0C\\Downloads\\Video Konten Terlaris\\1\\shoope-fix",
+        "default_hashtags": "#tasranselwanita #tasranselantimaling #taswanita #ranselkekinian #rekomendasitas #racunshopee #racuntiktok #shopeehaul #barangunik #fyp #viral",
+        "caption_template": "{caption}\n\nYuk amankan barang bawaan kamu sekarang! Klik keranjang kuning sebelum kehabisan promo ya 👇✨\n\n{hashtags}"
+      },
+      "photo_settings": {
+        "privacy": "public",
+        "select_music": true,
+        "default_hashtags": "#barangunik #racunshopee #racuntiktok #shopeehaul #fyp #viral",
+        "caption_template": "✨ {title}\n\n{description}\n\n{hashtags}"
+      },
+      "gdrive_folder": "KONTEN/barangunikparty"
+    },
     "inka.tech": {
       "display_name": "Inka.tech",
+      "email": "eka.ckp16799@gmail.com",
       "website": "https://inka.tech/",
       "tiktok": "@inka.tech",
       "instagram": "@arif_ex21",
       "browser_profiles": {
-        "chatgpt_account": "dian",
-        "tiktok_account": "eka"
+        "tiktok_account": "eka",
+        "chatgpt_account": "dian"
       },
       "colors": {
         "background": "#FFFFFF",
@@ -17,6 +58,21 @@
       },
       "logo_path": "assets/logo_inkatech.png",
       "logo_position": "top-right",
+      "video_settings": {
+        "privacy": "public",
+        "default_hashtags": "#teknologi #edukasi #belajarteknologi #tipsit #ai #coding #programmer #inkatech #fyp",
+        "caption_template": "💻 {title}\n\n{description}\n\nPelajari selengkapnya di inka.tech\n\n{hashtags}"
+      },
+      "photo_settings": {
+        "privacy": "public",
+        "select_music": true,
+        "aspect_ratio": "3:4",
+        "width": 1080,
+        "height": 1440,
+        "strip_metadata": true,
+        "default_hashtags": "#teknologi #belajarteknologi #edukasi #tipsit #ai #coding #inkatech #fyp",
+        "caption_template": "💡 {title}\n\n{description}\n\nPelajari selengkapnya di inka.tech\n\n{hashtags}"
+      },
       "gdrive_folder": "KONTEN/inka.tech"
     },
     "arif_ex21": {
@@ -24,8 +80,19 @@
       "tiktok": "@arif_ex21",
       "instagram": "@arif_ex21",
       "browser_profiles": {
-        "chatgpt_account": "dian",
-        "tiktok_account": "arif"
+        "tiktok_account": "arif",
+        "chatgpt_account": "dian"
+      },
+      "video_settings": {
+        "privacy": "public",
+        "default_hashtags": "#arifex21 #dailyvlog #tips #lifestyle #fyp",
+        "caption_template": "{title}\n\n{description}\n\n{hashtags}"
+      },
+      "photo_settings": {
+        "privacy": "public",
+        "select_music": true,
+        "default_hashtags": "#arifex21 #dailyvlog #tips #lifestyle #fyp",
+        "caption_template": "📸 {title}\n\n{description}\n\n{hashtags}"
       },
       "gdrive_folder": "arif_ex21"
     },
@@ -33,22 +100,22 @@
       "display_name": "Cat Lovers",
       "tiktok": "@catloversss",
       "browser_profiles": {
-        "chatgpt_account": "dian",
-        "tiktok_account": "catloversss"
+        "tiktok_account": "catloversss",
+        "chatgpt_account": "dian"
+      },
+      "video_settings": {
+        "privacy": "public",
+        "default_hashtags": "#kucinglucu #catlover #kucinggemoy #kucinglovers #pecintakucing #fyp #catsoftiktok",
+        "caption_template": "🐾 {title}\n\n{description}\n\n{hashtags}"
+      },
+      "photo_settings": {
+        "privacy": "public",
+        "select_music": true,
+        "default_hashtags": "#kucinglucu #catlover #kucinggemoy #fyp",
+        "caption_template": "🐱 {title}\n\n{description}\n\n{hashtags}"
       },
       "gdrive_folder": "catloversss"
     }
-  },
-  "postprocessing": {
-    "aspect_ratio": "3:4",
-    "width": 1080,
-    "height": 1440,
-    "strip_metadata": true
-  },
-  "tiktok_upload": {
-    "tab": "photo",
-    "select_music": true,
-    "privacy": "public"
   },
   "rclone": {
     "remote_name": "gdrive",

@@ -29,13 +29,19 @@ def load_config():
 
 
 def main():
+    cfg = load_config()
+    default_acc = cfg.get("active_account", "barangunikparty")
+
     parser = argparse.ArgumentParser(description="Master Multi-Account Social Media Content Engine")
     parser.add_argument("--topic", help="Topik materi konten (misal: '5 AI Masa Depan')")
-    parser.add_argument("--account", default="inka.tech", help="Nama akun media sosial (default: inka.tech)")
+    parser.add_argument("--account", default=default_acc, help=f"Nama akun target (default: {default_acc})")
     parser.add_argument("--title", default=None, help="Judul postingan TikTok (opsional)")
     parser.add_argument("--caption", default=None, help="Deskripsi caption TikTok (opsional)")
+    parser.add_argument("--mode", choices=["auto", "video", "photo"], default="auto", help="Mode upload: video (mp4) atau photo (carousel)")
+    parser.add_argument("--privacy", choices=["public", "only_me", "semua orang", "hanya saya"], default=None, help="Pengaturan privasi konten")
+    parser.add_argument("--dry-run", action="store_true", help="Buka browser dan isi form tapi jangan posting")
     parser.add_argument("--no-upload", action="store_true", help="Hanya render & post-process, jangan diunggah")
-    parser.add_argument("--upload-only", help="Arahkan path ke folder gambar processed untuk langsung diupload")
+    parser.add_argument("--upload-only", help="Arahkan path ke file video (mp4) atau folder (gambar/video) untuk langsung diupload")
     parser.add_argument("--sync-rclone", action="store_true", help="Sinkronkan dan backup ke cloud via Rclone serta bersihkan lokal")
     parser.add_argument("--status", action="store_true", help="Lihat statistik seluruh konten dan akun di Google Drive")
 
@@ -53,7 +59,7 @@ def main():
     # 1. Mode Status
     if args.status:
         from media_manager import print_status
-        print_status(args.account if args.account != "inka.tech" else None)
+        print_status(args.account if args.account != default_acc else None)
         return
 
     # 2. Mode Login & Check-Login
@@ -75,13 +81,55 @@ def main():
             sys.exit(1)
         return
 
-    # 3. Mode Upload Only
+    # 3. Mode Upload Only (Otomatis Mendeteksi Video vs Foto)
     if args.upload_only:
-        from upload_tiktok_photo import upload_photos_to_tiktok
-        folder = os.path.abspath(args.upload_only)
-        if not os.path.isdir(folder):
-            print(f"[Error] Direktori tidak ditemukan: {folder}", file=sys.stderr)
+        target_path = os.path.abspath(args.upload_only)
+        if not os.path.exists(target_path):
+            print(f"[Error] Target path tidak ditemukan: {target_path}", file=sys.stderr)
             sys.exit(1)
+
+        is_video_file = os.path.isfile(target_path) and target_path.lower().endswith((".mp4", ".mov", ".avi", ".mkv"))
+        is_video_dir = False
+        video_files = []
+
+        if os.path.isdir(target_path):
+            video_files = sorted([
+                os.path.join(target_path, f) for f in os.listdir(target_path)
+                if f.lower().endswith((".mp4", ".mov", ".avi", ".mkv"))
+            ])
+            photo_files = sorted([
+                os.path.join(target_path, f) for f in os.listdir(target_path)
+                if f.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+            ])
+            if args.mode == "video" or (args.mode == "auto" and video_files and not photo_files):
+                is_video_dir = True
+
+        # === ROUTING: VIDEO UPLOAD ===
+        if is_video_file or is_video_dir or args.mode == "video":
+            from upload_tiktok_video import upload_video_to_tiktok
+            target_video = target_path if is_video_file else (video_files[0] if video_files else None)
+            if not target_video:
+                print(f"[Error] Tidak ditemukan file video di: {target_path}", file=sys.stderr)
+                sys.exit(1)
+
+            print(f"\n[Run] Mode VIDEO terdeteksi: {target_video}")
+            v_res = upload_video_to_tiktok(
+                video_path=target_video,
+                account=args.account,
+                caption=args.caption,
+                title=args.title,
+                privacy=args.privacy,
+                dry_run=args.dry_run
+            )
+            if not v_res.get("success"):
+                print(f"\n[Upload Video Gagal] {v_res.get('error')}", file=sys.stderr)
+                sys.exit(1)
+            print(f"\n[Upload Video Sukses] Akun: @{args.account} | URL: {v_res.get('video_url')}")
+            return
+
+        # === ROUTING: PHOTO UPLOAD ===
+        from upload_tiktok_photo import upload_photos_to_tiktok
+        folder = target_path if os.path.isdir(target_path) else os.path.dirname(target_path)
         photos = sorted([
             os.path.join(folder, f) for f in os.listdir(folder)
             if f.lower().endswith((".png", ".jpg", ".jpeg"))
@@ -90,7 +138,6 @@ def main():
             print(f"[Error] Tidak ada file gambar di: {folder}", file=sys.stderr)
             sys.exit(1)
 
-        cfg = load_config()
         acc_info = cfg.get("accounts", {}).get(args.account, {})
         tiktok_acc = acc_info.get("browser_profiles", {}).get("tiktok_account", args.account)
         title = args.title or f"Konten Edukasi @{args.account}"
@@ -108,7 +155,7 @@ def main():
                         print(f"[Upload] Menemukan caption otomatis dari: {cf}", flush=True)
                         break
 
-        up_res = upload_photos_to_tiktok(photos, account=tiktok_acc, title=title, caption=caption, select_sound=True)
+        up_res = upload_photos_to_tiktok(photos, account=tiktok_acc, title=title, caption=caption, select_sound=True, dry_run=args.dry_run)
         if not up_res.get("success"):
             print(f"\n[Upload Gagal] {up_res.get('error')}", file=sys.stderr)
             sys.exit(1)

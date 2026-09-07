@@ -17,3 +17,4 @@ Desktop.ini
 # Temporary outputs (all content is managed inside accounts/)
 outputs/
 **/raw/
+*.mp4

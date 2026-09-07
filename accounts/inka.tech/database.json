@@ -2,7 +2,7 @@
   "account": "inka.tech",
   "created_at": 1788766204,
   "last_updated": 1788766239,
-  "total_content_count": 1,
+  "total_content_count": 2,
   "total_uploaded_to_gdrive": 1,
   "total_published_tiktok": 1,
   "history": [
@@ -19,6 +19,16 @@
       "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\metadata.json",
       "prompts_file": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\prompts.txt",
       "caption_file": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\caption.txt"
+    },
+    {
+      "id": "video_Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239",
+      "type": "video_series",
+      "topic": "Bahaya AI bagi Privasi dan Keamanan Masa Depan",
+      "scenes_count": 4,
+      "combined_video": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\video\\Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239\\Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_full_bersambung.mp4",
+      "folder": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\video\\Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239",
+      "status": "ready_for_review",
+      "created_at": "2026-09-07 15:22:36"
     }
   ]
 }
