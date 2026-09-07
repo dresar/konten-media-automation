@@ -96,6 +96,28 @@ Berikan output HANYA berupa 5 blok prompt DALL-E bahasa Inggris yang siap kirim,
         page.goto("https://chatgpt.com/", wait_until="domcontentloaded", timeout=45000)
         page.wait_for_timeout(3000)
 
+        # Check if CAPTCHA appears
+        from captcha_solver import detect_captcha, solve_tiktok_captcha
+        c_check = detect_captcha(page)
+        if c_check["detected"]:
+            solve_tiktok_captcha(page, account=account_name)
+
+        # Check if login is required
+        is_login = "login" in page.url.lower() or page.locator("button:has-text('Log in'), a[href*='login']").count() > 0
+        if is_login:
+            ss_dir = os.path.join(BASE_DIR, "accounts", account_name.replace("@", "").strip(), "screenshots")
+            os.makedirs(ss_dir, exist_ok=True)
+            ss_path = os.path.join(ss_dir, "login_required_chatgpt.png")
+            page.screenshot(path=ss_path)
+            print("\n" + "!" * 80, file=sys.stderr)
+            print(f"⚠️ PERINGATAN: Profil ChatGPT '{chatgpt_account}' BELUM LOGIN!", file=sys.stderr)
+            print(f"📸 Screenshot tersimpan: {ss_path}", file=sys.stderr)
+            print(f"👉 Jalankan perintah ini untuk login ke ChatGPT sekali saja:", file=sys.stderr)
+            print(f"   py -3 run.py --login --account {account_name} --platform chatgpt", file=sys.stderr)
+            print("!" * 80 + "\n", file=sys.stderr)
+            ctx.close()
+            return [], ""
+
         # New chat
         try:
             new_btn = page.locator('a[data-testid="new-chat-button"], a[href="/"]').first

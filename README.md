@@ -67,18 +67,46 @@ C:\Users\NCN0C\Videos\konten\
 ## Perintah Cepat CLI
 
 ```powershell
-# 1. Jalankan Full Pipeline (ChatGPT -> Process -> TikTok Live -> Rclone Backup & Purge Lokal)
+# 1. Cek Status Login Akun (TikTok / ChatGPT)
+py -3 run.py --check-login --account inka.tech
+py -3 run.py --check-login --account arif_ex21 --platform all
+
+# 2. Login Interaktif Sekali Jalan (Browser terbuka di layar untuk QR / Email)
+# Session & cookies otomatis tersimpan permanen di profil Chrome masing-masing akun:
+py -3 run.py --login --account inka.tech --platform tiktok
+py -3 run.py --login --account arif_ex21 --platform all
+
+# 3. Jalankan Full Pipeline (ChatGPT -> Process -> TikTok Live -> Rclone Backup & Purge Lokal)
 py -3 run.py --topic "Bahaya Media Sosial bagi Balita" --account inka.tech
 
-# 2. Cek Status Seluruh Akun & Backup Google Drive
+# 4. Cek Status Seluruh Akun & Backup Google Drive
 py -3 run.py --status
 
-# 3. Buat Gambar & Postprocess Tanpa Upload
+# 5. Buat Gambar & Postprocess Tanpa Upload
 py -3 run.py --topic "Tips Keamanan Data HP" --account inka.tech --no-upload
 
-# 4. Upload Saja Folder Tertentu ke TikTok & Backup ke Cloud
+# 6. Upload Saja Folder Tertentu ke TikTok & Backup ke Cloud
 py -3 run.py --upload-only "accounts/inka.tech/photo_carousel/[folder]/processed" --account inka.tech --sync-rclone
 
-# 5. Backup Manual Folder Apapun ke Google Drive & Bersihkan Media Lokal
+# 7. Backup Manual Folder Apapun ke Google Drive & Bersihkan Media Lokal
 py -3 media_manager.py --backup "accounts/inka.tech/photo_carousel/[folder]" --account inka.tech
 ```
+
+---
+
+## Penanganan CAPTCHA & Validasi Akun
+
+1. **Isolasi Profil Chrome per Akun**:
+   - Tiap akun memiliki profil Chrome mandiri di `%LOCALAPPDATA%\hermes\browser_profiles\<account>`.
+   - Data login, cookies, dan session aman dan tidak saling tumpang tindih.
+
+2. **AI CAPTCHA Solver**:
+   - Mendeteksi jenis CAPTCHA: Slider Puzzle, Select 2 Same Objects (Bentuk yang sama), dan Rotate.
+   - Menggunakan analisis kontur edge contrast & AI matching untuk menghitung titik geser / koordinat klik.
+   - Menggerakkan mouse dengan kurva Bézier halus dan jitter alami tangan manusia.
+   - Mode Interaktif Cerdas: Jika verifikasi tambahan dibutuhkan, sistem membuka jeda interaktif 60 detik di layar browser dan mendeteksi penyelesaian secara realtime tanpa menghentikan pipeline.
+
+3. **Validasi Login & Notifikasi Error Ramah**:
+   - Jika akun belum login, sistem mengambil screenshot bukti ke `accounts/<account>/screenshots/login_required_<platform>.png`.
+   - Menampilkan panduan dan perintah login instan di terminal.
+

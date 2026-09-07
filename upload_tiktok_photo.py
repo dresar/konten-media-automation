@@ -7,17 +7,10 @@ import time
 from playwright.sync_api import sync_playwright
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_PROFILE_DIR = os.path.expandvars(r"%LOCALAPPDATA%\hermes\browser_profiles")
+from account_login_manager import get_profile_dir, get_profile_name
+from captcha_solver import detect_captcha, solve_tiktok_captcha
 
 TIKTOK_PHOTO_URL = "https://www.tiktok.com/tiktokstudio/upload?from=webapp&tab=photo"
-
-
-def get_profile_dir(account: str) -> str:
-    acc = account.strip().lower() if account else "eka"
-    profile_path = os.path.join(BASE_PROFILE_DIR, acc)
-    os.makedirs(profile_path, exist_ok=True)
-    return profile_path
 
 
 def upload_photos_to_tiktok(
@@ -30,7 +23,8 @@ def upload_photos_to_tiktok(
     dry_run: bool = False,
     timeout_s: int = 300,
 ) -> dict:
-    ss_dir = os.path.join(BASE_DIR, "accounts", "inka.tech" if account == "eka" else account, "screenshots")
+    acc_clean = account.replace("@", "").strip()
+    ss_dir = os.path.join(BASE_DIR, "accounts", acc_clean, "screenshots")
     os.makedirs(ss_dir, exist_ok=True)
 
     result = {
@@ -52,8 +46,9 @@ def upload_photos_to_tiktok(
         result["error"] = "Tidak ada file foto yang valid untuk diunggah"
         return result
 
-    profile_dir = get_profile_dir(account)
-    print(f"[TikTokPhoto] Menggunakan akun: {account} ({profile_dir})", flush=True)
+    profile_dir = get_profile_dir(account, platform="tiktok")
+    profile_name = get_profile_name(account, platform="tiktok")
+    print(f"[TikTokPhoto] Menggunakan profil Chrome: {profile_name} ({profile_dir})", flush=True)
     print(f"[TikTokPhoto] Jumlah foto: {len(valid_photos)}", flush=True)
 
     with sync_playwright() as p:
@@ -84,10 +79,31 @@ def upload_photos_to_tiktok(
             page.goto(TIKTOK_PHOTO_URL, wait_until="domcontentloaded")
             page.wait_for_timeout(4000)
 
-            # Check if redirected to login
-            if "login" in page.url.lower():
-                result["error"] = f"LOGIN_REQUIRED: Akun {account} belum login ke TikTok"
+            # Check if redirected to login page or login buttons present
+            is_login_page = "login" in page.url.lower()
+            login_buttons = page.locator("button:has-text('Log in'), a[href*='login'], button:has-text('Masuk')").all()
+            has_login_btn = any(btn.is_visible() for btn in login_buttons if btn.count() > 0)
+
+            if is_login_page or has_login_btn:
+                ss_not_login = os.path.join(ss_dir, "login_required_tiktok.png")
+                page.screenshot(path=ss_not_login)
+                print("\n" + "!" * 80, file=sys.stderr)
+                print(f"⚠️ PERINGATAN: Akun TikTok '@{account}' BELUM LOGIN!", file=sys.stderr)
+                print(f"📸 Screenshot bukti tersimpan: {ss_not_login}", file=sys.stderr)
+                print(f"👉 Jalankan perintah berikut untuk login sekali secara interaktif:", file=sys.stderr)
+                print(f"   py -3 run.py --login --account {account} --platform tiktok", file=sys.stderr)
+                print("!" * 80 + "\n", file=sys.stderr)
+                result["error"] = f"LOGIN_REQUIRED: Akun '{account}' belum login ke TikTok. Jalankan: py -3 run.py --login --account {account}"
                 return result
+
+            # Check and solve CAPTCHA if appeared on page load
+            c_info = detect_captcha(page)
+            if c_info["detected"]:
+                print(f"[TikTokPhoto] Mendeteksi CAPTCHA saat load halaman. Memanggil AI Solver...", flush=True)
+                c_ok = solve_tiktok_captcha(page, account=account)
+                if not c_ok:
+                    result["error"] = "CAPTCHA_BLOCKED: CAPTCHA belum berhasil diselesaikan."
+                    return result
 
             # Discard any existing draft
             print("[TikTokPhoto] Memeriksa draf belum disimpan...", flush=True)
@@ -263,6 +279,14 @@ def upload_photos_to_tiktok(
                 });
                 if (confirmBtn) confirmBtn.click();
             }""")
+
+            page.wait_for_timeout(2500)
+
+            # Check and solve CAPTCHA if prompted upon clicking post
+            c_post = detect_captcha(page)
+            if c_post["detected"]:
+                print("[TikTokPhoto] ⚠️ CAPTCHA muncul saat konfirmasi posting. Menyelesaikan...", flush=True)
+                solve_tiktok_captcha(page, account=account)
 
             print("[TikTokPhoto] Menunggu konfirmasi terbit dari server TikTok...", flush=True)
             final_url = None
