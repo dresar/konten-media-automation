@@ -21,7 +21,10 @@
     <div>
       <div class="inka-label">
         <span>Topik</span>
-        <span id="txtResume" style="color:#0284C7;">Lanjutkan</span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <span id="txtResume" style="color:#0284C7; font-size: 11px;">Lanjutkan</span>
+          <button id="btnResetTopic" class="inka-btn-reset-mini" title="Reset progres & gambar topik saat ini">↺ Reset</button>
+        </div>
       </div>
       <select id="selTopic" class="inka-select"></select>
     </div>
@@ -77,7 +80,10 @@
     <div class="inka-card" style="padding: 10px;">
       <div class="inka-label" style="margin-bottom: 8px;">
         <span>Unduh Gambar (DALL-E)</span>
-        <span id="txtImageCount" class="inka-badge-blue">0 Gambar</span>
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span id="txtImageCount" class="inka-badge-blue">0 Gambar</span>
+          <button id="btnResetImages" class="inka-btn-reset-mini" title="Hapus daftar gambar terdeteksi untuk topik ini">↺ Reset Gambar</button>
+        </div>
       </div>
 
       <!-- Action Row: Pindai Tab & Unduh Semua -->

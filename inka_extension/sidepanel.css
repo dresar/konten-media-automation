@@ -449,3 +449,26 @@ body {
   text-align: center;
   padding: 10px 0;
 }
+
+.inka-btn-reset-mini {
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  color: #64748B;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.inka-btn-reset-mini:hover {
+  background: #FEE2E2;
+  border-color: #FCA5A5;
+  color: #DC2626;
+}
+
+.inka-btn-reset-mini:active {
+  transform: scale(0.96);
+}

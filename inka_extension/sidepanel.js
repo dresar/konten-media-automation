@@ -67,29 +67,29 @@ function getSlideFilename(contentId, slideIdx) {
   return `${slug}_${String(slideIdx).padStart(2, "0")}.png`;
 }
 
-// 1. Inisialisasi Database (Pra-isi 6 Gambar Terverifikasi Konten 1)
+// 1. Inisialisasi Database
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_seeded_v3"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_active_c) activeContentId = data.inka_active_c;
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
 
-    // Pra-isi database untuk Topik 1 (Juice Jacking) dengan 6 link CDN asli
-    const defaultTopic1Links = [
-      "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097a482118ef9e0c19e3d752d&ts=496885&p=fs&cid=1&sig=319b424a2db5cd2a284562063c7cd0a3d2f87bc2bb731c08ee203e674d8e6d6d&v=0",
-      "https://chatgpt.com/backend-api/estuary/content?id=file_000000002c6c821185d10ac3fca30ef6&ts=496885&p=fs&cid=1&sig=74197e404ee72aab7ad3879ec94c58ce6fc891a6143e3d0bbf6900c3cb6acd93&v=0",
-      "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097788209875887d3448c1760&ts=496885&p=fs&cid=1&sig=6981f4e66de03085627872d14549c9a7008c9b68c95cd3919554ecdc5250bde6&v=0",
-      "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb9c8208a142555a25fa81a7&ts=496885&p=fs&cid=1&sig=f91729ef0f10c7c3afda777e52feb764e490091e8e2a4288e2bb721a63fd922a&v=0",
-      "https://chatgpt.com/backend-api/estuary/content?id=file_000000008cec8211b8211938d89c01be&ts=496885&p=fs&cid=1&sig=c0daa7940aff86d8b2df80b107b15aca7679eaa64ed280c6bf44d1a658ac3c31&v=0",
-      "https://chatgpt.com/backend-api/estuary/content?id=file_00000000080c8207a6231b7605b40ba0&ts=496885&p=fs&cid=1&sig=1d614b402adf6dc54617527a8b38e0b7f8d7e40250fedf0748386abefb3c57ef&v=0"
-    ];
+    // Pra-isi hanya sekali saat pertama kali instalasi (tidak akan menimpa jika user melakukan reset)
+    if (!data.inka_seeded_v3 && !cdnDatabase["c1_s1"]) {
+      const defaultTopic1Links = [
+        "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097a482118ef9e0c19e3d752d&ts=496885&p=fs&cid=1&sig=319b424a2db5cd2a284562063c7cd0a3d2f87bc2bb731c08ee203e674d8e6d6d&v=0",
+        "https://chatgpt.com/backend-api/estuary/content?id=file_000000002c6c821185d10ac3fca30ef6&ts=496885&p=fs&cid=1&sig=74197e404ee72aab7ad3879ec94c58ce6fc891a6143e3d0bbf6900c3cb6acd93&v=0",
+        "https://chatgpt.com/backend-api/estuary/content?id=file_0000000097788209875887d3448c1760&ts=496885&p=fs&cid=1&sig=6981f4e66de03085627872d14549c9a7008c9b68c95cd3919554ecdc5250bde6&v=0",
+        "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb9c8208a142555a25fa81a7&ts=496885&p=fs&cid=1&sig=f91729ef0f10c7c3afda777e52feb764e490091e8e2a4288e2bb721a63fd922a&v=0",
+        "https://chatgpt.com/backend-api/estuary/content?id=file_000000008cec8211b8211938d89c01be&ts=496885&p=fs&cid=1&sig=c0daa7940aff86d8b2df80b107b15aca7679eaa64ed280c6bf44d1a658ac3c31&v=0",
+        "https://chatgpt.com/backend-api/estuary/content?id=file_00000000080c8207a6231b7605b40ba0&ts=496885&p=fs&cid=1&sig=1d614b402adf6dc54617527a8b38e0b7f8d7e40250fedf0748386abefb3c57ef&v=0"
+      ];
 
-    defaultTopic1Links.forEach((url, idx) => {
-      const s = idx + 1;
-      const key = `c1_s${s}`;
-      if (!cdnDatabase[key] || !cdnDatabase[key].cdn_url) {
+      defaultTopic1Links.forEach((url, idx) => {
+        const s = idx + 1;
+        const key = `c1_s${s}`;
         cdnDatabase[key] = {
           id: key,
           content_id: 1,
@@ -101,8 +101,10 @@ async function initDatabase() {
           timestamp: new Date().toISOString()
         };
         dbProgress[key] = true;
-      }
-    });
+      });
+      await chrome.storage.local.set({ inka_seeded_v3: true });
+      await saveDatabase();
+    }
 
     // Auto resume ke slide yang belum selesai
     const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
@@ -701,7 +703,42 @@ async function downloadAllImages() {
   toast(`Selesai! ${downloaded} gambar berhasil diunduh diam-diam ✓`);
 }
 
-// 10. Event Listeners & Boot
+// 10. Fitur Reset Progres & Gambar
+async function resetCurrentTopic() {
+  const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
+  const total = currTopic ? (currTopic.total_slides || 6) : 6;
+
+  for (let i = 1; i <= total; i++) {
+    delete dbProgress[`c${activeContentId}_s${i}`];
+    delete cdnDatabase[`c${activeContentId}_s${i}`];
+  }
+  processedImgs.clear();
+  activeSlideIdx = 1;
+
+  await saveDatabase();
+  renderDownloadCount();
+  renderDownloadList();
+  renderTopicSelect();
+  updateView();
+  toast(`↺ Progres Topik #${activeContentId} di-reset`);
+}
+
+async function resetCurrentTopicImages() {
+  const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
+  const total = currTopic ? (currTopic.total_slides || 6) : 6;
+
+  for (let i = 1; i <= total; i++) {
+    delete cdnDatabase[`c${activeContentId}_s${i}`];
+  }
+  processedImgs.clear();
+
+  await saveDatabase();
+  renderDownloadCount();
+  renderDownloadList();
+  toast(`↺ Gambar Topik #${activeContentId} dibersihkan`);
+}
+
+// 11. Event Listeners & Boot
 document.getElementById("selTopic").addEventListener("change", (e) => {
   activeContentId = parseInt(e.target.value);
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
@@ -726,6 +763,9 @@ document.getElementById("btnAutopilot").addEventListener("click", toggleAutopilo
 
 document.getElementById("btnScanTab").addEventListener("click", scanActiveTabForCdnImages);
 document.getElementById("btnDownloadAll").addEventListener("click", downloadAllImages);
+
+document.getElementById("btnResetTopic").addEventListener("click", resetCurrentTopic);
+document.getElementById("btnResetImages").addEventListener("click", resetCurrentTopicImages);
 
 async function boot() {
   await initDatabase();
