@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>InkaTech Studio</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="inka-header">
+    <div class="inka-brand-title">
+      <span class="inka-brand-icon">⚡</span>
+      <span>Inka Studio</span>
+    </div>
+    <span class="inka-badge">SIDEBAR</span>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="inka-container">
+    <!-- Topic Selector -->
+    <div>
+      <div class="inka-label">
+        <span>Topik</span>
+        <span id="txtResume" style="color:#0284C7;">Lanjutkan</span>
+      </div>
+      <select id="selTopic" class="inka-select"></select>
+    </div>
+
+    <!-- Content Info Card -->
+    <div class="inka-card">
+      <div id="txtHook" class="inka-hook-text">Memuat topik...</div>
+      <div class="inka-progress-row">
+        <span id="txtProgress">0/6 Selesai</span>
+        <span id="txtPercent">0%</span>
+      </div>
+      <div class="inka-progress-bar">
+        <div id="barFill" class="inka-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Slide Strip Pills (1 - 6) -->
+    <div>
+      <div class="inka-label">Slide</div>
+      <div id="stripSlides" class="inka-slide-strip"></div>
+    </div>
+
+    <!-- Prompt Box -->
+    <div>
+      <div id="txtOutline" class="inka-outline-tag"></div>
+      <div id="boxPrompt" class="inka-prompt-preview"></div>
+    </div>
+
+    <!-- Action Buttons (Row 1) -->
+    <div class="inka-btn-grid">
+      <button id="btnAutopilot" class="inka-btn inka-btn-primary">
+        ⚡ Autopilot
+      </button>
+      <button id="btnSend" class="inka-btn inka-btn-secondary">
+        Kirim
+      </button>
+    </div>
+
+    <!-- Action Buttons (Row 2) -->
+    <div class="inka-btn-grid-3">
+      <button id="btnCopy" class="inka-btn inka-btn-secondary">
+        Salin
+      </button>
+      <button id="btnNewChat" class="inka-btn inka-btn-accent">
+        New Chat
+      </button>
+      <button id="btnCaption" class="inka-btn inka-btn-secondary">
+        Caption
+      </button>
+    </div>
+
+    <!-- Database CDN Card (Fokus & Bersih) -->
+    <div class="inka-card" style="padding: 10px;">
+      <div class="inka-label" style="margin-bottom: 8px;">
+        <span>Database CDN</span>
+        <span id="txtCdnCount" class="inka-badge-blue">0 Link</span>
+      </div>
+
+      <!-- Action Row: Pindai Tab & Unduh Semua -->
+      <div class="inka-btn-grid" style="margin-bottom: 6px;">
+        <button id="btnScanTab" class="inka-btn inka-btn-primary" title="Pindai link backend CDN di tab ChatGPT saat ini">
+          🔍 Pindai CDN Tab
+        </button>
+        <button id="btnDownloadAllCdn" class="inka-btn inka-btn-secondary" title="Unduh semua file gambar CDN">
+          📥 Unduh Semua
+        </button>
+      </div>
+
+      <!-- Action Row 2: Salin Semua & Ekspor JSON -->
+      <div class="inka-btn-grid" style="margin-bottom: 8px;">
+        <button id="btnCopyCdn" class="inka-btn inka-btn-secondary" title="Salin semua nama & link CDN">
+          Salin Semua
+        </button>
+        <button id="btnExportCdn" class="inka-btn inka-btn-secondary" title="Ekspor file JSON">
+          Ekspor JSON
+        </button>
+      </div>
+
+      <!-- Scanned CDN List with Filenames -->
+      <div class="inka-cdn-container">
+        <div class="inka-label" style="font-size: 10px; margin-bottom: 4px; color: #64748B;">Daftar File CDN</div>
+        <div id="listCdnItems" class="inka-cdn-list">
+          <div class="inka-empty-hint">Belum ada link. Klik 'Pindai CDN Tab'.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Status Bar Toast -->
+  <footer id="txtStatus" class="inka-footer-status">
+    Siap
+  </footer>
+
+  <script src="topics.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "InkaTech Studio ⚡",
+  "version": "2.1.0",
+  "description": "Chrome Native Side Panel Otomasi DALL-E @inka.tech: Auto-Detect Render, Autopilot, Canvas 3:4 & Watermark Logo.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://*.chatgpt.com/*",
+    "https://*.oaiusercontent.com/*"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Buka InkaTech Studio"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

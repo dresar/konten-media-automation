@@ -117,10 +117,12 @@ def build_ffmpeg_video(image_paths, output_mp4, topic=""):
 
 
 def process_images(image_paths, topic, output_name=None, mode="photo", aspect="3:4", logo_pos="top-right", out_dir=None):
-    ts = int(time.time())
-    safe_slug = "".join(c if c.isalnum() or c in "_-" else "_" for c in topic.strip().replace(" ", "_"))[:40].strip("_")
+    cleaned = "".join(c if c.isalnum() or c in " _-" else " " for c in topic.strip())
+    stopwords = {"dan", "di", "yang", "untuk", "bagi", "cara", "era", "ke", "dari", "pada", "bisa", "ini", "itu"}
+    words = [w.lower() for w in cleaned.split() if w.lower() not in stopwords]
+    safe_slug = "-".join(words[:2]) if len(words) >= 2 else (words[0] if words else "konten")
     if not output_name:
-        output_name = f"tiktok_{safe_slug}_{ts}"
+        output_name = f"tiktok_{safe_slug}"
 
     # Dedicated folder for this content topic
     content_dir = out_dir or os.path.join(BASE_DIR, "accounts", "inka.tech", "photo_carousel", safe_slug)

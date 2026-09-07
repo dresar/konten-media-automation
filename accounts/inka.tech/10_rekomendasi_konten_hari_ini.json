@@ -1,0 +1,163 @@
+[
+  {
+    "id": 1,
+    "topic": "Scam Call & Deepfake Voice AI",
+    "hook_title": "SUARA ORANG TERDEKAT BISA DIPALSUKAN AI. MASIH MAU LANGSUNG PERCAYA?",
+    "total_slides": 7,
+    "category": "Keamanan Siber / AI",
+    "slide_outline": [
+      "Slide 1: Hook — AI kini dapat membantu membuat penipuan telepon terdengar jauh lebih meyakinkan.",
+      "Slide 2: Mengapa berbahaya — suara dapat ditiru dari sampel audio yang tersedia di internet atau media sosial.",
+      "Slide 3: Modus umum — penipu berpura-pura menjadi keluarga, teman, atasan, customer service, atau pihak berwenang.",
+      "Slide 4: Red flag — permintaan uang mendadak, tekanan waktu, meminta OTP/PIN, atau melarang korban melakukan verifikasi.",
+      "Slide 5: Cara verifikasi — tutup telepon, hubungi nomor yang tersimpan, gunakan pertanyaan rahasia, dan verifikasi melalui kanal kedua.",
+      "Slide 6: Jika sudah terlanjur — segera hubungi bank/e-wallet, blokir akses yang berisiko, simpan bukti, dan laporkan transaksi.",
+      "Slide 7: CTA — Jangan percaya hanya karena suara terdengar familiar. Verifikasi sebelum bertindak."
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Phishing Modern & Link Palsu",
+    "hook_title": "LINK INI TERLIHAT RESMI. TAPI 1 KLIK BISA MENGAMBIL AKUNMU.",
+    "total_slides": 7,
+    "category": "Keamanan Siber",
+    "slide_outline": [
+      "Slide 1: Hook — phishing modern tidak selalu terlihat seperti email mencurigakan; tampilannya bisa sangat profesional.",
+      "Slide 2: Teknik terbaru — domain mirip, typosquatting, halaman login palsu, QR phishing, dan pesan yang dipersonalisasi.",
+      "Slide 3: Cara mengecek URL — perhatikan domain utama, ejaan, subdomain, HTTPS, dan tujuan sebenarnya sebelum login.",
+      "Slide 4: Red flag — pesan mendesak, hadiah palsu, akun akan diblokir, refund, paket tertahan, atau verifikasi pembayaran.",
+      "Slide 5: Mengapa AI membuat phishing lebih berbahaya — pesan dapat dibuat lebih natural, personal, dan minim kesalahan bahasa.",
+      "Slide 6: Pertahanan praktis — password manager, MFA/passkey, jangan login dari link pesan, dan akses situs melalui aplikasi atau bookmark resmi.",
+      "Slide 7: CTA — Berhenti 10 detik sebelum klik. Periksa alamatnya, bukan hanya tampilannya."
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Infostealer & Pencurian Session Login",
+    "hook_title": "PASSWORD SUDAH KUAT, MFA SUDAH AKTIF — KENAPA AKUN MASIH BISA DIBAJAK?",
+    "total_slides": 8,
+    "category": "Keamanan Siber / Privasi",
+    "slide_outline": [
+      "Slide 1: Hook — akun dapat diserang bukan hanya dengan mencuri password, tetapi juga dengan mencuri session login.",
+      "Slide 2: Apa itu infostealer — malware yang dapat mengambil cookie, session token, kredensial, dan data sensitif dari perangkat.",
+      "Slide 3: Bagaimana serangan terjadi — korban menjalankan software/file berbahaya, malware mencuri data browser, lalu pelaku menggunakan session yang dicuri.",
+      "Slide 4: Mengapa MFA tidak selalu cukup — session yang masih valid dapat memungkinkan akses tanpa proses login normal.",
+      "Slide 5: Sumber risiko — software bajakan, crack, ekstensi browser mencurigakan, file tidak dikenal, dan installer palsu.",
+      "Slide 6: Tanda perangkat berisiko — login asing, akun tiba-tiba logout, aktivitas aneh, ekstensi tidak dikenal, atau credential tersimpan berubah.",
+      "Slide 7: Cara memperkuat pertahanan — update OS, gunakan software resmi, hapus ekstensi mencurigakan, logout dari semua session, dan gunakan passkey bila tersedia.",
+      "Slide 8: CTA — Jangan hanya mengamankan password. Amankan juga perangkat tempat kamu login."
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Prompt Injection & AI Agent",
+    "hook_title": "AI AGENT BISA MENJADI ASISTENMU — TAPI BISA JUGA DIKELABUI.",
+    "total_slides": 8,
+    "category": "AI / Keamanan Siber",
+    "slide_outline": [
+      "Slide 1: Hook — semakin banyak AI yang dapat membaca dokumen, email, website, dan menjalankan tindakan, semakin penting memahami prompt injection.",
+      "Slide 2: Apa itu prompt injection — instruksi berbahaya yang disisipkan ke dalam konten agar AI mengabaikan tujuan atau aturan awal.",
+      "Slide 3: Contoh sederhana — AI diminta merangkum dokumen, tetapi dokumen berisi instruksi tersembunyi yang mencoba mengubah perilaku AI.",
+      "Slide 4: Mengapa AI agent lebih berisiko — agent dapat memiliki akses ke email, file, browser, kalender, atau sistem lain.",
+      "Slide 5: Risiko — kebocoran data, tindakan tidak diinginkan, manipulasi keputusan, atau penggunaan tool secara tidak semestinya.",
+      "Slide 6: Prinsip keamanan — least privilege, sandboxing, validasi tool, pemisahan data dan instruksi, serta human approval untuk tindakan sensitif.",
+      "Slide 7: Apa yang dapat dilakukan pengguna — jangan memberikan akses berlebihan dan jangan menganggap semua output atau instruksi yang dibaca AI dapat dipercaya.",
+      "Slide 8: CTA — AI yang pintar tetap membutuhkan batas akses yang pintar."
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Privasi Data di Era AI",
+    "hook_title": "JANGAN MASUKKAN 7 JENIS DATA INI KE AI SECARA SEMBARANGAN.",
+    "total_slides": 7,
+    "category": "AI / Privasi Data",
+    "slide_outline": [
+      "Slide 1: Hook — AI sangat membantu, tetapi data yang kita masukkan dapat menjadi informasi sensitif.",
+      "Slide 2: Data identitas — hindari memasukkan nomor identitas, alamat lengkap, nomor telepon, dan dokumen pribadi tanpa kebutuhan yang jelas.",
+      "Slide 3: Data finansial — jangan membagikan PIN, password, OTP, nomor kartu lengkap, atau informasi perbankan rahasia.",
+      "Slide 4: Data pekerjaan/kampus — dokumen internal, data mahasiswa, riset belum dipublikasikan, dan informasi perusahaan dapat bersifat sensitif.",
+      "Slide 5: Foto & dokumen — sebelum upload, periksa metadata, tanda tangan, QR/barcode, alamat, dan informasi lain yang terlihat.",
+      "Slide 6: Prinsip aman — minimalkan data, anonimisasi informasi, gunakan layanan tepercaya, dan pahami pengaturan privasi.",
+      "Slide 7: CTA — Gunakan AI sebagai alat bantu, bukan sebagai tempat penyimpanan semua rahasiamu."
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "AI Hallucination & Cara Memverifikasi Jawaban",
+    "hook_title": "AI BISA MENJAWAB DENGAN SANGAT YAKIN — DAN TETAP SALAH.",
+    "total_slides": 6,
+    "category": "AI / Literasi Digital",
+    "slide_outline": [
+      "Slide 1: Hook — jawaban AI yang terdengar meyakinkan bukan jaminan bahwa informasinya benar.",
+      "Slide 2: Apa itu hallucination — AI dapat menghasilkan fakta, sumber, angka, atau detail yang sebenarnya tidak akurat.",
+      "Slide 3: Mengapa terjadi — model menghasilkan respons berdasarkan pola bahasa dan konteks, bukan sekadar mengambil fakta dari database sempurna.",
+      "Slide 4: Kapan wajib verifikasi — kesehatan, hukum, finansial, akademik, berita terbaru, statistik, dan informasi yang berdampak besar.",
+      "Slide 5: Teknik verifikasi — cari sumber primer, cek tanggal, bandingkan beberapa sumber tepercaya, dan buka sumber asli yang diklaim AI.",
+      "Slide 6: CTA — Gunakan AI untuk mempercepat berpikir, tetapi tetap gunakan manusia untuk memeriksa fakta."
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Cara Algoritma Media Sosial Menentukan Apa yang Kamu Lihat",
+    "hook_title": "KENAPA KAMU TERUS MELIHAT KONTEN YANG SAMA? ALGORITMANYA SEDANG MEMPELAJARI KAMU.",
+    "total_slides": 7,
+    "category": "Algoritma / Media Sosial",
+    "slide_outline": [
+      "Slide 1: Hook — feed media sosial bukan urutan konten yang sepenuhnya acak.",
+      "Slide 2: Sinyal utama — watch time, completion rate, like, komentar, share, save, klik, dan interaksi dengan akun tertentu.",
+      "Slide 3: Personalization — sistem memprediksi konten yang kemungkinan membuat pengguna tetap berada di platform.",
+      "Slide 4: Efek feedback loop — semakin sering berinteraksi dengan suatu tema, semakin banyak tema serupa yang berpotensi muncul.",
+      "Slide 5: Mengapa konten kontroversial mudah menarik perhatian — emosi kuat dapat meningkatkan interaksi dan waktu menonton.",
+      "Slide 6: Cara mengendalikan feed — gunakan not interested, unfollow, reset rekomendasi jika tersedia, dan secara aktif mencari konten berkualitas.",
+      "Slide 7: CTA — Jangan hanya bertanya 'algoritma memilih apa untukku?', tetapi juga 'apa yang sedang aku ajarkan kepada algoritma?'"
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Jejak Digital & Data yang Diam-Diam Terkumpul",
+    "hook_title": "KAMU MERASA TIDAK MEMBERIKAN DATA? INTERNET MUNGKIN SUDAH TAHU BANYAK HAL TENTANGMU.",
+    "total_slides": 7,
+    "category": "Privasi / Keamanan Digital",
+    "slide_outline": [
+      "Slide 1: Hook — aktivitas online meninggalkan banyak sinyal digital bahkan ketika pengguna tidak merasa sedang membagikan informasi.",
+      "Slide 2: Sumber jejak digital — pencarian, lokasi, cookies, aplikasi, foto, komentar, pembelian, dan aktivitas akun.",
+      "Slide 3: Metadata — foto dan file tertentu dapat menyimpan informasi tambahan seperti waktu, perangkat, atau lokasi tergantung format dan pengaturan.",
+      "Slide 4: Risiko — profiling, iklan yang sangat personal, social engineering, doxxing, dan penyalahgunaan informasi.",
+      "Slide 5: Audit privasi — periksa permission aplikasi, akun yang masih login, aplikasi terhubung, lokasi, kamera, mikrofon, dan kontak.",
+      "Slide 6: Minimalkan jejak — hapus akun lama, batasi permission, gunakan pengaturan privasi, dan pikirkan sebelum mengunggah.",
+      "Slide 7: CTA — Sebelum posting, tanyakan: apakah saya nyaman jika informasi ini tetap tersedia bertahun-tahun?"
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "AI untuk Produktivitas Mahasiswa",
+    "hook_title": "BUKAN CUMA CHATGPT: 7 CARA AI BISA MEMOTONG PEKERJAAN KAMPUS TANPA MENGGANTIKAN OTAKMU.",
+    "total_slides": 8,
+    "category": "AI / Produktivitas / Pendidikan",
+    "slide_outline": [
+      "Slide 1: Hook — AI dapat digunakan sebagai copilot untuk mempercepat proses belajar, bukan sekadar mesin pembuat jawaban.",
+      "Slide 2: Belajar — ubah materi kuliah menjadi pertanyaan latihan, flashcard, kuis, dan penjelasan dengan tingkat kesulitan berbeda.",
+      "Slide 3: Riset — gunakan AI untuk membantu menemukan kata kunci, menyusun pertanyaan riset, dan memetakan topik sebelum membaca sumber asli.",
+      "Slide 4: Menulis — gunakan AI untuk brainstorming, membuat struktur tulisan, memperjelas kalimat, dan menemukan bagian yang belum kuat.",
+      "Slide 5: Presentasi — ubah konsep kompleks menjadi struktur slide, analogi, contoh, dan pertanyaan diskusi.",
+      "Slide 6: Coding — minta AI menjelaskan error, membuat contoh sederhana, menulis test, dan membantu memahami kode baris demi baris.",
+      "Slide 7: Aturan emas — jangan menyerahkan seluruh proses berpikir; verifikasi fakta, pahami hasil, dan patuhi aturan akademik.",
+      "Slide 8: CTA — Jadikan AI copilot, bukan autopilot."
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "AI Hemat Energi & Masa Depan Green Data Center",
+    "hook_title": "SETIAP KALI KAMU MEMAKAI AI, ADA 'MESIN' RAKSASA DI BELAKANGNYA. SEBERAPA BESAR ENERGINYA?",
+    "total_slides": 6,
+    "category": "AI / Teknologi / Lingkungan",
+    "slide_outline": [
+      "Slide 1: Hook — AI membutuhkan infrastruktur komputasi besar yang bekerja di balik setiap layanan digital.",
+      "Slide 2: Apa yang mengonsumsi energi — GPU/akselerator, server, jaringan, sistem pendingin, penyimpanan, dan infrastruktur data center.",
+      "Slide 3: Training vs inference — pelatihan model dapat membutuhkan komputasi sangat besar, sementara penggunaan harian juga membutuhkan energi secara terus-menerus.",
+      "Slide 4: Mengapa efisiensi penting — pertumbuhan AI meningkatkan kebutuhan terhadap listrik, pendinginan, chip, dan infrastruktur data center.",
+      "Slide 5: Solusi teknologi — model lebih efisien, hardware khusus AI, optimasi komputasi, pendinginan lebih baik, dan penggunaan energi terbarukan.",
+      "Slide 6: CTA — Masa depan AI bukan hanya tentang model yang makin pintar, tetapi juga teknologi yang makin efisien dan berkelanjutan."
+    ]
+  }
+]

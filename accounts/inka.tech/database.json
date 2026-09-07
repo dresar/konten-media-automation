@@ -1,24 +1,22 @@
 {
   "account": "inka.tech",
   "created_at": 1788766204,
-  "last_updated": 1788766239,
-  "total_content_count": 2,
-  "total_uploaded_to_gdrive": 1,
+  "last_updated": 1788786393,
+  "total_content_count": 11,
+  "total_uploaded_to_gdrive": 5,
   "total_published_tiktok": 1,
   "history": [
     {
-      "folder_name": "Bahaya_Media_Sosial_bagi_Balita_1788764845",
+      "folder_name": "medsos-balita",
       "topic": "Bahaya Media Sosial bagi Balita",
       "content_type": "photo_carousel",
       "account": "inka.tech",
       "created_at": 1788765412,
       "backup_timestamp": 1788766239,
       "backup_status": "SUCCESS",
-      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/Bahaya_Media_Sosial_bagi_Balita_1788764845",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/medsos-balita",
       "tiktok_published": true,
-      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\metadata.json",
-      "prompts_file": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\prompts.txt",
-      "caption_file": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\Bahaya_Media_Sosial_bagi_Balita_1788764845\\caption.txt"
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\medsos-balita\\konten.json"
     },
     {
       "id": "video_Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239",
@@ -29,6 +27,109 @@
       "folder": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\video\\Bahaya_AI_bagi_Privasi_dan_Keamanan_Masa_1788769239",
       "status": "ready_for_review",
       "created_at": "2026-09-07 15:22:36"
+    },
+    {
+      "folder_name": "scam-deepfake",
+      "topic": "Scam Call & Deepfake Voice AI",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788775664,
+      "backup_timestamp": 1788775854,
+      "backup_status": "SUCCESS",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/scam-deepfake",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\scam-deepfake\\konten.json"
+    },
+    {
+      "folder_name": "phishing-modern",
+      "topic": "Phishing Modern & Link Palsu",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788776643,
+      "backup_timestamp": 1788776829,
+      "backup_status": "SUCCESS",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/phishing-modern",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\phishing-modern\\konten.json"
+    },
+    {
+      "folder_name": "infostealer",
+      "topic": "Infostealer & Pencurian Session Login",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788777709,
+      "backup_timestamp": 1788777907,
+      "backup_status": "SUCCESS",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/infostealer",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\infostealer\\konten.json"
+    },
+    {
+      "folder_name": "prompt-injection",
+      "topic": "Prompt Injection & AI Agent",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788778756,
+      "backup_timestamp": 1788778911,
+      "backup_status": "SUCCESS",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/prompt-injection",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\prompt-injection\\konten.json"
+    },
+    {
+      "folder_name": "privasi-ai",
+      "topic": "Privasi Data di Era AI",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788786393,
+      "backup_status": "PENDING",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/privasi-ai",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\privasi-ai\\konten.json"
+    },
+    {
+      "folder_name": "ai-hallucination",
+      "topic": "AI Hallucination & Verifikasi Jawaban AI",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788786393,
+      "backup_status": "PENDING",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/ai-hallucination",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\ai-hallucination\\konten.json"
+    },
+    {
+      "folder_name": "algoritma-medsos",
+      "topic": "Cara Algoritma Media Sosial Menentukan Konten",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788786393,
+      "backup_status": "PENDING",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/algoritma-medsos",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\algoritma-medsos\\konten.json"
+    },
+    {
+      "folder_name": "jejak-digital",
+      "topic": "Jejak Digital & Pengumpulan Data",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788786393,
+      "backup_status": "PENDING",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/jejak-digital",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\jejak-digital\\konten.json"
+    },
+    {
+      "folder_name": "ai-produktivitas",
+      "topic": "AI untuk Produktivitas Mahasiswa",
+      "content_type": "photo_carousel",
+      "account": "inka.tech",
+      "created_at": 1788786393,
+      "backup_status": "PENDING",
+      "gdrive_path": "gdrive:KONTEN/inka.tech/photo_carousel/ai-produktivitas",
+      "tiktok_published": false,
+      "local_metadata_path": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\inka.tech\\photo_carousel\\ai-produktivitas\\konten.json"
     }
   ]
 }

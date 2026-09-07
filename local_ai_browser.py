@@ -37,18 +37,69 @@ def clean_profile_cache(profile_dir: str):
                 pass
 
 def kill_profile_chrome(profile_dir: str = ""):
-    ps_cmd = 'Get-CimInstance Win32_Process -Filter "Name = \'chrome.exe\'" | Where-Object { $_.CommandLine -like "*browser_profiles*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }'
+    if profile_dir:
+        acc_name = os.path.basename(profile_dir.rstrip(r"\/"))
+        ps_cmd = f'Get-CimInstance Win32_Process -Filter "Name = \'chrome.exe\'" | Where-Object {{ $_.CommandLine -like "*browser_profiles*{acc_name}*" }} | ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force }}'
+    else:
+        ps_cmd = 'Get-CimInstance Win32_Process -Filter "Name = \'chrome.exe\'" | Where-Object { $_.CommandLine -like "*browser_profiles*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }'
     try:
         subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", ps_cmd], capture_output=True, timeout=10)
     except Exception:
         pass
 
+def kill_locking_processes(profile_dir: str):
+    import ctypes
+    from ctypes import wintypes
+    try:
+        rm = ctypes.WinDLL('rstrtmgr')
+        pids_to_kill = set()
+        test_files = [
+            os.path.join(profile_dir, "lockfile"),
+            os.path.join(profile_dir, "Default", "LOCK"),
+            os.path.join(profile_dir, "SingletonLock")
+        ]
+        for tf in test_files:
+            if not os.path.exists(tf):
+                continue
+            session_handle = wintypes.DWORD()
+            session_key = (wintypes.WCHAR * 256)()
+            if rm.RmStartSession(ctypes.byref(session_handle), 0, session_key) == 0:
+                target = ctypes.c_wchar_p(tf)
+                if rm.RmRegisterResources(session_handle, 1, ctypes.byref(target), 0, None, 0, None) == 0:
+                    n_needed = wintypes.UINT()
+                    n_info = wintypes.UINT(10)
+                    class RM_PROCESS_INFO(ctypes.Structure):
+                        _fields_ = [
+                            ('Process', wintypes.DWORD * 2),
+                            ('strAppName', wintypes.WCHAR * 256),
+                            ('strServiceShortName', wintypes.WCHAR * 64),
+                            ('ApplicationType', wintypes.DWORD),
+                            ('AppStatus', wintypes.DWORD),
+                            ('TSSessionId', wintypes.DWORD),
+                            ('bRestartable', wintypes.BOOL)
+                        ]
+                    info_arr = (RM_PROCESS_INFO * 10)()
+                    reasons = wintypes.DWORD()
+                    if rm.RmGetList(session_handle, ctypes.byref(n_needed), ctypes.byref(n_info), info_arr, ctypes.byref(reasons)) == 0:
+                        for i in range(n_info.value):
+                            pids_to_kill.add(info_arr[i].Process[0])
+                rm.RmEndSession(session_handle)
+        for pid in pids_to_kill:
+            try:
+                subprocess.run(['taskkill', '/F', '/PID', str(pid)], capture_output=True)
+            except Exception:
+                pass
+    except Exception:
+        pass
+
 def clear_profile_locks(account: str):
     profile_dir = get_profile_dir(account)
+    kill_locking_processes(profile_dir)
     lock_patterns = [
         os.path.join(profile_dir, "SingletonLock"),
         os.path.join(profile_dir, "SingletonSocket"),
         os.path.join(profile_dir, "SingletonCookie"),
+        os.path.join(profile_dir, "lockfile"),
         os.path.join(profile_dir, "Default", "LOCK"),
         os.path.join(profile_dir, "Default", "LOG"),
     ]
@@ -184,7 +235,7 @@ def expand_prompts(base_prompt: str, count: int, start_index: int = 1) -> list[s
         ]
     elif any(k in low for k in ["balita", "anak", "social media", "medsos", "screen", "gadget", "bayi", "toddler", "parenting"]):
         themes = [
-            "Vertical 3:4 portrait orientation educational TikTok carousel slide (Cover Hook). A clean modern studio aesthetic with a PURE CLEAN WHITE BACKGROUND (#FFFFFF). In the center, a 3D cute cartoon stylized toddler sits beside an oversized glowing smartphone displaying chaotic social media popups, notification badges, and rapid flashing digital icons. The mood highlights digital sensory overload while maintaining a clean, educational atmosphere. Vibrant emerald green (#10B981) accents illuminate key UI elements. High up in the center, bold, crystal-clear typography reads: 'BAHAYA MEDIA SOSIAL BAGI BALITA!'. Subtitle below reads: 'Mengapa balita di bawah usia 3 tahun tidak boleh terpapar algoritma medsos?'. At the bottom right, a cute friendly white-and-green chibi robot mascot points at the screen with an alert gesture. The top-right corner is left completely blank and empty for the official logo placement. At the very bottom footer: 'Follow TikTok @inka.tech • Instagram @arif_ex21 • Jangan lupa follow akun ini'. Negative constraints & elements to avoid: [Do NOT include dark backgrounds, no black or dark blue backdrop, no photorealistic real human faces or real photographs, no logo, watermark, or text in the top-right corner, no blurry typography, no distorted cartoon anatomy, no clutter].",
+            "Vertical 3:4 portrait orientation educational TikTok carousel slide (Cover Hook). A clean modern studio aesthetic with a PURE CLEAN WHITE BACKGROUND (#FFFFFF). In the center, a 3D cute cartoon stylized toddler sits beside an oversized glowing smartphone displaying chaotic social media popups, notification badges, and rapid flashing digital icons. The mood highlights digital sensory overload while maintaining a clean, educational atmosphere. Vibrant emerald green (#10B981) accents illuminate key UI elements. High up in the center, bold, crystal-clear typography reads: 'BAHAYA MEDIA SOSIAL BAGI BALITA!'. Subtitle below reads: 'Mengapa balita di bawah usia 3 tahun tidak boleh terpapar algoritma medsos?'. At the bottom right, a cute friendly white-and-green chibi robot mascot points at the screen with an alert gesture. The top-right corner is left completely blank and empty for the official logo placement. At the bottom footer, a clean horizontal footer featuring the official 3D glossy TikTok logo icon directly beside '@inka.tech', a subtle separator dot, and the official 3D colorful Instagram camera logo icon directly beside '@arif_ex21', with small text 'Jangan lupa follow akun ini'. Strictly render the recognizable official visual brand logo icons for TikTok and Instagram, NOT the words 'Follow TikTok' or 'Instagram'. Negative constraints & elements to avoid: [Do NOT include dark backgrounds, no black or dark blue backdrop, no photorealistic real human faces or real photographs, no logo, watermark, or text in the top-right corner, no blurry typography, no distorted cartoon anatomy, no clutter].",
             "Vertical 3:4 portrait orientation educational TikTok carousel slide (Point 1: Speech Delay & Brain Development). PURE CLEAN WHITE BACKGROUND (#FFFFFF). Minimalist 3D educational infographic concept showing a stylized child's brain model with gentle green neural circuit lines alongside a fast-spinning digital social media reel symbol, depicting overstimulation. At the top, bold sharp headline reads: '1. Menghambat Perkembangan Bicara (Speech Delay)'. Two clear bullet points in large legible dark gray (#1F2937) typography: '• Pasif menerima stimulasi satu arah tanpa interaksi dua arah\n• Mengurangi waktu komunikasi penting dengan orang tua'. The small white-and-emerald chibi robot mascot stands beside an infographic milestone chart looking concerned. Top-right corner is strictly empty with generous negative space. Bottom footer: 'Follow TikTok @inka.tech • Instagram @arif_ex21 • Jangan lupa follow akun ini'. Negative constraints & elements to avoid: [No dark background, no black textures, no realistic human faces, no watermark, no text or icons in top-right corner, no cramped layout, no illegible text].",
             "Vertical 3:4 portrait orientation educational TikTok carousel slide (Point 2: Tantrums & Dopamine Addiction). PURE CLEAN WHITE BACKGROUND (#FFFFFF). Clean 3D vector illustration showing a stylized toddler character crying in distress when a glowing phone screen timer expires, contrasting with a soothing green calm zone. At the top, bold readable headline reads: '2. Memicu Tantrum Ekstrem & Kecanduan Dopamin'. Bullet points in high-contrast dark gray font: '• Algoritma video cepat membiasakan otak balita dengan dopamin instan\n• Anak menjadi tidak sabar, gelisah, dan mudah meledak emosinya'. Emerald green (#10B981) safety accents emphasize stability. Cute robot mascot holds a calm shield nearby. Top-right corner is completely blank and free of graphics. Bottom footer: 'Follow TikTok @inka.tech • Instagram @arif_ex21 • Jangan lupa follow akun ini'. Negative constraints & elements to avoid: [No dark or colored backgrounds, no real photography of crying children, no logo in top right, no watermarks, no distorted limbs].",
             "Vertical 3:4 portrait orientation educational TikTok carousel slide (Point 3: Sleep Disorder & Radiation Exposure). PURE CLEAN WHITE BACKGROUND (#FFFFFF). Cozy yet minimalist nursery illustration with soft studio lighting. A stylized cartoon child crib under a night-light, showing a bright blue-light ray from a phone disrupting natural sleep cycles, marked with a soft warning symbol. At the top, clear bold headline reads: '3. Gangguan Tidur & Penurunan Fokus Jangka Panjang'. Bullet points in crisp typography: '• Paparan paparan cahaya biru menekan hormon melatonin alami\n• Kualitas tidur rusak mengakibatkan konsentrasi anak terganggu'. The cute white chibi robot mascot holds a moon and gentle green sleep tracker icon. Top-right corner remains clean white negative space. Bottom footer: 'Follow TikTok @inka.tech • Instagram @arif_ex21 • Jangan lupa follow akun ini'. Negative constraints & elements to avoid: [No dark room backdrop, keep overall canvas pure clean white, no realistic human faces, no top-right markings, no watermarks, no messy composition].",
@@ -277,14 +328,27 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
             page.wait_for_timeout(3000)
 
             if is_image:
-                prompts_list = expand_prompts(prompt, count, start_index)
+                if isinstance(prompt, list):
+                    prompts_list = prompt
+                else:
+                    prompts_list = expand_prompts(prompt, count, start_index)
                 os.makedirs(os.path.join("outputs", "images"), exist_ok=True)
 
+                ensure_new_chat_chatgpt(page)
+
                 for idx, curr_prompt in enumerate(prompts_list):
-                    ensure_new_chat_chatgpt(page)
+                    # Auto dismiss any rate-limit or blocking modal
+                    try:
+                        page.evaluate("""() => {
+                            document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"]').forEach(el => el.remove());
+                            document.querySelectorAll('div.fixed.inset-0.z-50').forEach(el => el.remove());
+                        }""")
+                    except Exception:
+                        pass
+
                     prompt_el = page.locator('#prompt-textarea')
                     try:
-                        prompt_el.wait_for(state='visible', timeout=20000)
+                        prompt_el.wait_for(state='visible', timeout=25000)
                     except Exception:
                         if page.get_by_role("button", name="Log in").count() > 0 or page.get_by_role("link", name="Log in").count() > 0:
                             result["error"] = f"LOGIN_REQUIRED: Halaman ChatGPT meminta login untuk akun '{account}'."
@@ -295,7 +359,17 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                     initial_img_srcs = set(page.evaluate("() => Array.from(document.querySelectorAll('img')).map(i => i.src).filter(Boolean)"))
 
                     prompt_el.click()
-                    prompt_el.fill(curr_prompt)
+                    page.wait_for_timeout(300)
+                    try:
+                        prompt_el.fill(curr_prompt)
+                    except Exception:
+                        page.evaluate("""(txt) => {
+                            const el = document.querySelector('#prompt-textarea');
+                            if (el) {
+                                el.focus();
+                                document.execCommand('insertText', false, txt);
+                            }
+                        }""", curr_prompt)
                     page.wait_for_timeout(1000)
 
                     send_btn = page.locator('button[data-testid="send-button"]').first
@@ -345,6 +419,10 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                             img_num = (start_index - 1) + idx + 1
                             if output_path and len(prompts_list) == 1 and start_index == 1:
                                 out = output_path
+                            elif output_path and "{idx" in output_path:
+                                out = output_path.format(idx=img_num)
+                            elif output_path and os.path.isdir(output_path):
+                                out = os.path.join(output_path, f"slide_{img_num:02d}.png")
                             elif output_path:
                                 base, ext = os.path.splitext(output_path)
                                 ext = ext or ".png"
@@ -371,14 +449,13 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
 
                     page.wait_for_timeout(3000)
                     if idx + 1 < len(prompts_list):
-                        ensure_new_chat_chatgpt(page)
+                        # Lanjutkan di obrolan yang sama tanpa membuka new-chat agar tidak kena rate-limit
                         prompt_next = page.locator('#prompt-textarea')
                         try:
                             prompt_next.wait_for(state='visible', timeout=25000)
-                            page.wait_for_timeout(2000)
+                            page.wait_for_timeout(1000)
                         except Exception:
-                            page.goto("https://chatgpt.com", wait_until="domcontentloaded", timeout=45000)
-                            page.wait_for_timeout(3000)
+                            pass
 
                 if result["saved_images"]:
                     result["saved_image"] = result["saved_images"][0]
@@ -422,6 +499,7 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
 
         except Exception as e:
             result["error"] = str(e)
+            print(f"[ChatGPT Error] Terjadi kesalahan: {e}", flush=True)
         finally:
             if context:
                 try:

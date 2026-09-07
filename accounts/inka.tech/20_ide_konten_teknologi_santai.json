@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1,
+    "topic": "Juice Jacking & Cas HP Sembarangan",
+    "hook_title": "JANGAN ASAL COLOK CASAN DI TEMPAT UMUM! INI BAHAYA JUICE JACKING",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Colok USB di bandara/stasiun bisa bikin data HP dibobol tanpa sadar.",
+      "Slide 2: Cara kerjanya — Kabel USB bukan cuma ngisi daya, tapi juga transfer file otomatis.",
+      "Slide 3: Data apa yang bisa kesedot — Foto galeri, kontak, chat rahasia, sampai token login aplikasi.",
+      "Slide 4: Solusi simpel 1 — Selalu bawa kepala charger sendiri dan colok di stopkontak listrik biasa.",
+      "Slide 5: Senjata rahasia 2 — Pake USB Data Blocker (dongle murah yang cuma izinin aliran listrik tanpa data).",
+      "Slide 6: Rangkuman & CTA — Cas aman, data tenang! Follow @inka.tech buat trik teknologi harian."
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Mode Incognito Bukan Mode Menghilang",
+    "hook_title": "KAMU PIKIR INCOGNITO BIKIN KAMU GAK KELIHATAN? BOHONG BESAR!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Buka incognito berasa udah kayak hacker ninja, padahal masih kebaca jelas.",
+      "Slide 2: Fakta sebenarnya — Incognito cuma hapus riwayat & cookies di perangkat kamu sendiri.",
+      "Slide 3: Siapa yang tetap tahu — Provider WiFi (kantor/sekolah), ISP, dan website yang kamu buka.",
+      "Slide 4: Pelacak iklan tetap jalan — Alamat IP dan sidik jari browser tetap terlacak.",
+      "Slide 5: Solusi privasi beneran — Gunakan DNS aman, private browser, dan VPN tepercaya.",
+      "Slide 6: Rangkuman & CTA — Jangan tertipu mode rahasia palsu! Simpan postingan ini ya."
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Trik Prompting AI Santai Biar Gak Kaku",
+    "hook_title": "AI JAWABNYA KAKU KAYAK ROBOT? COBA 3 MANTRA PROMPT INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Kenapa jawaban ChatGPT kamu kaku banget dan kebaca banget buatan AI?",
+      "Slide 2: Kesalahan umum — Prompt terlalu pendek dan gak ngasih gaya kepribadian.",
+      "Slide 3: Mantra 1 (Role & Tone) — Jawab dengan gaya teman ngopi yang jago teknologi, santai & tanpa istilah ribet.",
+      "Slide 4: Mantra 2 (Negative Constraints) — Jangan pakai kata klise AI seperti tentu, bayangkan, menyelami, mari.",
+      "Slide 5: Mantra 3 (Analogikan) — Jelaskan konsep ini pakai analogi kehidupan sehari-hari anak muda.",
+      "Slide 6: Rangkuman & CTA — Cobain sekarang! Follow @inka.tech buat trik AI selanjutnya."
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Kenapa HP Makin Lama Makin Lemot",
+    "hook_title": "HP BARU SETAHUN KOK UDAH LEMOT? BUKAN DISURUH GANTI HP, INI SEBABNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baru beli setahun tapi buka aplikasi mulai patah-patah? Tenang, belum tentu rusak.",
+      "Slide 2: Penyebab 1: Memori internal di atas 85% bikin sistem swap RAM macet.",
+      "Slide 3: Penyebab 2: Cache aplikasi medsos (TikTok/IG/WA) numpuk sampai puluhan GB.",
+      "Slide 4: Penyebab 3: Fitur background refresh & auto-sync puluhan aplikasi gak guna.",
+      "Slide 5: Cara beresin 5 menit — Bersihin cache WA/TikTok, sisain free storage min 20%, restart HP seminggu sekali.",
+      "Slide 6: Rangkuman & CTA — HP kenceng lagi tanpa modal! Share ke teman yang HP-nya lemot."
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Bahaya WiFi Gratisan Tanpa Password",
+    "hook_title": "LIHAT WIFI GRATIS DI CAFE LANGSUNG KONEK? HATI-HATI JEBAKAN EVIL TWIN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Siapa yang gak suka gratisan? Tapi WiFi terbuka bisa jadi umpan penjahat siber.",
+      "Slide 2: Modus Evil Twin — Hacker bikin nama WiFi persis nama cafe untuk nangkep semua lalu lintas data.",
+      "Slide 3: Data yang terancam — Sesi login, cookie belanja online, password yang gak terenkripsi.",
+      "Slide 4: Aturan wajib saat pakai WiFi cafe — Jangan pernah buka m-banking atau transaksi belanja online.",
+      "Slide 5: Pertahanan instan — Selalu nyalain VPN dan matikan opsi Auto-connect to open networks.",
+      "Slide 6: Rangkuman & CTA — Gratisan enak, tapi keamanan akun nomor satu! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "Kenapa Iklan Bisa Tepat Banget Sama Obrolan Kita",
+    "hook_title": "BARU AJA NGOBROLIN SEPATU, TIBA-TIBA MUNCUL IKLANNYA? HP BENERAN NYADAP?",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering ngerasa HP dengerin omongan kita karena iklan yang muncul pas banget?",
+      "Slide 2: Mitos vs Fakta — HP gak perlu dengerin audio 24 jam; algoritma pelacak data udah jauh lebih canggih.",
+      "Slide 3: Cara kerjanya 1 (Cross-Device Matching) — Teman yang satu jaringan WiFi nyari produk itu, kamu kena imbasnya.",
+      "Slide 4: Cara kerjanya 2 (Micro-Interactions) — Berhenti 2 detik di video tertentu udah kebaca sebagai minat tinggi.",
+      "Slide 5: Cara matikan pelacak — Matikan Personalised Ads di setting Google/Apple & batasi izin mikrofon.",
+      "Slide 6: Rangkuman & CTA — Algoritma lebih tahu kamu dibanding kamu sendiri! Share ke temanmu."
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Rahasia Baterai HP Awet Sampai Bertahun-tahun",
+    "hook_title": "BATTERY HEALTH CEPAT TURUN? JANGAN-JANGAN KAMU MASIH NGELAKUIN INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baterai HP kamu bocor sebelum 2 tahun? Cek kebiasaan ngecas kamu.",
+      "Slide 2: Musuh utama baterai — Panas berlebih! Main game berat sambil ngecas adalah pembunuh baterai tercepat.",
+      "Slide 3: Aturan 20-80 — Usahakan cas saat 20% dan cabut di 80-85% untuk memperpanjang siklus lithium-ion.",
+      "Slide 4: Jangan biarin mati total (0%) — Siklus drop nol bikin voltase kimia stres parah.",
+      "Slide 5: Gunakan charger original & kabel berkualitas — Voltase stabil menjaga kesehatan motherboard.",
+      "Slide 6: Rangkuman & CTA — Rawat baterai HP biar hemat jutaan rupiah! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Password Manager: Satu Kunci Untuk Selamanya",
+    "hook_title": "MASIH PAKE PASSWORD TANGGAL LAHIR DI SEMUA AKUN? BESOK BISA HILANG SEMUA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Mengaku aja: kamu pasti punya 1 password yang dipakai di puluhan website kan?",
+      "Slide 2: Bahaya credential stuffing — Kalau 1 website bocor di dark web, semua akunmu otomatis jebol.",
+      "Slide 3: Solusi cerdas: Password Manager (Bitwarden, 1Password, atau bawaan Google/Apple).",
+      "Slide 4: Cara kerjanya — Bikin password acak 20 karakter rumit untuk tiap website tanpa perlu kamu hapal.",
+      "Slide 5: Kamu cuma perlu hapal 1 Master Password utama yang kuat dan unik.",
+      "Slide 6: Rangkuman & CTA — Amankan hidup digitalmu hari ini juga! Simpan postingan ini."
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "Cara Cek Apakah Datamu Pernah Bocor di Dark Web",
+    "hook_title": "DATA PRIBADIMU UDAH DIJUAL DI DARK WEB? CEK SENDIRI DALAM 1 MENIT!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Banyak kebocoran database besar beberapa tahun terakhir. Akunmu kena gak ya?",
+      "Slide 2: Alat cek resmi & aman — Buka website HaveIBeenPwned.com (gratis dan tepercaya).",
+      "Slide 3: Cara pakainya — Cukup masukkan alamat email atau nomormu, tanpa perlu masukkan password apapun.",
+      "Slide 4: Cara baca hasilnya — Kalau merah (Pwned), dia bakal kasih tahu data apa aja yang bocor.",
+      "Slide 5: Langkah wajib jika bocor — Ganti password akun terkait dan nyalakan verifikasi 2 langkah (2FA).",
+      "Slide 6: Rangkuman & CTA — Cek email kamu sekarang juga sebelum terlambat! Share ke grup keluarga."
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "Format File Rahasia: Kenapa PDF Gak Boleh Sembarangan Diedit",
+    "hook_title": "KIRIM SCAN KTP FORMAT PDF? HATI-HATI JANGAN LUPA DIBERI WATERMARK!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering disuruh upload scan KTP/SIM buat daftar online? Waspada pinjol ilegal!",
+      "Slide 2: Modus pemalsuan — Foto KTP bersih gampang banget disalahgunakan orang lain buat pinjaman tanpa izin.",
+      "Slide 3: Trik aman wajib — Selalu tambahkan watermark digital melintang di atas gambar KTP.",
+      "Slide 4: Contoh tulisan watermark — SCAN KTP UNTUK VERIFIKASI APLIKASI X TANGGAL DD/MM/YYYY.",
+      "Slide 5: Tutup tanda tangan & nomor sensitif jika gak diminta secara resmi.",
+      "Slide 6: Rangkuman & CTA — Jaga identitasmu baik-baik! Follow @inka.tech untuk tips keamanan lainnya."
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "Mitos Radiasi HP: Benarkah Bahaya Saat Tidur?",
+    "hook_title": "TIDUR SEBELAH HP BIKIN KANKER OTAK? INI PENJELASAN SAINS YANG SEBENARNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering dimarahin orang tua karena tidur deket HP? Yuk kita bedah faktanya.",
+      "Slide 2: Jenis radiasi HP — Radiasi elektromagnetik non-ionisasi (frekuensi radio), bukan radiasi nuklir.",
+      "Slide 3: Bahaya aslinya bukan radiasi — Tapi cahaya biru (blue light) yang merusak produksi hormon tidur (melatonin).",
+      "Slide 4: Efek nyata — Susah tidur nyenyak, mata lelah, dan bangun tidur tetap merasa capek.",
+      "Slide 5: Tips tidur berkualitas — Jauhkan HP 1-2 meter sebelum tidur atau aktifkan Do Not Disturb.",
+      "Slide 6: Rangkuman & CTA — Tidur sehat, gadget aman! Share ke teman yang suka begadang main HP."
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Cloud Storage Gratisan: Cara Maksimalkan Tanpa Bayar",
+    "hook_title": "GOOGLE DRIVE 15GB PENUH? INI CARA BERSIHIN TANPA PERLU LANGGANAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Muncul notifikasi penyimpanan Google hampir habis? Jangan buru-buru beli langganan.",
+      "Slide 2: Biang kerok 1: Lampiran email besar di Gmail yang udah bertahun-tahun gak dihapus.",
+      "Slide 3: Trik filter Gmail — Ketik size:10m di kotak pencarian Gmail untuk hapus email berbobot besar.",
+      "Slide 4: Biang kerok 2: Video cadangan di Google Photos yang gak pernah ditonton lagi.",
+      "Slide 5: Alternatif backup — Pindahkan file arsip ke harddisk eksternal atau cloud sekunder.",
+      "Slide 6: Rangkuman & CTA — Ruang lega lagi tanpa keluar uang! Simpan postingan ini ya."
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Trik Pintar Google Search yang 90% Orang Gak Tahu",
+    "hook_title": "CARI FILE DI GOOGLE MASIH KETIK BIASA? PAKE 4 SIMBOL RAHASIA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Nyari materi atau ebook di Google tapi yang keluar malah website iklan sampah?",
+      "Slide 2: Simbol 1: filetype:pdf untuk langsung download dokumen PDF resmi tanpa masuk web ribet.",
+      "Slide 3: Simbol 2: site:edu atau site:gov untuk menyaring hanya sumber kampus atau pemerintah.",
+      "Slide 4: Simbol 3: Tanda kutip \"kata kunci\" untuk mencari frasa yang persis dan tidak diacak.",
+      "Slide 5: Simbol 4: Tanda minus -iklan untuk membuang kata yang gak kamu mau dari hasil pencarian.",
+      "Slide 6: Rangkuman & CTA — Riset kilat secepat kilat! Follow @inka.tech buat trik produktivitas."
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "Kenapa Kabel Casan Murah Bisa Ngerusak HP",
+    "hook_title": "BELI KABEL CASAN 15 RIBUAN? HP MAHAL KAMU BISA JADI KORBANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Kabel casan hilang terus beli kabel murah di pinggir jalan? Awas boncos belakangan.",
+      "Slide 2: Komponen yang hilang — Kabel murah biasanya gak punya chip pengatur arus & voltase (e-Marker).",
+      "Slide 3: Bahaya 1: Fluktuasi arus listrik bisa merusak IC Power (chip daya) di motherboard HP.",
+      "Slide 4: Bahaya 2: Kabel gampang panas dan berisiko korsleting sampai memicu percikan api.",
+      "Slide 5: Tips beli kabel awet — Cari yang punya sertifikasi resmi (MFi untuk Apple atau USB-IF tepercaya).",
+      "Slide 6: Rangkuman & CTA — Jangan korbankan HP jutaan demi hemat 20 ribu! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Fitur Tersembunyi WhatsApp yang Jarang Dipakai",
+    "hook_title": "SERING PAKE WHATSAPP TAPI GAK TAHU 4 FITUR RAHASIA INI? RUGI BANGET!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Tiap hari buka WA, tapi yakin udah tahu semua fitur canggih terbarunya?",
+      "Slide 2: Fitur 1: Kunci Chat Spesifik pake sidik jari tanpa perlu ngunci seluruh aplikasi WA.",
+      "Slide 3: Fitur 2: Edit Pesan dalam 15 menit setelah terkirim kalau ada typo memalukan.",
+      "Slide 4: Fitur 3: Kirim Foto Kualitas Asli (HD / Document) biar gak buram dan pecah.",
+      "Slide 5: Fitur 4: Senyapkan Telepon dari Nomor Tak Dikenal biar bebas dari spam telemarketing.",
+      "Slide 6: Rangkuman & CTA — Maksimalkan WA kamu sekarang juga! Share ke keluarga dan teman."
+    ]
+  },
+  {
+    "id": 16,
+    "topic": "Trik Mengamankan Akun Instagram dari Hacker",
+    "hook_title": "FOLLOWER SUDAH RIBUAN TAPI AKUN TIBA-TIBA HILANG? AMANKAN DENGAN 3 LANGKAH INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Bangun akun IG bertahun-tahun, jangan sampai dibajak cuma gara-gara teledor.",
+      "Slide 2: Celah paling sering — Ngeklik link DM yang bilang kamu melanggar hak cipta (copyright infringement).",
+      "Slide 3: Langkah 1: Aktifkan 2FA via Aplikasi Authenticator (Google Auth/Duo), BUKAN SMS.",
+      "Slide 4: Langkah 2: Periksa Email Keamanan Resmi di Pengaturan > Keamanan > Email dari Instagram.",
+      "Slide 5: Langkah 3: Cabut akses aplikasi pihak ketiga yang gak dikenal di Pengaturan Akun.",
+      "Slide 6: Rangkuman & CTA — Jangan tunggu akun kena hack baru panik! Amankan sekarang juga."
+    ]
+  },
+  {
+    "id": 17,
+    "topic": "Kenapa Laptop Cepat Panas dan Kipasnya Bising",
+    "hook_title": "LAPTOP BUNYI KAYAK PESAWAT MAU LEPAS LANDAS? INI SOLUSI GAMPANGNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baru buka Chrome sebentar tapi laptop udah berisik dan panas banget di paha?",
+      "Slide 2: Penyebab 1: Menggunakan laptop di atas kasur atau bantal yang menyumbat ventilasi bawah.",
+      "Slide 3: Penyebab 2: Debu tebal menumpuk di baling-baling kipas pendingin.",
+      "Slide 4: Penyebab 3: Thermal paste (pasta pendingin prosesor) sudah kering dan mengeras.",
+      "Slide 5: Solusi praktis — Gunakan stand laptop agar sirkulasi lancar dan bersihkan kipas berkala.",
+      "Slide 6: Rangkuman & CTA — Laptop adem, performa kenceng! Follow @inka.tech buat tips komputer."
+    ]
+  },
+  {
+    "id": 18,
+    "topic": "Trik Bikin Password Kuat Tapi Gampang Diingat",
+    "hook_title": "BINGUNG BIKIN PASSWORD SUSAH DITEBAK TAPI GAMPANG DIINGAT? PAKE METODE PASSPHRASE!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Password pendek gampang ditebak, password rumit kayak x7#Q9! malah sering lupa.",
+      "Slide 2: Kenalkan: Metode Passphrase — Gabungan 4 kata acak bahasa Indonesia yang punya cerita.",
+      "Slide 3: Contoh Passphrase: Kucing-Oren-Makan-Bakso#24 (Panjang 26 karakter, mustahil dibobol hacker!).",
+      "Slide 4: Kenapa ini super kuat — Komputer hacker butuh ribuan tahun untuk menebak kalimat panjang.",
+      "Slide 5: Sementara otakmu cuma perlu mengingat cerita lucu tentang kucing oren makan bakso.",
+      "Slide 6: Rangkuman & CTA — Password aman tanpa bikin pusing! Simpan dan coba di akun barumu."
+    ]
+  },
+  {
+    "id": 19,
+    "topic": "Kenapa Smart TV di Rumah Bisa Jadi Mata-Mata",
+    "hook_title": "SMART TV KAMU DI RUMAH TERNYATA MEREKAM APA YANG KAMU TONTON!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Senang punya Smart TV layar lebar? Tahu gak kalau kebiasaan nontonmu dipantau?",
+      "Slide 2: Teknologi ACR (Automated Content Recognition) yang tertanam di sistem operasi Smart TV.",
+      "Slide 3: Apa yang dicatat — Film yang ditonton, siaran yang diputar, sampai iklan yang sering kamu lewati.",
+      "Slide 4: Tujuannya — Dijual ke pengiklan untuk menargetkan iklan yang relevan ke HP dan laptop di rumahmu.",
+      "Slide 5: Cara mematikannya — Buka Pengaturan TV > Privasi > Matikan opsi ACR / Viewing Data Sharing.",
+      "Slide 6: Rangkuman & CTA — Nonton tenang tanpa dimata-matai! Share info ini ke grup keluarga."
+    ]
+  },
+  {
+    "id": 20,
+    "topic": "Masa Depan AI: Pekerjaan Apa yang Paling Aman?",
+    "hook_title": "TAKUT PEKERJAANMU DIGANTIKAN AI? INI SKILL MANUSIA YANG GAK BISA DITIRU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — AI makin pintar bikin gambar, nulis teks, sampai coding. Masa depan kita gimana?",
+      "Slide 2: Yang digantikan AI — Tugas repetitif, olah data rutin, dan hal-hal yang punya pola baku.",
+      "Slide 3: Skill yang aman 1: Empati dan Hubungan Antar Manusia (Leadership, Konseling, Negosiasi).",
+      "Slide 4: Skill yang aman 2: Critical Thinking & Problem Solving dalam situasi yang ambigu dan kompleks.",
+      "Slide 5: Kuncinya — Bukan melawan AI, tapi jadilah orang yang paling jago memanfaatkan AI sebagai asisten.",
+      "Slide 6: Rangkuman & CTA — Manusia + AI = Tak terkalahkan! Follow @inka.tech buat panduan masa depan teknologi."
+    ]
+  }
+]

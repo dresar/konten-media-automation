@@ -1,0 +1,282 @@
+[
+{
+"id": 21,
+"topic": "Privasi Kamera & Mikrofon HP",
+"hook_title": "KAMERA HP BISA NGINTIP SENDIRI? CEK TITIK HIJAU INI!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Kamera atau mic HP tiba-tiba aktif? Jangan langsung panik, tapi jangan diabaikan juga!",
+"Slide 2: Fakta/Masalah — Android dan iPhone punya indikator saat kamera atau mikrofon sedang digunakan aplikasi.",
+"Slide 3: Bahaya/Detail — Aplikasi dengan izin berlebihan bisa mengakses kamera, mic, atau lokasi tanpa alasan yang jelas.",
+"Slide 4: Solusi 1 — Cek aplikasi mana yang punya izin kamera dan mikrofon, lalu cabut izin yang tidak diperlukan.",
+"Slide 5: Solusi 2 — Update sistem dan aplikasi, serta hindari instal aplikasi dari sumber yang nggak jelas.",
+"Slide 6: Rangkuman & CTA — Izin aplikasi itu bukan formalitas. Cek sekarang dan follow @inka.tech buat tips teknologi santai."
+]
+},
+{
+"id": 22,
+"topic": "Pinjol Ilegal & Sadap Kontak",
+"hook_title": "PINJOL ILEGAL BISA TERORIN KONTAK KAMU? INI YANG HARUS DIWASPADAI!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Baru install pinjol, tiba-tiba teman dan keluarga ikut diteror? Kok bisa?",
+"Slide 2: Fakta/Masalah — Pinjol ilegal bisa meminta akses data pribadi dan kontak yang sebenarnya tidak dibutuhkan.",
+"Slide 3: Bahaya/Detail — Data kontak dapat disalahgunakan untuk intimidasi, spam, penipuan, atau tekanan saat penagihan.",
+"Slide 4: Solusi 1 — Jangan asal memberi izin kontak, SMS, file, kamera, atau lokasi kepada aplikasi pinjaman.",
+"Slide 5: Solusi 2 — Gunakan layanan pinjaman yang legal dan cek status penyelenggara melalui kanal resmi OJK.",
+"Slide 6: Rangkuman & CTA — Butuh uang bukan berarti harus menyerahkan seluruh isi HP. Follow @inka.tech buat edukasi digital lainnya."
+]
+},
+{
+"id": 23,
+"topic": "Google Search Tricks",
+"hook_title": "GOOGLE BISA JADI 'MESIN HACKER'? COBA TRIK SEARCH INI!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Google bukan cuma buat cari jawaban tugas. Dengan trik tertentu, pencarian bisa jauh lebih powerful!",
+"Slide 2: Fakta/Masalah — Operator seperti tanda kutip, minus, site:, dan filetype: bisa mempersempit hasil pencarian.",
+"Slide 3: Bahaya/Detail — Informasi publik yang terlalu terbuka kadang bisa membocorkan dokumen, halaman, atau data yang seharusnya tidak mudah ditemukan.",
+"Slide 4: Solusi 1 — Pakai operator pencarian untuk riset informasi publik secara lebih cepat dan terarah.",
+"Slide 5: Solusi 2 — Kalau menemukan data pribadi milikmu di hasil pencarian, minta penghapusan atau perbaiki sumber yang membocorkannya.",
+"Slide 6: Rangkuman & CTA — Google ternyata punya banyak trik tersembunyi. Follow @inka.tech buat tips teknologi yang kepake sehari-hari."
+]
+},
+{
+"id": 24,
+"topic": "Battery Health Mitos vs Fakta",
+"hook_title": "BATTERY HEALTH 100% HARUS DIPERTAHANKAN TERUS? BELUM TENTU!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Takut banget Battery Health turun dari 100%? Santai, baterai memang punya umur.",
+"Slide 2: Fakta/Masalah — Baterai lithium-ion mengalami degradasi alami setiap kali digunakan dan diisi ulang.",
+"Slide 3: Bahaya/Detail — Panas berlebihan dan kebiasaan ekstrem bisa mempercepat penurunan kapasitas baterai.",
+"Slide 4: Solusi 1 — Hindari HP terlalu panas, terutama saat charging sambil menjalankan aktivitas berat.",
+"Slide 5: Solusi 2 — Manfaatkan fitur optimized charging atau battery protection jika tersedia di perangkat.",
+"Slide 6: Rangkuman & CTA — Jangan obsesif mengejar angka 100%. Jaga suhu dan kebiasaan charging. Follow @inka.tech!"
+]
+},
+{
+"id": 25,
+"topic": "HP Panas Saat Gaming",
+"hook_title": "HP PANAS PAS MAIN GAME? BUKAN CUMA KARENA 'HP JELEK'!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Baru main 20 menit, HP sudah berasa setrika? Ini penyebabnya!",
+"Slide 2: Fakta/Masalah — Gaming membuat CPU, GPU, layar, jaringan, dan baterai bekerja lebih keras.",
+"Slide 3: Bahaya/Detail — Suhu tinggi terus-menerus bisa menurunkan performa dan mempercepat degradasi baterai.",
+"Slide 4: Solusi 1 — Turunkan brightness, frame rate, atau kualitas grafis jika perangkat terlalu panas.",
+"Slide 5: Solusi 2 — Jangan bermain sambil charging dalam kondisi panas dan lepaskan casing tebal bila menghambat pelepasan panas.",
+"Slide 6: Rangkuman & CTA — FPS tinggi memang seru, tapi HP juga perlu napas. Follow @inka.tech buat tips gadget lainnya."
+]
+},
+{
+"id": 26,
+"topic": "Rahasia Airplane Mode",
+"hook_title": "AIRPLANE MODE BUKAN CUMA BUAT NAIK PESAWAT! ADA TRIK YANG BERGUNA BANGET!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Selama ini kamu kira Airplane Mode cuma buat penerbangan? Ternyata banyak gunanya!",
+"Slide 2: Fakta/Masalah — Mode ini memutus koneksi seluler dan biasanya koneksi nirkabel tertentu sampai dinyalakan kembali.",
+"Slide 3: Bahaya/Detail — Airplane Mode bukan tombol ajaib yang otomatis mempercepat semua HP atau membuat baterai awet seharian.",
+"Slide 4: Solusi 1 — Gunakan saat sinyal buruk dan kamu ingin mengurangi aktivitas pencarian jaringan untuk sementara.",
+"Slide 5: Solusi 2 — Pakai untuk memutus koneksi dengan cepat saat butuh fokus, tidur, atau sedang ingin menghemat daya.",
+"Slide 6: Rangkuman & CTA — Airplane Mode ternyata lebih berguna dari yang kamu kira. Follow @inka.tech untuk trik gadget lainnya."
+]
+},
+{
+"id": 27,
+"topic": "Cache WhatsApp Membengkak",
+"hook_title": "WHATSAPP MAKAN STORAGE DIAM-DIAM? CEK FOLDER INI SEKARANG!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Storage penuh padahal merasa nggak punya banyak aplikasi? Bisa jadi WhatsApp pelakunya!",
+"Slide 2: Fakta/Masalah — Foto, video, dokumen, voice note, dan media dari berbagai chat bisa menumpuk.",
+"Slide 3: Bahaya/Detail — Grup aktif bisa membuat file media bertambah terus tanpa terasa sampai storage tinggal sedikit.",
+"Slide 4: Solusi 1 — Buka pengaturan penyimpanan WhatsApp dan lihat chat mana yang paling banyak memakan ruang.",
+"Slide 5: Solusi 2 — Hapus media besar yang tidak diperlukan dan matikan auto-download untuk jenis file tertentu.",
+"Slide 6: Rangkuman & CTA — Jangan tunggu storage merah dulu. Bersihkan WhatsApp secara berkala dan follow @inka.tech!"
+]
+},
+{
+"id": 28,
+"topic": "AI Agent Masa Depan",
+"hook_title": "AI AGENT NANTI BISA KLIK, BELANJA, KIRIM EMAIL SENDIRI?!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Bayangkan AI bukan cuma jawab chat, tapi benar-benar menjalankan tugas untuk kamu.",
+"Slide 2: Fakta/Masalah — AI agent dirancang untuk merencanakan langkah dan menggunakan tools atau aplikasi yang terhubung.",
+"Slide 3: Bahaya/Detail — Semakin banyak akses yang diberikan, semakin besar dampaknya kalau instruksi atau data yang diproses ternyata berbahaya.",
+"Slide 4: Solusi 1 — Berikan akses seminimal mungkin dan pisahkan tugas biasa dari tindakan yang sensitif.",
+"Slide 5: Solusi 2 — Untuk pembayaran, pengiriman email penting, atau perubahan data, tetap gunakan persetujuan manusia.",
+"Slide 6: Rangkuman & CTA — Masa depan AI bukan cuma pintar menjawab, tapi bisa bertindak. Follow @inka.tech buat bahas teknologi masa depan!"
+]
+},
+{
+"id": 29,
+"topic": "Fitur Tersembunyi Android",
+"hook_title": "ANDROID KAMU PUNYA FITUR TERSEMBUNYI? 5 MENIT COBA CEK!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Bisa jadi HP Android kamu punya fitur keren yang selama ini nggak pernah kamu sentuh!",
+"Slide 2: Fakta/Masalah — Banyak fitur praktis tersebar di Quick Settings, gesture, accessibility, dan pengaturan sistem.",
+"Slide 3: Bahaya/Detail — Fitur tertentu juga bisa memengaruhi privasi atau akses aplikasi kalau diaktifkan tanpa memahami fungsinya.",
+"Slide 4: Solusi 1 — Jelajahi Quick Settings dan menu Privacy atau Security untuk mengenali fitur yang tersedia.",
+"Slide 5: Solusi 2 — Aktifkan fitur yang benar-benar berguna seperti Find My Device, screen pinning, atau privacy controls sesuai kebutuhan.",
+"Slide 6: Rangkuman & CTA — Jangan cuma pakai HP buat scroll. Kenali fiturnya dan follow @inka.tech buat trik Android lainnya."
+]
+},
+{
+"id": 30,
+"topic": "Fitur Tersembunyi iPhone",
+"hook_title": "IPHONE KAMU MUNGKIN PUNYA FITUR YANG BELUM PERNAH KAMU COBA!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Punya iPhone mahal tapi cuma dipakai chat, kamera, dan TikTok? Rugi dong!",
+"Slide 2: Fakta/Masalah — iOS punya banyak fitur praktis di Control Center, accessibility, privacy, dan gesture.",
+"Slide 3: Bahaya/Detail — Beberapa fitur dan izin aplikasi bisa memengaruhi privasi kalau tidak pernah diperiksa.",
+"Slide 4: Solusi 1 — Cek Privacy & Security untuk melihat izin aplikasi terhadap lokasi, kamera, mic, foto, dan data lainnya.",
+"Slide 5: Solusi 2 — Eksplorasi fitur seperti Back Tap, Focus, Live Text, atau Safety Check sesuai versi iOS dan kebutuhan.",
+"Slide 6: Rangkuman & CTA — iPhone bukan cuma soal kamera. Maksimalkan fiturnya dan follow @inka.tech!"
+]
+},
+{
+"id": 31,
+"topic": "APK Mod & Bajakan",
+"hook_title": "DOWNLOAD APK MOD BIAR GRATIS? DATA & M-BANKING BISA IKUT JADI TARUHAN!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Game premium gratis, aplikasi unlocked, fitur VIP kebuka semua. Kedengarannya enak, kan?",
+"Slide 2: Fakta/Masalah — APK dari sumber tidak resmi bisa dimodifikasi dan tidak punya jaminan keamanan seperti aplikasi resmi.",
+"Slide 3: Bahaya/Detail — File berbahaya dapat mencuri kredensial, membaca data, menampilkan iklan agresif, atau meminta izin berlebihan.",
+"Slide 4: Solusi 1 — Download aplikasi dari toko resmi atau sumber pengembang yang dapat dipercaya.",
+"Slide 5: Solusi 2 — Kalau sudah terlanjur instal APK mencurigakan, hapus aplikasi, cek izin, jalankan pemeriksaan keamanan, dan ganti kredensial penting bila perlu.",
+"Slide 6: Rangkuman & CTA — Gratis belum tentu murah kalau risikonya data kamu. Follow @inka.tech buat tips keamanan gadget."
+]
+},
+{
+"id": 32,
+"topic": "Deepfake Audio & Video",
+"hook_title": "SUARA TEMAN BISA DIPALSUKAN AI?! JANGAN LANGSUNG PERCAYA!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Dengar suara orang terdekat minta uang lewat telepon? Bisa jadi bukan dia!",
+"Slide 2: Fakta/Masalah — AI sekarang dapat menghasilkan audio dan video yang sangat mirip dengan orang asli.",
+"Slide 3: Bahaya/Detail — Deepfake bisa dipakai untuk penipuan, impersonasi, manipulasi informasi, atau merusak reputasi.",
+"Slide 4: Solusi 1 — Jangan mengambil keputusan finansial hanya berdasarkan suara, foto, atau video yang diterima.",
+"Slide 5: Solusi 2 — Verifikasi lewat jalur lain, misalnya menghubungi nomor yang sudah kamu simpan atau membuat pertanyaan verifikasi.",
+"Slide 6: Rangkuman & CTA — Wajah dan suara sekarang bisa ditiru AI. Verifikasi dulu, percaya belakangan. Follow @inka.tech!"
+]
+},
+{
+"id": 33,
+"topic": "USB Type-C Palsu & Berbahaya",
+"hook_title": "USB TYPE-C BENTUKNYA SAMA, TAPI DALAMNYA BISA BEDA JAUH!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Semua kabel USB-C kelihatan sama? Jangan tertipu bentuk konektornya!",
+"Slide 2: Fakta/Masalah — USB-C adalah bentuk konektor, bukan jaminan bahwa semua kabel punya kemampuan transfer data, charging, atau video yang sama.",
+"Slide 3: Bahaya/Detail — Kabel berkualitas buruk atau tidak sesuai spesifikasi dapat menyebabkan charging lambat, koneksi bermasalah, atau panas berlebih.",
+"Slide 4: Solusi 1 — Perhatikan spesifikasi daya, kecepatan data, dan dukungan video sebelum membeli kabel.",
+"Slide 5: Solusi 2 — Pilih kabel dari produsen terpercaya dan hindari kabel murah dengan klaim spesifikasi yang tidak masuk akal.",
+"Slide 6: Rangkuman & CTA — USB-C sama bentuk bukan berarti sama kemampuan. Follow @inka.tech buat bahas gadget tanpa bahasa ribet!"
+]
+},
+{
+"id": 34,
+"topic": "Bluetooth Tetap Nyala",
+"hook_title": "BLUETOOTH NYALA TERUS BIKIN HP GAMPANG DI-HACK? INI FAKTANYA!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Bluetooth nggak pernah kamu matikan? Haruskah panik setiap keluar rumah?",
+"Slide 2: Fakta/Masalah — Bluetooth modern punya berbagai mekanisme keamanan, tetapi perangkat tetap perlu dikonfigurasi dengan benar.",
+"Slide 3: Bahaya/Detail — Risiko bisa muncul ketika perangkat menerima koneksi atau permintaan yang mencurigakan, terutama pada sistem yang tidak diperbarui.",
+"Slide 4: Solusi 1 — Jangan menerima pairing request atau file Bluetooth dari perangkat yang tidak dikenal.",
+"Slide 5: Solusi 2 — Update sistem dan hapus perangkat Bluetooth lama yang sudah tidak pernah digunakan.",
+"Slide 6: Rangkuman & CTA — Bluetooth bukan otomatis bahaya, tapi jangan asal menerima koneksi. Follow @inka.tech!"
+]
+},
+{
+"id": 35,
+"topic": "Screen Recording & Privasi",
+"hook_title": "LAGI SCREEN RECORD? DATA SENSITIF BISA IKUT KEREKAM!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Rekam layar buat tutorial atau bukti chat? Hati-hati, semuanya bisa ikut masuk video!",
+"Slide 2: Fakta/Masalah — Screen recording dapat menangkap tampilan aplikasi, notifikasi, chat, kode, dan informasi lain yang muncul.",
+"Slide 3: Bahaya/Detail — OTP, pesan pribadi, nomor rekening, atau data sensitif bisa tidak sengaja ikut terekam dan tersebar.",
+"Slide 4: Solusi 1 — Aktifkan mode jangan ganggu atau sembunyikan notifikasi saat melakukan screen recording.",
+"Slide 5: Solusi 2 — Sebelum membagikan rekaman, tonton ulang dari awal dan blur bagian yang mengandung informasi pribadi.",
+"Slide 6: Rangkuman & CTA — Yang terekam bukan cuma layar, tapi bisa juga privasi kamu. Follow @inka.tech!"
+]
+},
+{
+"id": 36,
+"topic": "Smartphone Tracking & Lokasi",
+"hook_title": "HP KAMU TAU KAMU ADA DI MANA? CEK SIAPA YANG DAPAT AKSES LOKASI!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Pernah heran kenapa aplikasi terasa tahu kamu sering pergi ke mana?",
+"Slide 2: Fakta/Masalah — Smartphone dan aplikasi dapat menggunakan data lokasi untuk navigasi, rekomendasi, iklan, dan fitur lainnya.",
+"Slide 3: Bahaya/Detail — Terlalu banyak aplikasi dengan akses lokasi bisa memperbesar jejak data tentang rutinitas dan tempat yang sering kamu kunjungi.",
+"Slide 4: Solusi 1 — Review izin lokasi dan pilih akses hanya saat digunakan jika fitur tidak membutuhkan lokasi sepanjang waktu.",
+"Slide 5: Solusi 2 — Matikan akses lokasi untuk aplikasi yang tidak punya alasan jelas untuk mengetahuinya.",
+"Slide 6: Rangkuman & CTA — Lokasi itu data pribadi juga. Jangan kasih akses ke semua aplikasi. Follow @inka.tech!"
+]
+},
+{
+"id": 37,
+"topic": "Clipboard HP",
+"hook_title": "COPY-PASTE DI HP BISA SIMPAN DATA RAHASIA? CEK CLIPBOARD KAMU!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Pernah copy OTP, password, atau nomor rekening lalu lupa menghapusnya?",
+"Slide 2: Fakta/Masalah — Clipboard menyimpan teks yang baru saja disalin agar bisa ditempel kembali.",
+"Slide 3: Bahaya/Detail — Data sensitif yang tertinggal di clipboard dapat menjadi risiko jika diakses aplikasi atau perangkat yang tidak aman.",
+"Slide 4: Solusi 1 — Hindari menyalin password dan kode rahasia lebih lama dari yang diperlukan.",
+"Slide 5: Solusi 2 — Gunakan password manager dan fitur clipboard yang otomatis membersihkan data sensitif jika tersedia.",
+"Slide 6: Rangkuman & CTA — Copy-paste kelihatan sepele, tapi datanya bisa sensitif. Follow @inka.tech untuk tips privasi lainnya."
+]
+},
+{
+"id": 38,
+"topic": "Notifikasi & OTP",
+"hook_title": "OTP BISA KEBOCOR CUMA DARI NOTIFIKASI? JANGAN ASAL IZINKAN!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — HP terkunci tapi pesan OTP tetap muncul di layar? Nah, ini yang perlu kamu pikirkan!",
+"Slide 2: Fakta/Masalah — Notifikasi dapat menampilkan sebagian isi pesan tanpa pengguna membuka aplikasi.",
+"Slide 3: Bahaya/Detail — Orang yang melihat layar terkunci bisa mendapatkan informasi sensitif jika preview notifikasi terlalu terbuka.",
+"Slide 4: Solusi 1 — Sembunyikan preview pesan sensitif di lock screen.",
+"Slide 5: Solusi 2 — Jangan pernah membagikan OTP kepada siapa pun, termasuk orang yang mengaku dari bank atau layanan tertentu.",
+"Slide 6: Rangkuman & CTA — OTP itu rahasia, termasuk dari layar lock screen. Atur notifikasi dan follow @inka.tech!"
+]
+},
+{
+"id": 39,
+"topic": "Fake Storage & RAM Booster",
+"hook_title": "APLIKASI 'RAM BOOSTER' BIKIN HP NGEGAS? BISA JADI CUMA SUGESTI!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — RAM tinggal sedikit? Jangan langsung download aplikasi booster yang menjanjikan HP auto ngebut!",
+"Slide 2: Fakta/Masalah — Sistem operasi modern sudah mengelola memori sendiri dan angka RAM kosong tidak selalu berarti performa buruk.",
+"Slide 3: Bahaya/Detail — Aplikasi pembersih atau booster pihak ketiga bisa memakai resource tambahan, menampilkan iklan, atau meminta izin berlebihan.",
+"Slide 4: Solusi 1 — Hapus aplikasi yang benar-benar tidak dipakai dan gunakan fitur bawaan sistem untuk mengelola storage.",
+"Slide 5: Solusi 2 — Restart perangkat atau update sistem jika performa bermasalah, lalu cari penyebab sebenarnya daripada mengandalkan booster.",
+"Slide 6: Rangkuman & CTA — RAM kosong bukan otomatis HP lebih kencang. Jangan gampang percaya aplikasi booster. Follow @inka.tech!"
+]
+},
+{
+"id": 40,
+"topic": "WiFi Publik & Auto Connect",
+"hook_title": "HP AUTO CONNECT KE WIFI? BISA JADI KEBIASAAN YANG BIKIN KAMU LENGAH!",
+"total_slides": 6,
+"slide_outline": [
+"Slide 1: Hook — Baru masuk kafe, HP langsung nyambung WiFi sendiri? Kamu yakin jaringan itu yang kamu mau?",
+"Slide 2: Fakta/Masalah — Perangkat dapat mengingat jaringan WiFi dan mencoba terhubung kembali ketika jaringan yang dikenal tersedia.",
+"Slide 3: Bahaya/Detail — Jaringan publik yang tidak aman dapat membuka peluang penyadapan atau manipulasi koneksi, terutama jika layanan yang digunakan tidak terenkripsi dengan baik.",
+"Slide 4: Solusi 1 — Matikan auto-join untuk jaringan publik yang tidak diperlukan dan hapus jaringan lama yang mencurigakan.",
+"Slide 5: Solusi 2 — Hindari aktivitas sensitif di jaringan publik yang meragukan dan gunakan koneksi seluler atau jaringan terpercaya saat memungkinkan.",
+"Slide 6: Rangkuman & CTA — WiFi gratis memang menggoda, tapi jangan sampai keamanan ikut gratis. Follow @inka.tech buat tips keamanan digital lainnya!"
+]
+}
+]
