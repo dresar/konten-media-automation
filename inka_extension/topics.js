@@ -572,7 +572,8 @@ function buildSuperMegaPrompt(topic, slideDesc, slideNum, totalSlides, hookTitle
     ? "curious with wide eyes pointing up excitedly"
     : (!isCta ? "friendly teacher holding a small glowing holographic tablet" : "cheerful and waving enthusiastically encouraging the viewer");
 
-  return "Vertical 3:4 portrait orientation mobile educational TikTok carousel slide for @inka.tech. " +
+  return "Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt: " +
+    "Vertical 3:4 portrait orientation mobile educational TikTok carousel slide for @inka.tech. " +
     "Topic: '" + topic + "'. " + headerFocus + ". " +
     "CASUAL, MODERN, & FRIENDLY TECH AESTHETIC: PURE CLEAN WHITE BACKGROUND (#FFFFFF). Bright and even studio illumination with soft ambient lighting. " +
     "Clean tech design using vibrant emerald tech green (#10B981) highlights paired with modern charcoal typography (#1F2937). " +

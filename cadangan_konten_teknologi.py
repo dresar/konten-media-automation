@@ -578,6 +578,7 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
         for i in range(total_slides):
             s_desc = slide_outline[i] if (slide_outline and i < len(slide_outline)) else f"Slide {i+1}: {topic}"
             p_text = (
+                f"Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt: "
                 f"Vertical 3:4 portrait orientation mobile educational TikTok carousel slide for @inka.tech. "
                 f"Topic: '{topic}'. Slide content: '{s_desc}'. "
                 f"CASUAL & ENGAGING TECH STYLE: PURE CLEAN WHITE BACKGROUND (#FFFFFF). Modern bright studio lighting. "
