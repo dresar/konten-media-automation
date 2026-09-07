@@ -479,8 +479,8 @@ async function sendPromptToChatGpt(autoSend = true) {
   updateEngineStatus(State.INJECTING, `Mengisi chatbox Slide ${activeSlideIdx}...`);
   const promptText = getCurrentPrompt();
 
-  // Eksekusi in-tab injection
-  const res = await executeInTab((text, send) => {
+  // Eksekusi in-tab injection secara asinkron dengan multi-strategy robust click
+  const res = await executeInTab(async (text, send) => {
     try {
       document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
     } catch (e) {}
@@ -490,14 +490,14 @@ async function sendPromptToChatGpt(autoSend = true) {
 
     const userTurnsBefore = document.querySelectorAll('[data-message-author-role="user"]').length;
 
-    // Bersihkan chatbox secara total
+    // 1. Bersihkan chatbox secara total
     textarea.focus();
     try {
       document.execCommand("selectAll", false, null);
       document.execCommand("delete", false, null);
     } catch (e) {}
 
-    // Injeksi teks menggunakan DataTransfer (standar ProseMirror)
+    // 2. Injeksi teks menggunakan DataTransfer (standar ProseMirror)
     try {
       const dt = new DataTransfer();
       dt.setData("text/plain", text);
@@ -532,25 +532,83 @@ async function sendPromptToChatGpt(autoSend = true) {
       return { ok: true, submitted: false, userTurnsBefore };
     }
 
-    // Klik tombol Kirim
-    let submitted = false;
-    const sendBtn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Send"], button[aria-label*="Kirim"]');
-    if (sendBtn && !sendBtn.disabled) {
-      sendBtn.click();
-      submitted = true;
-    } else {
-      const enterEvt = new KeyboardEvent("keydown", {
-        bubbles: true,
-        cancelable: true,
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13
-      });
-      textarea.dispatchEvent(enterEvt);
-      submitted = true;
+    // 3. MULTI-STRATEGY ROBUST SEND BUTTON CLICK (ANTI-MISS)
+    // Tunggu 400ms agar React selesai mengaktifkan tombol kirim (menjadi warna biru aktif)
+    await new Promise(r => setTimeout(r, 400));
+
+    function findSendButton() {
+      // Prioritas 1: data-testid send-button
+      let b = document.querySelector('button[data-testid="send-button"]');
+      if (b) return b;
+
+      // Prioritas 2: aria-label Kirim / Send
+      b = document.querySelector('button[aria-label*="Kirim" i], button[aria-label*="Send" i]');
+      if (b) return b;
+
+      // Prioritas 3: Tombol bulat biru dengan SVG panah ke atas (seperti di UI ChatGPT)
+      const allButtons = Array.from(document.querySelectorAll('button'));
+      for (const btn of allButtons) {
+        if (btn.getAttribute('data-testid')?.includes('speech') || btn.getAttribute('aria-label')?.toLowerCase().includes('suara')) continue;
+        if (btn.querySelector('svg path[d*="M2.5 12"]') || btn.querySelector('svg path[d*="M12 2.5"]') || btn.querySelector('svg path[d*="M5 12"]') || btn.querySelector('svg path[d*="M12 4"]')) {
+          return btn;
+        }
+        if (btn.classList.contains('rounded-full') && btn.closest('#prompt-textarea, form, div.flex.w-full')) {
+          if (btn.querySelector('svg')) return btn;
+        }
+      }
+
+      // Prioritas 4: Form submit button
+      const form = textarea.closest('form');
+      if (form) {
+        const sub = form.querySelector('button[type="submit"]');
+        if (sub) return sub;
+      }
+
+      return null;
     }
 
-    return { ok: true, submitted, userTurnsBefore };
+    let isSubmitted = false;
+
+    // Strategi A: Polling klik tombol kirim hingga 5x (jeda 200ms) sampai enabled
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      const btn = findSendButton();
+      if (btn && !btn.disabled) {
+        btn.focus();
+        btn.click();
+        isSubmitted = true;
+        break;
+      }
+      await new Promise(r => setTimeout(r, 200));
+    }
+
+    // Strategi B: Form native requestSubmit
+    if (!isSubmitted) {
+      const form = textarea.closest('form');
+      if (form && typeof form.requestSubmit === 'function') {
+        try {
+          form.requestSubmit();
+          isSubmitted = true;
+        } catch (e) {}
+      }
+    }
+
+    // Strategi C: Native Enter Keyboard Event pada target ProseMirror
+    if (!isSubmitted) {
+      const targetP = textarea.querySelector('p') || textarea;
+      ['keydown', 'keypress', 'keyup'].forEach(type => {
+        targetP.dispatchEvent(new KeyboardEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          key: 'Enter',
+          code: 'Enter',
+          keyCode: 13,
+          which: 13
+        }));
+      });
+      isSubmitted = true;
+    }
+
+    return { ok: true, submitted: isSubmitted, userTurnsBefore };
   }, [promptText, autoSend]);
 
   if (!res || !res.ok) {
@@ -771,7 +829,24 @@ async function checkRenderStatus() {
       return;
     }
 
+    // Auto-Recovery: Jika dalam 3 detik belum mulai render, periksa apakah teks masih ada di chatbox dan klik lagi!
     const elapsedSubmit = Date.now() - activeSession.submitTime;
+    if (elapsedSubmit >= 2500 && elapsedSubmit <= 12000) {
+      await executeInTab(() => {
+        const ta = document.querySelector("#prompt-textarea");
+        const cur = (ta?.innerText || ta?.value || "").trim();
+        if (cur.length > 20) {
+          const btn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Kirim" i], button[aria-label*="Send" i]') || 
+                      Array.from(document.querySelectorAll('button')).find(b => b.classList.contains('rounded-full') && b.querySelector('svg'));
+          if (btn && !btn.disabled) {
+            btn.click();
+          } else {
+            ta.closest('form')?.requestSubmit();
+          }
+        }
+      });
+    }
+
     if (elapsedSubmit > 35000) {
       updateEngineStatus(State.IDLE, "Timeout menunggu respon");
       toast(`⚠️ Timeout menunggu respon Slide ${activeSession.slideIdx}.`);

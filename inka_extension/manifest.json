@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.1.0",
-  "description": "InkaTech Studio ⚡ v4.1: Multi-Account Batching (20 Topics/Account), 12-Layer Validation, & Overnight Autopilot.",
+  "version": "4.2.0",
+  "description": "InkaTech Studio ⚡ v4.2: Robust Multi-Strategy Send Click, Multi-Account Batching & 12-Layer Engine.",
   "permissions": [
     "sidePanel",
     "storage",
