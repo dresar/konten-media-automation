@@ -522,23 +522,38 @@ async function handleDetectedImage(imgUrl, contentId, slideIdx) {
       }, 2500);
     }
   } else {
-    toast(`🎉 Konten #${contentId} Selesai Semua (6 Slide)!`);
+    toast(`🎉 Konten #${contentId} Selesai Semua (${total} Slide)!`);
+
+    // Pindai tab sekali lagi untuk memastikan jika ada slide yang link CDN-nya belum tercatat
+    try {
+      await scanActiveTabForCdnImages();
+    } catch (e) {}
+
+    // AUTO-UNDUH BATCH: Unduh semua gambar topik ini yang belum terunduh SEBELUM pindah chat!
+    toast(`📥 Mengunduh otomatis semua gambar Konten #${contentId} (${slug})...`);
+    const dlCount = await downloadTopicImages(contentId);
+    toast(`✓ ${dlCount} gambar Konten #${contentId} tersimpan!`);
+
     if (isAutopilot && activeContentId < window.INKA_TOPICS.length) {
       activeContentId++;
       activeSlideIdx = 1;
       await saveDatabase();
       renderTopicSelect();
       updateView();
-      toast(`⚡ Autopilot: Membuka New Chat untuk Konten #${activeContentId}...`);
+      toast(`⚡ Autopilot: Membuka New Chat untuk Konten #${activeContentId} dalam 3 detik...`);
       setTimeout(async () => {
         await triggerNewChat();
+        toast(`⚡ Autopilot: Menunggu halaman baru siap...`);
         setTimeout(() => {
-          if (isAutopilot) sendPromptToChatGpt(true);
-        }, 3500);
-      }, 2000);
+          if (isAutopilot) {
+            toast(`⚡ Autopilot: Mengirim Slide 1 Konten #${activeContentId}...`);
+            sendPromptToChatGpt(true);
+          }
+        }, 4500);
+      }, 3000);
     } else if (isAutopilot) {
       toggleAutopilot();
-      toast("Semua Konten Selesai!");
+      toast("🎉 SELESAI! Seluruh konten berhasil digenerate & diunduh.");
     }
   }
 }
@@ -555,12 +570,23 @@ async function scanActiveTabForCdnImages() {
       if (!clean.startsWith("http")) return false;
 
       const lower = clean.toLowerCase();
-      if (lower.includes("avatar") || lower.includes("profile") || lower.includes("icon") || lower.includes("logo") || lower.includes(".svg")) {
+      if (
+        lower.includes("avatar") ||
+        lower.includes("profile") ||
+        lower.includes("icon") ||
+        lower.includes("logo") ||
+        lower.includes(".svg") ||
+        lower.includes("sprites") ||
+        lower.includes("emoji") ||
+        lower.includes("user-") ||
+        lower.includes("gravatar") ||
+        lower.includes("favicon")
+      ) {
         return false;
       }
 
       const isEstuary = lower.includes("backend-api/estuary/content");
-      const isOaiCdn = lower.includes("oaiusercontent.com") && !lower.includes("user-");
+      const isOaiCdn = lower.includes("oaiusercontent.com");
       const isDalle = lower.includes("dalle");
 
       return isEstuary || isOaiCdn || isDalle;
@@ -581,7 +607,7 @@ async function scanActiveTabForCdnImages() {
     const assistantMsgs = document.querySelectorAll('[data-message-author-role="assistant"]');
     assistantMsgs.forEach(msg => {
       msg.querySelectorAll("img").forEach(im => {
-        const isBig = (im.naturalWidth >= 300 || im.width >= 300 || !im.complete);
+        const isBig = (im.naturalWidth >= 300 || im.width >= 300 || !im.complete || (im.src && im.src.includes("backend-api/estuary")));
         if (isBig) {
           addUrl(im.currentSrc || im.src || im.getAttribute("src"));
           const parentA = im.closest("a");
@@ -635,16 +661,23 @@ async function scanActiveTabForCdnImages() {
   toast(`✓ ${added} gambar (${slug}) terverifikasi!`);
 }
 
-// 8. Eksekusi Unduh Diam-diam (Silent Download Langsung Tanpa Dialog)
+// 8. Eksekusi Unduh Diam-diam dengan Filter Ketat
 async function downloadSilentImage(url, filename) {
+  if (!url || typeof url !== "string" || !url.startsWith("http")) return false;
   const pureFilename = filename.split("/").pop();
 
-  // Metode 1: Eksekusi in-tab fetch dengan cookie aktif ChatGPT + background click (Paling Handal)
+  // Metode 1: Eksekusi in-tab fetch dengan cookie aktif ChatGPT + background click
   const tabRes = await executeInTab(async (targetUrl, fname) => {
     try {
       const resp = await fetch(targetUrl, { credentials: "include" });
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       const blob = await resp.blob();
+
+      // Filter ketat ukuran: Gambar DALL-E asli pasti > 30KB
+      if (blob.size < 30000) {
+        throw new Error("Blob terlalu kecil (" + blob.size + " bytes), bukan gambar DALL-E valid.");
+      }
+
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.style.display = "none";
@@ -682,6 +715,48 @@ async function downloadSilentImage(url, filename) {
     });
   }
   return false;
+}
+
+// 9. Unduh Otomatis Batch Semua Gambar Topik Ini (Filter Ketat Sebelum Pindah Chat)
+async function downloadTopicImages(contentId) {
+  const currTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find((t) => t.id === contentId)) || { topic: "konten" };
+  const total = currTopic.total_slides || 6;
+  const slug = getTopicSlug(contentId);
+
+  const topicKeys = [];
+  for (let s = 1; s <= total; s++) {
+    topicKeys.push(`c${contentId}_s${s}`);
+  }
+
+  // Filter ketat: Pastikan URL ada, valid, dan belum pernah diunduh
+  const pendingKeys = topicKeys.filter(k => {
+    const rec = cdnDatabase[k];
+    return rec && rec.cdn_url && !rec.downloaded;
+  });
+
+  if (pendingKeys.length === 0) return 0;
+
+  toast(`📥 Mengunduh ${pendingKeys.length} gambar Topik #${contentId}...`);
+  let downloaded = 0;
+
+  for (let i = 0; i < pendingKeys.length; i++) {
+    const k = pendingKeys[i];
+    const rec = cdnDatabase[k];
+    const fileName = rec.name || `${slug}_${String(rec.slide).padStart(2, "0")}.png`;
+
+    toast(`📥 Unduh (${i + 1}/${pendingKeys.length}): ${fileName}...`);
+    const ok = await downloadSilentImage(rec.cdn_url, fileName);
+    if (ok) {
+      rec.downloaded = true;
+      downloaded++;
+    }
+    await new Promise(r => setTimeout(r, 800));
+  }
+
+  await saveDatabase();
+  renderDownloadCount();
+  renderDownloadList();
+  return downloaded;
 }
 
 // 9. Unduh Semua Gambar Terdeteksi Sekaligus Secara Diam-diam
