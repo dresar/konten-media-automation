@@ -1,5 +1,16 @@
 {
-  "last_updated": "2026-09-07 19:54:34",
-  "total_images": 0,
-  "records": {}
+  "last_updated": "2026-09-07 20:37:00",
+  "total_images": 1,
+  "records": {
+    "c1_s1": {
+      "id": "c1_s1",
+      "content_id": 1,
+      "topic": "Juice Jacking & Cas HP Sembarangan",
+      "slug": "01-juice-jacking",
+      "slide": 1,
+      "name": "01-juice-jacking_slide_01.png",
+      "cdn_url": "https://chatgpt.com/backend-api/estuary/content?id=file_00000000cb1881f5bcd85fcf4677c6fc&ts=496885&p=fs&cid=1&sig=872f606aa6a23150b89225e34de573f31308b7efe217708a19e9e0fc9633501c&v=0",
+      "timestamp": "2026-09-07T20:37:00.000Z"
+    }
+  }
 }
