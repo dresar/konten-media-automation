@@ -209,7 +209,44 @@ Buka PowerShell di folder `C:\Users\NCN0C\Videos\konten`:
 
 ---
 
-## 6. Aturan Mutlak Workspace Hygiene & Larangan File Sampah (Zero Leftover Policy)
+## 6. Standar Otomasi Pembuatan Konten Video via Google Flow (Veo 3.1)
+
+Setiap kali user meminta pembuatan konten **VIDEO** (misal: "buatkan video tentang...", "bikin video edukasi...", dsb.), agen **WAJIB** menggunakan pipeline resmi **Google Flow (Veo 3.1)**:
+
+### 1. Engine & Akun Resmi:
+- **Engine Video**: Google Flow (`https://flow.google.com/`) dengan model **Veo 3.1 - Quality**.
+- **Profil Browser ChatGPT (Prompt Architect)**: Profil `dian` (`%LOCALAPPDATA%\hermes\browser_profiles\dian`).
+- **Profil Browser Google Flow**: Profil `eka` (`%LOCALAPPDATA%\hermes\browser_profiles\eka` — akun `eka.ckp16799@gmail.com` berstatus PRO).
+
+### 2. Setelan Agen di Google Flow (Sudah Terkunci):
+- **Setelan Agen**: *"Jangan pernah"* (Agen membuat media dan otomatis memotong kredit tanpa memunculkan popup persetujuan kredit).
+- **Default Video**: Aspek rasio **9:16**, x1, model **Veo 3.1 - Quality**.
+
+### 3. Alur 3-Langkah Pembuatan Video:
+1. **Langkah 1: Perancangan Storyboard & Prompt di ChatGPT (Akun `dian`)**:
+   - ChatGPT menyusun 4 prompt adegan bersambung (total durasi > 30 detik) dalam bahasa Inggris super panjang & detail (120-180 kata per prompt).
+   - **Gaya Visual Mutlak**: Full Animasi Kartun Stylized (3D/2D Hybrid / Cinematic Animation seperti film bioskop *Arcane* / *Spider-Verse* / *Pixar*).
+   - **Larangan Manusia Asli**: DILARANG menampilkan manusia asli/fotorealistis. Tokoh manusia wajib berwujud karakter animasi kartun berkarakter heroik, cel-shaded, dan ekspresif.
+   - **Negative Constraints**: Wajib mengakhiri prompt dengan: `[Negative constraints to avoid: no real human, no live action footage, no photorealistic human skin, no live actors, no babyish childish cartoon, no distorted anatomy, no messy lines, no blurry lowres]`.
+   - Menyusun naskah voiceover bahasa Indonesia dan caption TikTok.
+2. **Langkah 2: Eksekusi Render di Google Flow (Akun `eka`)**:
+   - Buka project Flow (`https://flow.google.com/` atau project ID aktif).
+   - Masukkan prompt adegan ke input bar *"Agen"* (`div.ProseMirror`).
+   - Tekan tombol kirim panah (`arrow_forward`).
+   - Pantau render Veo 3.1 hingga selesai 100% (~40-50 detik per adegan).
+   - Masuk ke timeline editor (`[aria-label='Buka video di editor']`).
+   - Unduh video hasil render (`[aria-label='Download adegan']`).
+   - Jika multi-scene, gabungkan seluruh klip video secara berurutan menggunakan FFmpeg ke dalam satu file video final 9:16 portrait.
+3. **Langkah 3: Review Gate & Publikasi TikTok Video**:
+   - **WAJIB**: Sajikan preview video atau path video final kepada user untuk ditinjau sebelum diunggah.
+   - Setelah user menyetujui, publikasikan ke TikTok Studio menggunakan:
+     ```powershell
+     py -3 upload_tiktok_video.py --video "path/ke/video_final.mp4" --account "inka.tech" --caption "Caption video edukatif #edukasi #fyp"
+     ```
+
+---
+
+## 7. Aturan Mutlak Workspace Hygiene & Larangan File Sampah (Zero Leftover Policy)
 
 **PERINGATAN KERAS UNTUK SELURUH AGEN AI**:
 1. **DILARANG KERAS MENUMPUK SCRIPT TEST / COBA-COBA / DEBUG DI WORKSPACE**:
@@ -233,4 +270,5 @@ Buka PowerShell di folder `C:\Users\NCN0C\Videos\konten`:
    - `upload_tiktok_photo.py`
    - `upload_tiktok_video.py`
    - Folder: `accounts/`, `assets/`
+
 
