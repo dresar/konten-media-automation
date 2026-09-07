@@ -44,6 +44,10 @@ def main():
     parser.add_argument("--check-login", action="store_true", help="Periksa status login akun tanpa membuka browser interaktif")
     parser.add_argument("--platform", choices=["tiktok", "chatgpt", "all"], default="tiktok", help="Platform untuk login/check (default: tiktok)")
 
+    # Fitur Google Flow AI Video
+    parser.add_argument("--video", action="store_true", help="Gunakan Google Flow Video Engine untuk membuat video bersambung (Multi-Scene Veo 3.1)")
+    parser.add_argument("--aspect", choices=["9:16", "16:9"], default="9:16", help="Aspek rasio video Google Flow (default: 9:16 vertikal)")
+
     args = parser.parse_args()
 
     # 1. Mode Status
@@ -115,7 +119,16 @@ def main():
             backup_and_purge_content(parent_topic_dir, account=args.account)
         return
 
-    # 4. Mode Topic (Full Pipeline)
+    # 4. Mode Video Bersambung (Google Flow Veo 3.1)
+    if args.video:
+        if not args.topic:
+            print("[Error] Harap sertakan topik konten video: --topic 'Topik Video'", file=sys.stderr)
+            sys.exit(1)
+        from flow_video_engine import generate_flow_video_series
+        generate_flow_video_series(topic=args.topic, account=args.account, aspect=args.aspect)
+        return
+
+    # 5. Mode Topic Photo Carousel (Full Pipeline)
     if not args.topic:
         parser.print_help()
         sys.exit(1)

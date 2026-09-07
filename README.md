@@ -90,6 +90,11 @@ py -3 run.py --upload-only "accounts/inka.tech/photo_carousel/[folder]/processed
 
 # 7. Backup Manual Folder Apapun ke Google Drive & Bersihkan Media Lokal
 py -3 media_manager.py --backup "accounts/inka.tech/photo_carousel/[folder]" --account inka.tech
+
+# 8. Google Flow AI Video Series (Veo 3.1 & Omni Flash)
+# Membuat video edukasi bersambung (Multi-Scene Storyboard 9:16 Vertikal):
+py -3 run.py --video --topic "Bahaya Artificial Intelligence bagi Manusia" --account inka.tech
+py -3 flow_video_engine.py --storyboard-only --topic "Bahaya AI bagi Privasi"
 ```
 
 ---
