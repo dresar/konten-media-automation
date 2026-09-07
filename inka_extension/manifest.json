@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.4.0",
-  "description": "InkaTech Studio ⚡ v4.4: Omni-Channel DALL-E CDN Scanner (Estuary/OAI/Network Timing/DOM Regex), Real-Time Sync & Overnight Autopilot.",
+  "version": "4.4.1",
+  "description": "InkaTech Studio ⚡ v4.4.1: Anti-Duplicate Prompting & Strictly Sequential DALL-E Wait Gate, Real-Time Sync & Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

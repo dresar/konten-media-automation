@@ -25,6 +25,9 @@ let cdnDatabase = {};
 let knownFileIds = new Set();
 let isDownloadingBatch = false;
 let lastPromptSubmitTime = 0;
+let lastSentTopicId = 0;
+let lastSentSlide = 0;
+let isSendingPrompt = false;
 
 // Pemetaan Rentang Topik Per Akun (Multi-Akun Isolation)
 function getAccountTopicRange() {
@@ -443,141 +446,150 @@ function getCurrentPrompt() {
 
 // 6. INJEKSI CHATBOX BERSIH & KLIK TOMBOL BIRU TANGGUH
 async function sendPromptToChatGpt(autoSend = true) {
-  updateEngineStatus(State.INJECTING, `Mengisi chatbox Slide ${activeSlideIdx}...`);
-  const promptText = getCurrentPrompt();
+  if (isSendingPrompt) return;
+  isSendingPrompt = true;
 
-  const res = await executeInTab(async (text, send) => {
-    try {
-      document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
-    } catch (e) {}
+  try {
+    updateEngineStatus(State.INJECTING, `Mengisi chatbox Slide ${activeSlideIdx}...`);
+    const promptText = getCurrentPrompt();
 
-    const textarea = document.querySelector("#prompt-textarea");
-    if (!textarea) return { ok: false, error: "Chatbox (#prompt-textarea) tidak ditemukan" };
+    const res = await executeInTab(async (text, send) => {
+      try {
+        document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
+      } catch (e) {}
 
-    // 1. Bersihkan chatbox secara total
-    textarea.focus();
-    try {
-      document.execCommand("selectAll", false, null);
-      document.execCommand("delete", false, null);
-    } catch (e) {}
+      const textarea = document.querySelector("#prompt-textarea");
+      if (!textarea) return { ok: false, error: "Chatbox (#prompt-textarea) tidak ditemukan" };
 
-    // 2. Injeksi teks menggunakan DataTransfer (standar ProseMirror)
-    try {
-      const dt = new DataTransfer();
-      dt.setData("text/plain", text);
-      const pasteEvt = new ClipboardEvent("paste", {
-        bubbles: true,
-        cancelable: true,
-        clipboardData: dt
-      });
-      textarea.dispatchEvent(pasteEvt);
-    } catch (e) {}
+      // 1. Bersihkan chatbox secara total
+      textarea.focus();
+      try {
+        document.execCommand("selectAll", false, null);
+        document.execCommand("delete", false, null);
+      } catch (e) {}
 
-    // Fallback jika paste dicegah
-    let curText = (textarea.innerText || textarea.value || "").trim();
-    if (!curText || curText.length < 20) {
-      if (textarea.tagName.toLowerCase() === "textarea") {
-        textarea.value = text;
-      } else {
-        const p = textarea.querySelector("p") || textarea;
-        p.textContent = text;
-      }
-      textarea.dispatchEvent(new Event("input", { bubbles: true }));
-      textarea.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    curText = (textarea.innerText || textarea.value || "").trim();
-    if (curText.length < 20) {
-      return { ok: false, error: "Chatbox gagal diisi teks" };
-    }
-
-    if (!send) {
-      return { ok: true, submitted: false };
-    }
-
-    // 3. JEDA ASINKRON 400ms AGAR TOMBOL BIRU MENYALA
-    await new Promise(r => setTimeout(r, 400));
-
-    function findSendButton() {
-      let b = document.querySelector('button[data-testid="send-button"]');
-      if (b) return b;
-
-      b = document.querySelector('button[aria-label*="Kirim" i], button[aria-label*="Send" i]');
-      if (b) return b;
-
-      const allButtons = Array.from(document.querySelectorAll('button'));
-      for (const btn of allButtons) {
-        if (btn.getAttribute('data-testid')?.includes('speech') || btn.getAttribute('aria-label')?.toLowerCase().includes('suara')) continue;
-        if (btn.querySelector('svg path[d*="M2.5 12"]') || btn.querySelector('svg path[d*="M12 2.5"]') || btn.querySelector('svg path[d*="M5 12"]') || btn.querySelector('svg path[d*="M12 4"]')) {
-          return btn;
-        }
-        if (btn.classList.contains('rounded-full') && btn.closest('#prompt-textarea, form, div.flex.w-full')) {
-          if (btn.querySelector('svg')) return btn;
-        }
-      }
-
-      const form = textarea.closest('form');
-      if (form) {
-        const sub = form.querySelector('button[type="submit"]');
-        if (sub) return sub;
-      }
-
-      return null;
-    }
-
-    let isSubmitted = false;
-    for (let attempt = 1; attempt <= 5; attempt++) {
-      const btn = findSendButton();
-      if (btn && !btn.disabled) {
-        btn.focus();
-        btn.click();
-        isSubmitted = true;
-        break;
-      }
-      await new Promise(r => setTimeout(r, 200));
-    }
-
-    if (!isSubmitted) {
-      const form = textarea.closest('form');
-      if (form && typeof form.requestSubmit === 'function') {
-        try {
-          form.requestSubmit();
-          isSubmitted = true;
-        } catch (e) {}
-      }
-    }
-
-    if (!isSubmitted) {
-      const targetP = textarea.querySelector('p') || textarea;
-      ['keydown', 'keypress', 'keyup'].forEach(type => {
-        targetP.dispatchEvent(new KeyboardEvent(type, {
+      // 2. Injeksi teks menggunakan DataTransfer (standar ProseMirror)
+      try {
+        const dt = new DataTransfer();
+        dt.setData("text/plain", text);
+        const pasteEvt = new ClipboardEvent("paste", {
           bubbles: true,
           cancelable: true,
-          key: 'Enter',
-          code: 'Enter',
-          keyCode: 13,
-          which: 13
-        }));
-      });
-      isSubmitted = true;
+          clipboardData: dt
+        });
+        textarea.dispatchEvent(pasteEvt);
+      } catch (e) {}
+
+      // Fallback jika paste dicegah
+      let curText = (textarea.innerText || textarea.value || "").trim();
+      if (!curText || curText.length < 20) {
+        if (textarea.tagName.toLowerCase() === "textarea") {
+          textarea.value = text;
+        } else {
+          const p = textarea.querySelector("p") || textarea;
+          p.textContent = text;
+        }
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
+        textarea.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+
+      curText = (textarea.innerText || textarea.value || "").trim();
+      if (curText.length < 20) {
+        return { ok: false, error: "Chatbox gagal diisi teks" };
+      }
+
+      if (!send) {
+        return { ok: true, submitted: false };
+      }
+
+      // 3. JEDA ASINKRON 400ms AGAR TOMBOL BIRU MENYALA
+      await new Promise(r => setTimeout(r, 400));
+
+      function findSendButton() {
+        let b = document.querySelector('button[data-testid="send-button"]');
+        if (b) return b;
+
+        b = document.querySelector('button[aria-label*="Kirim" i], button[aria-label*="Send" i]');
+        if (b) return b;
+
+        const allButtons = Array.from(document.querySelectorAll('button'));
+        for (const btn of allButtons) {
+          if (btn.getAttribute('data-testid')?.includes('speech') || btn.getAttribute('aria-label')?.toLowerCase().includes('suara')) continue;
+          if (btn.querySelector('svg path[d*="M2.5 12"]') || btn.querySelector('svg path[d*="M12 2.5"]') || btn.querySelector('svg path[d*="M5 12"]') || btn.querySelector('svg path[d*="M12 4"]')) {
+            return btn;
+          }
+          if (btn.classList.contains('rounded-full') && btn.closest('#prompt-textarea, form, div.flex.w-full')) {
+            if (btn.querySelector('svg')) return btn;
+          }
+        }
+
+        const form = textarea.closest('form');
+        if (form) {
+          const sub = form.querySelector('button[type="submit"]');
+          if (sub) return sub;
+        }
+
+        return null;
+      }
+
+      let isSubmitted = false;
+      for (let attempt = 1; attempt <= 5; attempt++) {
+        const btn = findSendButton();
+        if (btn && !btn.disabled) {
+          btn.focus();
+          btn.click();
+          isSubmitted = true;
+          break;
+        }
+        await new Promise(r => setTimeout(r, 200));
+      }
+
+      if (!isSubmitted) {
+        const form = textarea.closest('form');
+        if (form && typeof form.requestSubmit === 'function') {
+          try {
+            form.requestSubmit();
+            isSubmitted = true;
+          } catch (e) {}
+        }
+      }
+
+      if (!isSubmitted) {
+        const targetP = textarea.querySelector('p') || textarea;
+        ['keydown', 'keypress', 'keyup'].forEach(type => {
+          targetP.dispatchEvent(new KeyboardEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            key: 'Enter',
+            code: 'Enter',
+            keyCode: 13,
+            which: 13
+          }));
+        });
+        isSubmitted = true;
+      }
+
+      return { ok: true, submitted: isSubmitted };
+    }, [promptText, autoSend]);
+
+    if (!res || !res.ok) {
+      updateEngineStatus(State.IDLE, "Gagal mengisi chatbox");
+      toast(`❌ ${res ? res.error : "Gagal mengisi chatbox. Pastikan ChatGPT terbuka."}`);
+      return;
     }
 
-    return { ok: true, submitted: isSubmitted };
-  }, [promptText, autoSend]);
-
-  if (!res || !res.ok) {
-    updateEngineStatus(State.IDLE, "Gagal mengisi chatbox");
-    toast(`❌ ${res ? res.error : "Gagal mengisi chatbox. Pastikan ChatGPT terbuka."}`);
-    return;
-  }
-
-  if (autoSend) {
-    lastPromptSubmitTime = Date.now();
-    updateEngineStatus(State.AWAITING_GENERATION, `Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
-    toast(`Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
-  } else {
-    updateEngineStatus(State.IDLE, "Prompt siap di chatbox");
-    toast(`✓ Prompt Slide ${activeSlideIdx} siap di chatbox`);
+    if (autoSend) {
+      lastPromptSubmitTime = Date.now();
+      lastSentTopicId = activeContentId;
+      lastSentSlide = activeSlideIdx;
+      updateEngineStatus(State.AWAITING_GENERATION, `Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
+      toast(`Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
+    } else {
+      updateEngineStatus(State.IDLE, "Prompt siap di chatbox");
+      toast(`✓ Prompt Slide ${activeSlideIdx} siap di chatbox`);
+    }
+  } finally {
+    isSendingPrompt = false;
   }
 }
 
@@ -597,6 +609,8 @@ function copyCaption() {
 }
 
 async function triggerNewChat() {
+  lastSentSlide = 0;
+  lastSentTopicId = 0;
   updateEngineStatus(State.SWITCHING_CHAT, "Membuka New Chat...");
   toast("Membuka New Chat...");
   await executeInTab(() => {
@@ -634,9 +648,9 @@ async function checkRenderStatus() {
   if (!tab) return;
 
   const inspection = await executeInTab(() => {
-    const stopBtn = document.querySelector('button[data-testid="stop-button"], button[aria-label*="Stop generating"], button[aria-label*="Stop"]');
+    const stopBtn = document.querySelector('button[data-testid="stop-button"], button[aria-label*="Stop" i], button[aria-label*="Hentikan" i], button svg rect');
     const isStopBtnPresent = !!stopBtn;
-    const isShimmerPresent = !!document.querySelector('.animate-pulse, [data-testid*="generating"], svg.animate-spin');
+    const isShimmerPresent = !!document.querySelector('.result-streaming, .animate-pulse, [data-testid*="generating"], svg.animate-spin, [aria-busy="true"]');
 
     // Kumpulkan seluruh URL gambar DALL-E asli di tab secara OMNI-CHANNEL
     const list = [];
@@ -718,6 +732,7 @@ async function checkRenderStatus() {
 
     // Cek teks pesan error ChatGPT
     let detectedError = null;
+    const assistantMsgs = Array.from(document.querySelectorAll('[data-message-author-role="assistant"], div.agent-turn, [data-testid*="conversation-turn"]'));
     if (assistantMsgs.length > 0) {
       const latestTurn = assistantMsgs[assistantMsgs.length - 1];
       const lowerText = (latestTurn.innerText || "").toLowerCase();
@@ -826,6 +841,20 @@ async function checkRenderStatus() {
     }
   }
 
+  // JIKA MASIH MENUNGGU GAMBAR DARI SLIDE YANG TELAH DIKIRIM (ANTI-DUPLIKAT PROMPT)
+  const isWaitingForImage = (lastSentTopicId === activeContentId && lastSentSlide > currentImagesCount);
+  if (isWaitingForImage) {
+    const waitSec = Math.round((Date.now() - lastPromptSubmitTime) / 1000);
+    if (waitSec > 180) {
+      updateEngineStatus(State.PAUSED_ERROR, `Timeout menunggu Slide ${lastSentSlide}`);
+      toast(`⚠️ Timeout: Gambar Slide ${lastSentSlide} belum selesai setelah 3 menit.`);
+    } else {
+      updateEngineStatus(State.AWAITING_GENERATION, `Menunggu Gambar Slide ${lastSentSlide} (${waitSec}s)...`);
+    }
+    // WAJIB RETURN: JANGAN BIARKAN AUTOPILOT MENGIRIM ULANG SLIDE INI ATAU SLIDE LAINNYA!
+    return;
+  }
+
   if (currentImagesCount >= total) {
     updateEngineStatus(State.SLIDE_SUCCESS, `${total}/${total} Slide Selesai!`);
   } else if (currentImagesCount > 0) {
@@ -847,9 +876,16 @@ async function handleAutopilotProgression(currentImagesCount, total) {
     activeSlideIdx = nextSlide;
     updateView();
 
+    // Pastikan slide ini belum pernah dikirim dalam sesi topik ini
+    const isAlreadySent = (lastSentTopicId === activeContentId && lastSentSlide >= nextSlide);
+    if (isAlreadySent) {
+      // Masih menunggu hasil render slide ini, dilarang kirim duplikat!
+      return;
+    }
+
     const elapsed = Date.now() - lastPromptSubmitTime;
     // Jeda minimal 4 detik sejak pengiriman terakhir
-    if (elapsed > 4000 && currentState !== State.INJECTING && currentState !== State.AWAITING_GENERATION) {
+    if (elapsed > 4000 && !isSendingPrompt && currentState !== State.INJECTING && currentState !== State.AWAITING_GENERATION) {
       toast(`⚡ Autopilot: Mengirim Slide ${activeSlideIdx}...`);
       await sendPromptToChatGpt(true);
     }
@@ -867,6 +903,8 @@ async function handleAutopilotProgression(currentImagesCount, total) {
     if (activeContentId < range.max) {
       activeContentId++;
       activeSlideIdx = 1;
+      lastSentSlide = 0;
+      lastSentTopicId = activeContentId;
       await saveDatabase();
       renderTopicSelect();
       updateView();
@@ -906,7 +944,9 @@ function runAutopilotStep() {
       }
     }
     updateView();
-    sendPromptToChatGpt(true);
+    if (lastSentTopicId !== activeContentId || lastSentSlide < activeSlideIdx) {
+      sendPromptToChatGpt(true);
+    }
   } else {
     handleAutopilotProgression(done, total);
   }
@@ -1064,6 +1104,8 @@ async function scanActiveTabForCdnImages() {
 
 // 12. Fitur Reset
 async function resetCurrentTopic() {
+  lastSentSlide = 0;
+  lastSentTopicId = 0;
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
   const total = currTopic ? (currTopic.total_slides || 6) : 6;
 
@@ -1084,6 +1126,8 @@ async function resetCurrentTopic() {
 }
 
 async function resetCurrentTopicImages() {
+  lastSentSlide = 0;
+  lastSentTopicId = 0;
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
   const total = currTopic ? (currTopic.total_slides || 6) : 6;
 
@@ -1107,6 +1151,8 @@ if (selAcc) {
     const range = getAccountTopicRange();
     activeContentId = range.min;
     activeSlideIdx = 1;
+    lastSentSlide = 0;
+    lastSentTopicId = 0;
     await saveDatabase();
     renderTopicSelect();
     updateView();
@@ -1116,6 +1162,8 @@ if (selAcc) {
 
 document.getElementById("selTopic").addEventListener("change", (e) => {
   activeContentId = parseInt(e.target.value);
+  lastSentSlide = 0;
+  lastSentTopicId = 0;
   const currTopic = window.INKA_TOPICS.find((t) => t.id === activeContentId);
   const total = currTopic ? (currTopic.total_slides || 6) : 6;
   let targetSlide = 1;
