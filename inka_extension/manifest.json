@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "2.1.0",
-  "description": "Chrome Native Side Panel Otomasi DALL-E @inka.tech: Auto-Detect Render, Autopilot, Canvas 3:4 & Watermark Logo.",
+  "version": "3.0.0",
+  "description": "Side Panel Otomasi DALL-E @inka.tech v3.0: Silent Direct Downloader, Verified CDN & Auto-Naming.",
   "permissions": [
     "sidePanel",
     "storage",
