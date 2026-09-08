@@ -14,7 +14,7 @@ class ChatGptEngine {
   }
 
   getInjectScript() {
-    return (text, autoSend) => {
+    return async (text, autoSend) => {
       try {
         document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(el => el.remove());
       } catch (e) {}
@@ -56,6 +56,8 @@ class ChatGptEngine {
         return { ok: true, submitted: false };
       }
 
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       function findSendButton() {
         let btn = document.querySelector('button[data-testid="send-button"]');
         if (btn) return btn;
@@ -79,12 +81,28 @@ class ChatGptEngine {
         return null;
       }
 
+      function triggerClick(el) {
+        if (!el) return;
+        el.focus();
+        ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'].forEach(evtType => {
+          try {
+            el.dispatchEvent(new MouseEvent(evtType, { bubbles: true, cancelable: true, view: window, buttons: 1 }));
+          } catch (e) {}
+        });
+        if (typeof el.click === 'function') {
+          try { el.click(); } catch (e) {}
+        }
+      }
+
       let isSubmitted = false;
-      const sendBtn = findSendButton();
-      if (sendBtn && !sendBtn.disabled) {
-        sendBtn.focus();
-        sendBtn.click();
-        isSubmitted = true;
+      for (let attempt = 1; attempt <= 8; attempt++) {
+        const sendBtn = findSendButton();
+        if (sendBtn && !sendBtn.disabled && sendBtn.getAttribute("aria-disabled") !== "true") {
+          triggerClick(sendBtn);
+          isSubmitted = true;
+          break;
+        }
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
 
       if (!isSubmitted) {
@@ -223,7 +241,7 @@ class GeminiEngine {
   }
 
   getInjectScript() {
-    return (text, autoSend) => {
+    return async (text, autoSend) => {
       function findInput() {
         const selectors = [
           'rich-textarea div[contenteditable="true"]',
@@ -269,9 +287,13 @@ class GeminiEngine {
         } else {
           inputEl.innerHTML = "<p>" + text.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</p>";
         }
-        inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-        inputEl.dispatchEvent(new Event("change", { bubbles: true }));
       }
+
+      try {
+        inputEl.dispatchEvent(new InputEvent("input", { bubbles: true, cancelable: true, inputType: "insertText", data: text }));
+      } catch (e) {}
+      inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+      inputEl.dispatchEvent(new Event("change", { bubbles: true }));
 
       currentText = (inputEl.innerText || inputEl.textContent || inputEl.value || "").trim();
       if (currentText.length < 20) {
@@ -283,43 +305,121 @@ class GeminiEngine {
       }
 
       function findSendButton() {
-        const selectors = [
+        const primarySelectors = [
           'button[aria-label*="Kirim" i]',
           'button[aria-label*="Send" i]',
+          'button[aria-label*="Submit" i]',
+          'button[aria-label*="Prompt" i]',
+          'button[aria-label*="Pesan" i]',
+          'button[aria-label*="Perintah" i]',
           'button.send-button',
           'button[data-test-id="send-button"]',
-          'div.send-button-container button',
+          'button[data-testid="send-button"]',
+          '.send-button-container button',
+          'div.input-buttons-wrapper button:last-child',
+          'div.buttons-container button:last-child',
           'button:has(mat-icon[data-mat-icon-name="send"])',
-          'button:has(mat-icon)'
+          'button:has(mat-icon[data-mat-icon-name*="arrow"])'
         ];
-        for (const sel of selectors) {
+
+        for (const sel of primarySelectors) {
           try {
-            const btn = document.querySelector(sel);
-            if (btn && !btn.disabled) return btn;
+            const matches = document.querySelectorAll(sel);
+            for (const btn of matches) {
+              const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+              if (label.includes("mic") || label.includes("suara") || label.includes("audio")) continue;
+              if (!btn.disabled && btn.getAttribute("aria-disabled") !== "true") {
+                return btn;
+              }
+            }
           } catch (e) {}
         }
-        const allBtns = Array.from(document.querySelectorAll("button"));
-        for (const b of allBtns) {
-          const label = (b.getAttribute("aria-label") || "").toLowerCase();
-          if (label.includes("send") || label.includes("kirim")) return b;
-          if (b.querySelector('mat-icon') && !b.disabled) {
-            const iconName = b.querySelector('mat-icon').getAttribute('data-mat-icon-name') || '';
-            if (iconName.includes('send')) return b;
+
+        const inputArea = document.querySelector('rich-textarea, .input-area, .bottom-container, .input-wrapper, form') || document.body;
+        const candidateButtons = Array.from(inputArea.querySelectorAll('button, [role="button"]'));
+
+        const validCandidates = candidateButtons.filter(btn => {
+          const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+          if (label.includes("mic") || label.includes("suara") || label.includes("microphone") || label.includes("audio")) return false;
+          if (label.includes("expand") || label.includes("upload") || label.includes("lampirkan") || label.includes("file") || label.includes("tools")) return false;
+          if (label.includes("menu") || label.includes("setting") || label.includes("bantuan") || label.includes("help")) return false;
+          return true;
+        });
+
+        for (const btn of validCandidates) {
+          if (btn.disabled || btn.getAttribute("aria-disabled") === "true") continue;
+          const style = window.getComputedStyle(btn);
+          const bg = style.backgroundColor;
+          const matchRgb = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          if (matchRgb) {
+            const r = parseInt(matchRgb[1]), g = parseInt(matchRgb[2]), b = parseInt(matchRgb[3]);
+            if (b > 140 && b > r + 20) {
+              return btn;
+            }
           }
         }
+
+        for (const btn of validCandidates) {
+          if (btn.disabled || btn.getAttribute("aria-disabled") === "true") continue;
+          if (btn.querySelector('mat-icon') || btn.querySelector('svg')) {
+            const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+            if (label.includes("send") || label.includes("kirim") || label.includes("up") || !label) {
+              return btn;
+            }
+          }
+        }
+
+        const micBtn = document.querySelector('button[aria-label*="mic" i], button[aria-label*="suara" i], button[aria-label*="microphone" i]');
+        if (micBtn) {
+          const parent = micBtn.parentElement;
+          if (parent) {
+            const siblingBtns = Array.from(parent.querySelectorAll('button, [role="button"]')).filter(b => b !== micBtn);
+            for (const b of siblingBtns) {
+              if (!b.disabled && b.getAttribute("aria-disabled") !== "true") {
+                return b;
+              }
+            }
+          }
+        }
+
+        if (validCandidates.length > 0) {
+          const last = validCandidates[validCandidates.length - 1];
+          if (!last.disabled && last.getAttribute("aria-disabled") !== "true") {
+            return last;
+          }
+        }
+
         return null;
       }
 
+      function triggerClick(el) {
+        if (!el) return false;
+        el.focus();
+        ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'].forEach(evtType => {
+          try {
+            el.dispatchEvent(new MouseEvent(evtType, { bubbles: true, cancelable: true, view: window, buttons: 1 }));
+          } catch (e) {}
+        });
+        if (typeof el.click === 'function') {
+          try { el.click(); } catch (e) {}
+        }
+        return true;
+      }
+
       let isSubmitted = false;
-      const sendBtn = findSendButton();
-      if (sendBtn && !sendBtn.disabled) {
-        sendBtn.focus();
-        sendBtn.click();
-        isSubmitted = true;
+      for (let attempt = 1; attempt <= 10; attempt++) {
+        await new Promise(resolve => setTimeout(resolve, 180));
+        const sendBtn = findSendButton();
+        if (sendBtn) {
+          triggerClick(sendBtn);
+          isSubmitted = true;
+          break;
+        }
       }
 
       if (!isSubmitted) {
-        ["keydown", "keypress", "keyup"].forEach(evt => {
+        inputEl.focus();
+        ['keydown', 'keypress', 'keyup'].forEach(evt => {
           inputEl.dispatchEvent(new KeyboardEvent(evt, { bubbles: true, cancelable: true, key: "Enter", code: "Enter", keyCode: 13, which: 13 }));
         });
         isSubmitted = true;
