@@ -26,7 +26,12 @@ function updateEngineStatus(state, detail = "") {
     case State.GENERATING:
       badge.className = "inka-badge-generating";
       badge.innerText = "● MERENDER";
-      txtDetail.innerText = detail || "DALL-E sedang merender...";
+      txtDetail.innerText = detail || "Sedang merender gambar...";
+      break;
+    case State.COOLDOWN:
+      badge.className = "inka-badge-cooldown";
+      badge.innerText = `⏳ JEDA (${cooldownRemaining}s)`;
+      txtDetail.innerText = detail || `Jeda sebelum Slide ${activeSlideIdx}...`;
       break;
     case State.SLIDE_SUCCESS:
       badge.className = "inka-badge-success";
@@ -77,9 +82,17 @@ function updatePlatformBadge(target) {
 function renderUI() {
   renderPlatformSelect();
   renderTopicSelect();
+  renderSlideDelaySelect();
   renderDownloadCount();
   renderDownloadList();
   updateView();
+}
+
+function renderSlideDelaySelect() {
+  const selDelay = document.getElementById("selSlideDelay");
+  const txtBadge = document.getElementById("txtCooldownBadge");
+  if (selDelay) selDelay.value = String(slideDelaySeconds);
+  if (txtBadge) txtBadge.innerText = `${slideDelaySeconds}s`;
 }
 
 function renderPlatformSelect() {

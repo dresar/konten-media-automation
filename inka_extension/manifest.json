@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.7.0",
-  "description": "InkaTech Studio ⚡ v4.7.0: Dual-Engine AI Architecture (ChatGPT DALL-E & Google Gemini Imagen 3), Full 100 Topics Support & Batch Autopilot.",
+  "version": "4.8.0",
+  "description": "InkaTech Studio ⚡ v4.8.0: Dual-Engine AI (ChatGPT & Gemini), Inter-Slide Cooldown Timer, Anti-Spam Guard & 100 Topics Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",

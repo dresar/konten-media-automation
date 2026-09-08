@@ -3,6 +3,7 @@ const State = {
   INJECTING: "INJECTING",
   AWAITING_GENERATION: "AWAITING_GENERATION",
   GENERATING: "GENERATING",
+  COOLDOWN: "COOLDOWN",
   SLIDE_SUCCESS: "SLIDE_SUCCESS",
   DOWNLOADING_TOPIC: "DOWNLOADING_TOPIC",
   SWITCHING_CHAT: "SWITCHING_CHAT",
@@ -25,6 +26,9 @@ let lastSentTopicId = 0;
 let lastSentSlide = 0;
 let isSendingPrompt = false;
 let isTransitioningTopic = false;
+let slideDelaySeconds = 30;
+let cooldownRemaining = 0;
+let isWaitingForCooldown = false;
 
 const TOPIC_SLUGS = {
   1: "01-juice-jacking",
@@ -211,6 +215,7 @@ async function initDatabase() {
     }
 
     if (data.inka_active_s) activeSlideIdx = data.inka_active_s;
+    if (data.inka_slide_delay) slideDelaySeconds = parseInt(data.inka_slide_delay) || 30;
 
     knownFileIds.clear();
     Object.values(cdnDatabase).forEach(record => {
@@ -242,7 +247,8 @@ async function saveDatabase() {
       inka_cdn_db: cdnDatabase,
       inka_account_mode: accountMode,
       inka_stop_topic: stopTopicId,
-      inka_engine_mode: selectedEngineId
+      inka_engine_mode: selectedEngineId,
+      inka_slide_delay: slideDelaySeconds
     });
   } catch (error) {}
 }

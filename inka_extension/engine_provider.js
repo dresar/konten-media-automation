@@ -431,11 +431,12 @@ class GeminiEngine {
 
   getScanScript() {
     return () => {
-      const turns = Array.from(document.querySelectorAll('model-response, div.model-response-text, div.response-container, div[data-test-id="model-response"], message-content, chat-message'));
+      const rawTurns = Array.from(document.querySelectorAll('model-response, div[data-test-id="model-response"], div.model-response-text, div.response-container'));
+      const turns = rawTurns.filter(t => !t.closest('user-query, .user-query-container, .user-message, header, nav'));
 
-      const stopBtn = document.querySelector('button[aria-label*="Hentikan" i], button[aria-label*="Stop" i], button.stop-button, button[data-test-id="stop-button"]');
+      const stopBtn = document.querySelector('button[aria-label*="Hentikan" i], button[aria-label*="Stop" i], button.stop-button, button[data-test-id="stop-button"], button:has(mat-icon[data-mat-icon-name="stop"])');
       const isStopBtnPresent = !!stopBtn;
-      const isShimmerPresent = !!document.querySelector('div.sparkle-container, div.loading-indicator, .sparkle-animation, [aria-label*="Generating" i], [aria-label*="Membuat" i], mat-progress-bar, [aria-busy="true"]');
+      const isShimmerPresent = !!document.querySelector('div.sparkle-container, div.loading-indicator, .sparkle-animation, [aria-label*="Generating" i], [aria-label*="Membuat" i], mat-progress-bar, [aria-busy="true"], div[role="progressbar"], div.loading-dots');
 
       let curInputText = "";
       const inputEl = document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"][role="textbox"], textarea.textarea, div.ql-editor');
@@ -453,17 +454,41 @@ class GeminiEngine {
         let cUrl = url.trim().replace(/&amp;/g, "&");
         if (cUrl.startsWith("/")) cUrl = window.location.origin + cUrl;
         const low = cUrl.toLowerCase();
-        if (low.includes("photo.jpg") || low.includes("avatar") || low.includes("profile") || low.includes("favicon") || low.includes("gemini_sparkle") || low.includes("sprites") || low.includes(".svg")) {
+        if (
+          low.includes("/a/") ||
+          low.includes("/ogw/") ||
+          low.includes("photo.jpg") ||
+          low.includes("avatar") ||
+          low.includes("profile") ||
+          low.includes("favicon") ||
+          low.includes("gemini_sparkle") ||
+          low.includes("sprites") ||
+          low.includes(".svg") ||
+          low.includes("googlelogo") ||
+          low.includes("accounts.google") ||
+          low.includes("/gadgets/") ||
+          low.includes("/proxy") ||
+          low.includes("data:image/svg")
+        ) {
           return false;
         }
-        if (imgEl && imgEl.naturalWidth > 0 && (imgEl.naturalWidth < 150 || imgEl.naturalHeight < 150)) {
-          return false;
+        if (imgEl) {
+          if (imgEl.closest('user-query, .user-message, header, nav, button, [role="button"], .avatar')) {
+            return false;
+          }
+          if (imgEl.alt && (imgEl.alt.toLowerCase().includes("profil") || imgEl.alt.toLowerCase().includes("avatar") || imgEl.alt.toLowerCase().includes("logo"))) {
+            return false;
+          }
+          if (imgEl.complete && (imgEl.naturalWidth < 250 || imgEl.naturalHeight < 250)) {
+            return false;
+          }
         }
         return low.includes("googleusercontent.com") || low.startsWith("blob:") || low.includes("image-viewer") || low.includes("generated_image");
       }
 
       function addUrl(url, imgEl) {
         if (!isGenuineUrl(url, imgEl)) return;
+        if (imgEl && !imgEl.complete) return;
         let cUrl = url.trim().replace(/&amp;/g, "&");
         if (cUrl.startsWith("/")) cUrl = window.location.origin + cUrl;
         const key = cUrl.split("=")[0].split("?")[0];
@@ -475,13 +500,12 @@ class GeminiEngine {
 
       turns.forEach(turn => {
         turn.querySelectorAll("img").forEach(img => {
-          const src = img.currentSrc || img.src || img.getAttribute("src");
-          addUrl(src, img);
-          const pAnchor = img.closest("a");
-          if (pAnchor) addUrl(pAnchor.href || pAnchor.getAttribute("href"), img);
-        });
-        turn.querySelectorAll('a[href*="googleusercontent.com"], a[href*="blob:"]').forEach(a => {
-          addUrl(a.href || a.getAttribute("href"), null);
+          if (img.complete && img.naturalWidth >= 250 && img.naturalHeight >= 250) {
+            const src = img.currentSrc || img.src || img.getAttribute("src");
+            addUrl(src, img);
+            const pAnchor = img.closest("a");
+            if (pAnchor) addUrl(pAnchor.href || pAnchor.getAttribute("href"), img);
+          }
         });
       });
 

@@ -5,6 +5,7 @@ async function scanActiveTabForCdnImages() {
 }
 
 async function resetCurrentTopic() {
+  if (typeof stopSlideCooldown === "function") stopSlideCooldown();
   lastSentSlide = 0;
   lastSentTopicId = 0;
   const currentTopic = window.INKA_TOPICS.find(item => item.id === activeContentId);
@@ -27,6 +28,7 @@ async function resetCurrentTopic() {
 }
 
 async function resetCurrentTopicImages() {
+  if (typeof stopSlideCooldown === "function") stopSlideCooldown();
   lastSentSlide = 0;
   lastSentTopicId = 0;
   const currentTopic = window.INKA_TOPICS.find(item => item.id === activeContentId);
@@ -94,9 +96,21 @@ if (selStopElement) {
   });
 }
 
+const selDelayElement = document.getElementById("selSlideDelay");
+if (selDelayElement) {
+  selDelayElement.addEventListener("change", async (event) => {
+    slideDelaySeconds = parseInt(event.target.value) || 30;
+    const badge = document.getElementById("txtCooldownBadge");
+    if (badge) badge.innerText = `${slideDelaySeconds}s`;
+    await saveDatabase();
+    toast(`Jeda antar slide diatur ke: ${slideDelaySeconds} detik`);
+  });
+}
+
 const selTopicElement = document.getElementById("selTopic");
 if (selTopicElement) {
   selTopicElement.addEventListener("change", (event) => {
+    if (typeof stopSlideCooldown === "function") stopSlideCooldown();
     activeContentId = parseInt(event.target.value);
     lastSentSlide = 0;
     lastSentTopicId = 0;

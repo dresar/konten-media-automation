@@ -80,6 +80,7 @@ function toggleAutopilot() {
     toast("Autopilot berjalan...");
     runAutopilotStep();
   } else {
+    stopSlideCooldown();
     button.classList.remove("inka-btn-autopilot-running");
     button.innerText = "⚡ Autopilot";
     updateEngineStatus(State.IDLE, "Autopilot dijeda oleh pengguna");
@@ -145,24 +146,72 @@ async function transitionToNextTopic() {
   }
 }
 
+let cooldownTimer = null;
+
+function stopSlideCooldown() {
+  if (cooldownTimer) {
+    clearInterval(cooldownTimer);
+    cooldownTimer = null;
+  }
+  cooldownRemaining = 0;
+  isWaitingForCooldown = false;
+}
+
+function startSlideCooldown(nextSlide) {
+  stopSlideCooldown();
+  isWaitingForCooldown = true;
+  cooldownRemaining = slideDelaySeconds;
+
+  updateEngineStatus(State.COOLDOWN, `Jeda sebelum Slide ${nextSlide} (${cooldownRemaining}s)...`);
+  toast(`⏳ Jeda ${cooldownRemaining} detik sebelum Slide ${nextSlide}...`);
+
+  cooldownTimer = setInterval(async () => {
+    if (!isAutopilot) {
+      stopSlideCooldown();
+      updateEngineStatus(State.IDLE, "Autopilot dijeda oleh pengguna");
+      return;
+    }
+
+    cooldownRemaining--;
+    if (cooldownRemaining > 0) {
+      updateEngineStatus(State.COOLDOWN, `Jeda sebelum Slide ${nextSlide} (${cooldownRemaining}s)...`);
+    } else {
+      stopSlideCooldown();
+
+      const target = await window.inkaEngineManager.getActiveTarget();
+      if (target.tab && target.engine) {
+        const inspection = await executeInTab(target.engine.getScanScript());
+        if (inspection && (inspection.isStopBtnPresent || inspection.isShimmerPresent)) {
+          updateEngineStatus(State.GENERATING, "AI masih sibuk, menunggu...");
+          startSlideCooldown(nextSlide);
+          return;
+        }
+      }
+
+      activeSlideIdx = nextSlide;
+      updateView();
+      toast(`⚡ Autopilot: Mengirim Slide ${activeSlideIdx}...`);
+      await sendPromptToChatGpt(true);
+    }
+  }, 1000);
+}
+
 async function handleAutopilotProgression(currentImagesCount, total) {
   if (isTransitioningTopic) return;
+  if (isWaitingForCooldown) return;
 
   if (currentImagesCount < total) {
     const nextSlide = currentImagesCount + 1;
-    activeSlideIdx = nextSlide;
-    updateView();
-
     const isAlreadySent = (lastSentTopicId === activeContentId && lastSentSlide >= nextSlide);
     if (isAlreadySent) {
       return;
     }
 
-    const elapsed = Date.now() - lastPromptSubmitTime;
-    if (elapsed > 4000 && !isSendingPrompt && currentState !== State.INJECTING && currentState !== State.AWAITING_GENERATION) {
-      toast(`⚡ Autopilot: Mengirim Slide ${activeSlideIdx}...`);
-      await sendPromptToChatGpt(true);
+    if (currentState === State.COOLDOWN || cooldownRemaining > 0) {
+      return;
     }
+
+    startSlideCooldown(nextSlide);
   } else {
     await transitionToNextTopic();
   }
@@ -170,6 +219,7 @@ async function handleAutopilotProgression(currentImagesCount, total) {
 
 function runAutopilotStep() {
   if (isTransitioningTopic) return;
+  if (isWaitingForCooldown) return;
 
   const currentTopic = (window.INKA_TOPICS && window.INKA_TOPICS.find(item => item.id === activeContentId)) || { topic: "konten" };
   const total = currentTopic.total_slides || 6;

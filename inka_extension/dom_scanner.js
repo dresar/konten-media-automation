@@ -103,15 +103,21 @@ async function checkRenderStatus(forceManual = false) {
     }
   }
 
-  const isWaitingForImage = (lastSentTopicId === activeContentId && lastSentSlide > currentImagesCount);
+  const elapsedSinceSubmit = Date.now() - lastPromptSubmitTime;
+  const isWaitingForImage = (lastSentTopicId === activeContentId && lastSentSlide > currentImagesCount) || (lastSentTopicId === activeContentId && lastSentSlide > 0 && elapsedSinceSubmit < 8000 && currentImagesCount < lastSentSlide);
+
   if (isWaitingForImage) {
-    const waitSec = Math.round((Date.now() - lastPromptSubmitTime) / 1000);
+    const waitSec = Math.round(elapsedSinceSubmit / 1000);
     if (waitSec > 180) {
       updateEngineStatus(State.PAUSED_ERROR, `Timeout menunggu Slide ${lastSentSlide}`);
       toast(`⚠️ Timeout: Gambar Slide ${lastSentSlide} belum selesai setelah 3 menit.`);
     } else {
       updateEngineStatus(State.AWAITING_GENERATION, `Menunggu Gambar Slide ${lastSentSlide} (${waitSec}s)...`);
     }
+    return;
+  }
+
+  if (currentState === State.COOLDOWN || isWaitingForCooldown) {
     return;
   }
 
@@ -123,7 +129,7 @@ async function checkRenderStatus(forceManual = false) {
     updateEngineStatus(State.IDLE, `Siap (${engine.shortName}). Menunggu perintah.`);
   }
 
-  if (isAutopilot && !isDownloadingBatch && !isTransitioningTopic && !inspection.isStopBtnPresent && !inspection.isShimmerPresent) {
+  if (isAutopilot && !isDownloadingBatch && !isTransitioningTopic && !inspection.isStopBtnPresent && !inspection.isShimmerPresent && !isWaitingForCooldown && currentState !== State.COOLDOWN) {
     await handleAutopilotProgression(currentImagesCount, total);
   }
 }
