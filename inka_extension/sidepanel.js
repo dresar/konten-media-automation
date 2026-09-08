@@ -59,6 +59,9 @@ if (selAccountElement) {
     activeSlideIdx = 1;
     lastSentSlide = 0;
     lastSentTopicId = 0;
+    if (stopTopicId < range.min || stopTopicId > range.max) {
+      stopTopicId = range.max;
+    }
     await saveDatabase();
     renderTopicSelect();
     updateView();
@@ -69,7 +72,7 @@ if (selAccountElement) {
 const selStopElement = document.getElementById("selStopTopic");
 if (selStopElement) {
   selStopElement.addEventListener("change", (event) => {
-    stopTopicId = parseInt(event.target.value) || 35;
+    stopTopicId = parseInt(event.target.value) || 100;
     saveDatabase();
     toast(`Target stop diatur ke: Topik #${stopTopicId}`);
   });

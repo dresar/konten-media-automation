@@ -151,6 +151,14 @@ function copyPrompt() {
 function copyCaption() {
   const currentTopic = window.INKA_TOPICS.find(item => item.id === activeContentId);
   if (!currentTopic) return;
+  if (currentTopic.caption) {
+    const text = typeof currentTopic.caption === "string" ? currentTopic.caption : currentTopic.caption.body;
+    if (text && text.trim().length > 0) {
+      navigator.clipboard.writeText(text.trim());
+      toast("Caption disalin");
+      return;
+    }
+  }
   const bullets = (currentTopic.slide_outline || []).slice(0, 4).map(item => `• ${item}`).join("\n");
   const caption = `💡 ${currentTopic.hook_title || currentTopic.topic}\n\n${bullets}\n\nTips teknologi santai dan trik digital gampang dari @inka.tech.\nSimpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌\nFollow TikTok @inka.tech • Instagram @arif_ex21\n\n#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp`;
   navigator.clipboard.writeText(caption);

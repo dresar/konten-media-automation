@@ -10,11 +10,11 @@ const State = {
 };
 
 let currentState = State.IDLE;
-let activeContentId = 1;
+let activeContentId = 41;
 let activeSlideIdx = 1;
 let isAutopilot = false;
-let accountMode = "acc1";
-let stopTopicId = 35;
+let accountMode = "batch41_100";
+let stopTopicId = 100;
 let dbProgress = {};
 let cdnDatabase = {};
 let knownFileIds = new Set();
@@ -65,7 +65,67 @@ const TOPIC_SLUGS = {
   37: "37-clipboard-hp",
   38: "38-notifikasi-otp",
   39: "39-fake-storage",
-  40: "40-wifi-publik"
+  40: "40-wifi-publik",
+  41: "41-powerbank-fast",
+  42: "42-phishing-kurir",
+  43: "43-nfc-skimming",
+  44: "44-cas-bawah-bantal",
+  45: "45-wa-web-kantor",
+  46: "46-quishing-qr-palsu",
+  47: "47-ai-voice-cloning",
+  48: "48-hotspot-aman",
+  49: "49-download-manager",
+  50: "50-amankan-telegram",
+  51: "51-upgrade-ssd",
+  52: "52-bahaya-fake-gps",
+  53: "53-ekstensi-berbahaya",
+  54: "54-mitos-dark-mode",
+  55: "55-privasi-facebook",
+  56: "56-lacak-hp-mati",
+  57: "57-cloud-backup-otomatis",
+  58: "58-deteksi-airtag",
+  59: "59-sim-swap-fraud",
+  60: "60-cek-kecepatan-asli",
+  61: "61-charger-laptop-hp",
+  62: "62-simpan-ktp-wa",
+  63: "63-keranjang-ngikut",
+  64: "64-layar-120hz-60hz",
+  65: "65-bersihkan-speaker-air",
+  66: "66-kembalikan-file-terhapus",
+  67: "67-ransomware-kunci-file",
+  68: "68-reset-hp-bekas",
+  69: "69-voice-note-ke-teks",
+  70: "70-bahaya-vpn-gratisan",
+  71: "71-fitur-rahasia-gboard",
+  72: "72-kamera-depan-mirror",
+  73: "73-wa-tanpa-simpan-nomor",
+  74: "74-ai-gambar-gratis",
+  75: "75-hapus-suara-google",
+  76: "76-flashdisk-64gb-59gb",
+  77: "77-kunci-aplikasi-bawaan",
+  78: "78-undangan-nikah-apk",
+  79: "79-notifikasi-spam-chrome",
+  80: "80-thermal-throttling",
+  81: "81-jack-audio-hilang",
+  82: "82-kirim-file-asli",
+  83: "83-charger-watt-tinggi",
+  84: "84-cek-layar-hp-kw",
+  85: "85-emergency-sos",
+  86: "86-wifi-5ghz-vs-24ghz",
+  87: "87-sembunyikan-aplikasi",
+  88: "88-atur-windows-update",
+  89: "89-kompres-video-gede",
+  90: "90-bahaya-macro-office",
+  91: "91-cek-battery-health-android",
+  92: "92-rekam-layar-windows",
+  93: "93-lampu-webcam-nyala",
+  94: "94-loker-palsu-telegram",
+  95: "95-browsing-tanpa-jejak",
+  96: "96-hp-panas-susah-sinyal",
+  97: "97-batasi-kuota-hotspot",
+  98: "98-scan-teks-kertas-hp",
+  99: "99-hapus-bloatware-pabrik",
+  100: "100-checkup-keamanan-bulanan"
 };
 
 function getAccountTopicRange() {
@@ -73,8 +133,16 @@ function getAccountTopicRange() {
     return { min: 1, max: 20, label: "Akun 1 (Topik 01 - 20)" };
   } else if (accountMode === "acc2") {
     return { min: 21, max: 40, label: "Akun 2 (Topik 21 - 40)" };
+  } else if (accountMode === "acc3") {
+    return { min: 41, max: 60, label: "Akun 3 (Topik 41 - 60)" };
+  } else if (accountMode === "acc4") {
+    return { min: 61, max: 80, label: "Akun 4 (Topik 61 - 80)" };
+  } else if (accountMode === "acc5") {
+    return { min: 81, max: 100, label: "Akun 5 (Topik 81 - 100)" };
+  } else if (accountMode === "batch41_100") {
+    return { min: 41, max: 100, label: "Batch 41 - 100 (Topik 41 - 100)" };
   } else {
-    return { min: 1, max: 40, label: "Semua Akun (Topik 01 - 40)" };
+    return { min: 1, max: 100, label: "Semua Akun (Topik 01 - 100)" };
   }
 }
 
@@ -125,10 +193,14 @@ async function initDatabase() {
     const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode", "inka_stop_topic"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_account_mode) accountMode = data.inka_account_mode;
-    if (data.inka_stop_topic) stopTopicId = parseInt(data.inka_stop_topic) || 35;
+    if (data.inka_stop_topic) stopTopicId = parseInt(data.inka_stop_topic) || 100;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
 
     const range = getAccountTopicRange();
+    if (stopTopicId < range.min || stopTopicId > range.max) {
+      stopTopicId = range.max;
+    }
+
     if (!data.inka_active_c || data.inka_active_c < range.min || data.inka_active_c > range.max) {
       activeContentId = range.min;
     } else {
@@ -172,8 +244,12 @@ async function saveDatabase() {
 }
 
 function getCurrentPrompt() {
-  const currentTopic = window.INKA_TOPICS.find(item => item.id === activeContentId);
-  const total = currentTopic ? (currentTopic.total_slides || 6) : 6;
+  const currentTopic = window.INKA_TOPICS && window.INKA_TOPICS.find(item => item.id === activeContentId);
+  if (!currentTopic) return "";
+  if (currentTopic.prompts && currentTopic.prompts[activeSlideIdx - 1]) {
+    return currentTopic.prompts[activeSlideIdx - 1];
+  }
+  const total = currentTopic.total_slides || 6;
   const outline = (currentTopic.slide_outline && currentTopic.slide_outline[activeSlideIdx - 1]) || `Slide ${activeSlideIdx}: ${currentTopic.topic}`;
   return window.buildSuperMegaPrompt(currentTopic.topic, outline, activeSlideIdx, total, currentTopic.hook_title || currentTopic.topic);
 }

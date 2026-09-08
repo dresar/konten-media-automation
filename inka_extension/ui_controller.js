@@ -70,7 +70,7 @@ function renderTopicSelect() {
 
   if (selAcc) selAcc.value = accountMode;
   if (tagAcc) {
-    tagAcc.innerText = range.min === 1 && range.max === 20 ? "01 - 20" : range.min === 21 ? "21 - 40" : "01 - 40";
+    tagAcc.innerText = `${String(range.min).padStart(2, "0")} - ${String(range.max).padStart(2, "0")}`;
   }
 
   const sel = document.getElementById("selTopic");
@@ -134,7 +134,7 @@ function updateView() {
   }
 
   const outline = (currentTopic.slide_outline && currentTopic.slide_outline[activeSlideIdx - 1]) || `Slide ${activeSlideIdx}: ${currentTopic.topic}`;
-  const megaPrompt = window.buildSuperMegaPrompt(currentTopic.topic, outline, activeSlideIdx, total, currentTopic.hook_title || currentTopic.topic);
+  const megaPrompt = getCurrentPrompt();
 
   document.getElementById("txtOutline").innerText = `📌 ${outline}`;
   document.getElementById("boxPrompt").innerText = megaPrompt;

@@ -3,7 +3,7 @@
   "slug": "76-flashdisk-64gb-59gb",
   "topic": "Flashdisk 64GB Terbaca 59GB",
   "hook_title": "BELI FLASHDISK 64GB KOK CUMA 59GB? BUKAN DITIPU, INI PENJELASANNYA!",
-  "total_slides": 7,
+  "total_slides": 6,
   "status": "ready_for_dalle",
   "target_audience": "pengguna smartphone, gen z, mahasiswa, pekerja kantoran",
   "created_at": "2026-09-08 12:01:02",
@@ -42,13 +42,6 @@
       "slide": 3,
       "outline": "Gunakan angka nyata: 64.000.000.000 byte dibagi 1.073.741.824 byte per GiB menghasilkan sekitar 59,60 GiB, sehingga tampilan sekitar 59,6 GB/GiB bukan berarti sekitar 4,4 GB hilang.",
       "prompt": "Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt: Vertical 3:4 portrait orientation mobile educational TikTok carousel slide for inka.tech. Create a stunning modern 3D clean tech calculation scene on pure clean white background #FFFFFF, emerald tech green #10B981 highlights, neutral dark gray typography #1F2937. Place a giant transparent calculator in the center with a glowing equation rendered as clean educational typography: Negative constraints to avoid: [No slide numbers, no pagination indicators, no 1/6 or 2/6 badges, no carousel step counters, no progress dots, no pill counters, no page numbers, no dark background, no realistic human faces, no logo or text in top right, no watermarks, no distorted objects]",
-      "cdn_url": null,
-      "status": "pending"
-    },
-    {
-      "slide": 1,
-      "outline": "",
-      "prompt": "Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt:  Negative constraints to avoid: [No slide numbers, no pagination indicators, no 1/6 or 2/6 badges, no carousel step counters, no progress dots, no pill counters, no page numbers, no dark background, no realistic human faces, no logo or text in top right, no watermarks, no distorted objects]",
       "cdn_url": null,
       "status": "pending"
     },

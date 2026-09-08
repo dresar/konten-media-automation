@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.5.2",
-  "description": "InkaTech Studio ⚡ v4.5.2: Sequential Clean Tab Transitioning, Anti-Skip Mutex, Real-Time Sync & Autopilot.",
+  "version": "4.6.0",
+  "description": "InkaTech Studio ⚡ v4.6.0: Full 100 Topics Support (Batch 41-100 Autopilot), Multi-Account Profiles, Zero Slide Numbering & Cadangan Asset Sync.",
   "permissions": [
     "sidePanel",
     "storage",

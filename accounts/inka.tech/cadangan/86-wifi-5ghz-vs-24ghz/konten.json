@@ -3,7 +3,7 @@
   "slug": "86-wifi-5ghz-vs-24ghz",
   "topic": "WiFi 5GHz vs 2.4GHz",
   "hook_title": "WIFI 5GHZ KENCENG TAPI SINYAL LEMAH DARI KAMAR? INI BEDANYA!",
-  "total_slides": 7,
+  "total_slides": 6,
   "status": "ready_for_dalle",
   "target_audience": "pengguna smartphone, gen z, mahasiswa, pekerja kantoran",
   "created_at": "2026-09-08 12:07:00",
@@ -35,13 +35,6 @@
       "slide": 2,
       "outline": "Jelaskan bahwa 2.4GHz dan 5GHz adalah pita frekuensi radio yang berbeda; frekuensi lebih tinggi memiliki panjang gelombang lebih pendek dan umumnya lebih mudah mengalami pelemahan saat melewati material tertentu.",
       "prompt": "Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt: Vertical 3:4 portrait orientation mobile wireless-technology education slide for inka.tech. Create a premium modern 3D clean tech illustration on pure clean white background #FFFFFF, emerald tech green #10B981 highlights, neutral dark gray typography #1F2937. Build a futuristic radio-wave laboratory with two elegant frequency generators. One generator emits smooth waves labeled \"2.4 GHz\" with visibly longer wavelengths, while another emits tighter waves labeled Negative constraints to avoid: [No slide numbers, no pagination indicators, no 1/6 or 2/6 badges, no carousel step counters, no progress dots, no pill counters, no page numbers, no dark background, no realistic human faces, no logo or text in top right, no watermarks, no distorted objects]",
-      "cdn_url": null,
-      "status": "pending"
-    },
-    {
-      "slide": 1,
-      "outline": "",
-      "prompt": "Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt:  Negative constraints to avoid: [No slide numbers, no pagination indicators, no 1/6 or 2/6 badges, no carousel step counters, no progress dots, no pill counters, no page numbers, no dark background, no realistic human faces, no logo or text in top right, no watermarks, no distorted objects]",
       "cdn_url": null,
       "status": "pending"
     },
