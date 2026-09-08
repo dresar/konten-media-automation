@@ -197,10 +197,10 @@ async function transitionToNextTopic() {
     toast(`✓ ${dlCount} gambar Topik #${activeContentId} berhasil disimpan!`);
 
     const range = getAccountTopicRange();
-    if (activeContentId >= range.max) {
+    if (activeContentId >= stopTopicId || activeContentId >= range.max) {
       toggleAutopilot();
-      updateEngineStatus(State.IDLE, `Semua konten ${range.label} selesai!`);
-      toast(`🎉 SELESAI! Seluruh konten ${range.label} berhasil digenerate & diunduh.`);
+      updateEngineStatus(State.IDLE, `Autopilot selesai! Target Topik #${activeContentId} tercapai.`);
+      toast(`🎉 SELESAI! Autopilot berhenti di batas target Topik #${activeContentId}.`);
       return;
     }
 

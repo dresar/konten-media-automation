@@ -66,6 +66,15 @@ if (selAccountElement) {
   });
 }
 
+const selStopElement = document.getElementById("selStopTopic");
+if (selStopElement) {
+  selStopElement.addEventListener("change", (event) => {
+    stopTopicId = parseInt(event.target.value) || 35;
+    saveDatabase();
+    toast(`Target stop diatur ke: Topik #${stopTopicId}`);
+  });
+}
+
 const selTopicElement = document.getElementById("selTopic");
 if (selTopicElement) {
   selTopicElement.addEventListener("change", (event) => {

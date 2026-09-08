@@ -1,12 +1,20 @@
-💡 PAKAI DARK MODE BIKIN BATERAI AWET? TERNYATA CUMA BERLAKU DI LAYAR INI!
+Selama ini mungkin kamu mikir: "Pakai Dark Mode = baterai pasti lebih awet." 😎
 
-• Menyalakan mode gelap sepanjang hari dengan harapan baterai HP jadi super hemat? Yuk pahami fakta sainsnya!
-• Dark mode hanya terbukti menghemat daya signifikan pada layar jenis OLED atau AMOLED berkat piksel mandiri.
-• Pada panel OLED piksel warna hitam pekat benar-benar dimatikan sepenuhnya sehingga tidak mengonsumsi arus daya.
-• Sebaliknya pada layar LCD IPS lampu backlight di belakang layar tetap menyala penuh meskipun menampilkan warna hitam.
+Nggak sepenuhnya salah, tapi ada satu syarat penting: JENIS LAYAR.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Kenapa?
+• 📱 OLED/AMOLED punya piksel yang bisa memancarkan cahaya sendiri
+• ⚫ Saat menampilkan warna hitam, piksel OLED dapat dimatikan sehingga area tersebut tidak memancarkan cahaya
+• 💡 LCD memakai backlight yang menerangi layar dari belakang, jadi tampilan hitam tidak mematikan backlight secara keseluruhan
+• 🔆 Di OLED, semakin banyak area gelap dan semakin rendah brightness, potensi penghematan daya layar bisa makin terasa
+• 🔋 Tapi konsumsi baterai bukan cuma dari layar — CPU, aplikasi, jaringan, refresh rate, brightness, dan aktivitas lain juga berpengaruh
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Jadi kesimpelnya:
+OLED/AMOLED → Dark Mode bisa benar-benar membantu konsumsi daya layar.
+LCD → Dark Mode tetap bisa enak dilihat, tapi efek hemat baterainya biasanya jauh lebih kecil.
+
+Kalau kamu nggak tahu HP-mu pakai OLED atau LCD, cek spesifikasinya dulu. Jangan cuma percaya mitos! 👀
+
+HP kamu sekarang pakai OLED/AMOLED atau LCD? Tulis tipenya di komentar! 👇
+
+#teknologi #tipsit #darkmode #amoled #oled #lcd #baterai #tipsandroid #tipsiphone #inkatech

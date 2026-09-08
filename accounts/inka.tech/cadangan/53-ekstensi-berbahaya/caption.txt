@@ -1,12 +1,20 @@
-💡 EKSTENSI CHROME INI BISA REKAM PASSWORD & CHAT KAMU! CEK SEKARANG!
+Ekstensi browser memang bisa bikin aktivitas browsing jauh lebih praktis. Tapi jangan lupa: ekstensi dapat meminta izin tertentu untuk mengakses atau memodifikasi bagian dari browser.
 
-• Suka menginstal puluhan ekstensi browser untuk download video gratis atau custom kursor? Hati-hati jebakan spyware!
-• Banyak ekstensi populer yang diam-diam dijual ke pengembang nakal lalu disusupi kode pelacak berbahaya.
-• Ekstensi dengan izin akses read and change all your data on websites bisa merekam ketikan password dan cookie akun.
-• Audit menu kelola ekstensi di browser kamu dan segera hapus ekstensi yang sudah jarang atau tidak pernah digunakan.
+Kalau ekstensi berbahaya, tidak tepercaya, atau disusupi, izin yang dimilikinya bisa menjadi sumber risiko keamanan dan privasi.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Yang wajib kamu cek:
+• 🔍 Siapa publisher/pembuatnya?
+• 🔐 Permission apa yang diminta?
+• ⭐ Jangan cuma percaya rating dan jumlah pengguna
+• 🕒 Kapan terakhir ekstensi diperbarui?
+• 🤔 Beneran perlu atau cuma ikut-ikutan install?
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Kalau ada ekstensi yang nggak kamu kenal atau sudah nggak diperlukan, lebih baik review dan hapus.
+
+Kalau kamu mencurigai akun sudah terkena dampak, amankan akun dari perangkat tepercaya, periksa aktivitas login, ganti password yang relevan, dan aktifkan 2FA jika tersedia.
+
+Intinya: ekstensi kecil bukan berarti risikonya kecil. Jangan asal klik "Add extension"! 🧩🛡️
+
+Coba cek browser kamu sekarang. Ada berapa ekstensi yang sebenarnya sudah nggak pernah kamu pakai? 👇
+
+#teknologi #tipsit #browser #chrome #ekstensibrowser #cybersecurity #keamanandigital #privasi #tipskomputer #inkatech

@@ -1,12 +1,51 @@
-💡 WIFI 5GHZ KENCENG TAPI SINYAL LEMAH DARI KAMAR? INI PERBEDAANNYA!
+Pernah merasa WiFi 5 GHz ngebut banget dekat router, tapi begitu masuk kamar sinyalnya langsung drop? 😭
 
-• Melihat ada dua nama WiFi di rumah dengan akhiran 2.4G dan 5G tapi bingung mana yang paling cocok untuk gadgetmu?
-• Frekuensi 5GHz menawarkan kecepatan transfer data super kencang dan bebas dari gangguan interferensi gelombang elektronik lain.
-• Namun kelemahannya gelombang 5GHz memiliki panjang gelombang pendek yang sangat sulit menembus dinding tembok tebal.
-• Sebaliknya frekuensi 2.4GHz memiliki daya jangkau yang jauh lebih luas dan mampu menembus sekat ruangan dengan stabil.
+Bukan berarti 5 GHz jelek. Kamu cuma sedang melihat perbedaan karakter dua pita frekuensi WiFi.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+📡 2.4 GHz vs 5 GHz
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+⚡ 5 GHz
+• Umumnya bisa memberikan throughput lebih tinggi dalam kondisi yang sesuai
+• Punya banyak kanal yang tersedia pada sistem WiFi tertentu
+• Sering cocok untuk streaming, download, gaming, dan perangkat yang dekat router
+• Namun sinyalnya umumnya lebih cepat melemah ketika jarak bertambah atau melewati banyak obstacle
+
+🌐 2.4 GHz
+• Umumnya memiliki jangkauan lebih jauh
+• Lebih mampu menjangkau area yang terhalang dibanding 5 GHz dalam kondisi yang sama
+• Cocok untuk perangkat yang jauh dari router atau perangkat smart home yang tidak membutuhkan bandwidth besar
+• Tetapi pita ini sering lebih ramai karena banyak perangkat lain juga menggunakannya
+
+🧠 KENAPA BISA BEDA?
+
+2.4 GHz dan 5 GHz menggunakan frekuensi radio yang berbeda.
+
+Secara fisika, frekuensi yang lebih tinggi memiliki panjang gelombang yang lebih pendek. Karakter propagasinya juga berbeda, sehingga 5 GHz umumnya mengalami pelemahan lebih besar ketika jarak bertambah atau sinyal melewati obstacle tertentu.
+
+Tapi jangan salah: GHz bukan satu-satunya penentu kecepatan.
+
+Kecepatan nyata juga dipengaruhi oleh:
+✅ Standar WiFi yang digunakan
+✅ Kemampuan router
+✅ Kemampuan HP/laptop
+✅ Lebar kanal
+✅ Jumlah perangkat yang terhubung
+✅ Interferensi jaringan lain
+✅ Jarak dari access point
+✅ Material dinding dan kondisi bangunan
+
+🎯 PATOKAN GAMPANG:
+
+Dekat router + butuh speed tinggi → coba 5 GHz.
+
+Jauh dari router + banyak dinding → 2.4 GHz sering lebih cocok.
+
+Rumah luas dan banyak dead zone → pertimbangkan mesh WiFi atau access point tambahan.
+
+Dan jangan menganggap 5 GHz selalu lebih cepat dalam semua kondisi. Kalau sinyalnya sudah sangat lemah karena jarak atau obstacle, throughput aktual bisa turun drastis.
+
+Jadi WiFi yang paling bagus bukan selalu yang punya angka GHz paling tinggi.
+
+Yang paling bagus adalah yang cocok dengan posisi perangkat dan kondisi rumahmu. 📶🔥
+
+Kalau di rumahmu, masalahnya lebih sering WiFi lemot atau sinyal nggak sampai kamar? 👀

@@ -1,12 +1,19 @@
-💡 KUOTA INTERNET HABIS MISTERIUS? BISA JADI HOTSPOT HP-MU DIBOBOL TETANGGA!
+Kuota tiba-tiba boros padahal pemakaian biasa aja? Jangan langsung salahin operator 😭
 
-• Baru isi kuota puluhan gigabyte tapi mendadak habis dalam 2 hari padahal jarang dipakai? Cek hotspot pribadimu!
-• Password hotspot yang terlalu sederhana membuat orang di sekitar bisa menebak dan menyusup ke koneksi HP kamu.
-• Perangkat asing yang terhubung bisa menyedot kuota untuk unduhan file raksasa atau update aplikasi otomatis.
-• Gunakan protokol keamanan minimal WPA2 atau WPA3-Personal dengan sandi kombinasi huruf acak dan angka unik.
+Bisa jadi hotspot HP kamu masih aktif dan ada perangkat lain yang ikut terhubung.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Yang perlu kamu lakukan:
+• Matikan hotspot kalau sudah selesai dipakai.
+• Gunakan password yang panjang dan sulit ditebak.
+• Hindari password berdasarkan nama atau tanggal lahir.
+• Cek daftar perangkat yang sedang terhubung.
+• Putuskan perangkat yang nggak kamu kenali.
+• Gunakan opsi keamanan terbaru yang tersedia di HP.
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Catatan: perangkat asing tidak otomatis berarti hotspot kamu 'dibobol'. Bisa saja password pernah dibagikan atau perangkat lama masih tersimpan/terhubung. Jadi, cek daftar koneksi dulu sebelum panik.
+
+Simpan postingan ini dan cek pengaturan hotspot HP kamu sekarang. 🔐📱
+
+Follow inka.tech untuk tips teknologi yang simpel, santai, dan kepake setiap hari!
+
+#teknologi #tipsit #keamanandigital #cybersecurity #hotspot #wifi #tipsandroid #tipsiphone #privasi #literasidigital

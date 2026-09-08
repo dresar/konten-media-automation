@@ -1,12 +1,38 @@
-💡 SATU KLIK SEMUA FILE DI ENKRIPSI? KENALI CARA KERJA VIRUS RANSOMWARE!
+Bayangin buka laptop, lalu foto, dokumen tugas, spreadsheet, sampai file kerja tiba-tiba nggak bisa dibuka. 😱
 
-• Tiba-tiba semua dokumen skripsi dan foto di laptop berubah ekstensi aneh dan tidak bisa dibuka? Itu serangan ransomware!
-• Ransomware menyusup melalui lampiran email spam, software bajakan ber-crack, atau link download palsu di internet.
-• Sekali aktif, virus mengenkripsi seluruh file berharga menggunakan algoritma militer dan meminta tebusan mata uang kripto.
-• Membayar uang tebusan tidak pernah menjamin peretas akan memberikan kunci pembuka data yang terkunci.
+Salah satu penyebab yang perlu diwaspadai adalah ransomware.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Ransomware adalah jenis malware yang dapat mengenkripsi file korban sehingga data menjadi tidak dapat diakses seperti biasa. Pelaku kemudian biasanya meminta tebusan dengan menjanjikan pemulihan akses.
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Gambaran sederhananya:
+📄 File asli → 🔐 proses enkripsi → 🧩 data tidak bisa dibaca seperti biasa
+
+Ransomware bisa masuk melalui berbagai jalur, misalnya:
+• 🎣 Phishing dan link mencurigakan
+• 📎 Lampiran/file berbahaya
+• 📦 Software atau sumber instalasi yang tidak tepercaya
+• 🛠️ Kerentanan software yang belum ditambal
+
+Dan dampaknya bisa lebih luas dari satu laptop. Tergantung varian dan akses yang tersedia, ransomware dapat mengganggu file atau resource lain yang terhubung.
+
+Kalau sudah kena:
+🛑 Isolasi perangkat dari jaringan jika aman dilakukan
+📸 Simpan bukti dan catat apa yang terjadi
+🚨 Laporkan ke tim IT/keamanan atau pihak yang relevan
+💾 Gunakan backup yang bersih dan dapat dipulihkan
+👨‍💻 Untuk kasus serius, pertimbangkan bantuan profesional
+
+⚠️ Jangan langsung menganggap membayar tebusan adalah solusi pasti. Pembayaran tidak menjamin file kembali, dan tidak menjamin sistem bebas dari serangan berikutnya.
+
+Pertahanan paling penting justru dilakukan SEBELUM kena:
+✅ Backup rutin
+✅ Punya salinan yang terpisah/terisolasi
+✅ Uji apakah backup benar-benar bisa dipulihkan
+✅ Update OS dan software
+✅ Gunakan proteksi keamanan perangkat
+✅ Aktifkan MFA untuk akun penting
+✅ Jangan asal klik link atau lampiran
+
+Intinya: ransomware bukan sekadar 'virus yang bikin laptop lemot'. Ia bisa membuat data penting tidak dapat diakses.
+
+Kalau file tugas kuliah tiba-tiba terkunci semua, kamu sudah punya backup belum? 👀👇

@@ -1,12 +1,14 @@
-💡 ADA SMS 'PAKET SEDANG DIKIRIM' FORMAT .APK? JANGAN DIKLIK, SALDO BISA HILANG!
+Nunggu paket memang bikin penasaran. Tapi kalau tiba-tiba dapat SMS soal paket lalu disuruh download file .APK, STOP dulu. 🚨
 
-• Sering terima chat WA dari kurir paket yang melampirkan file Surat_Jalan.apk? Awas jebakan malware berbahaya!
-• Penipu menyamarkan malware pencuri SMS perbankan dalam bentuk file instalasi Android (.apk).
-• Sekali diinstal, malware meminta izin akses SMS dan langsung meneruskan kode OTP bank ke hacker.
-• Ingat aturan emas: kurir resmi tidak pernah mengirim dokumen berformat APK, hanya nomor resi teks biasa.
+Yang perlu kamu lakukan:
+• Jangan instal APK dari SMS/chat yang tidak terduga.
+• Jangan asal percaya link yang dikirim lewat pesan.
+• Cek resi langsung lewat aplikasi atau situs resmi kurir.
+• Waspadai aplikasi yang meminta izin yang tidak relevan.
+• Kalau pesannya mencurigakan, hapus dan laporkan.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Ingat: bukan ekstensi .APK-nya yang otomatis berarti malware. Masalahnya adalah ketika APK tersebut merupakan aplikasi berbahaya dan berasal dari sumber yang tidak tepercaya. Jadi, jangan kasih akses ke aplikasi yang belum kamu percaya. 📦📱
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Paket boleh ditunggu. APK mencurigakan? Jangan!
+
+Follow @inka.tech buat tips teknologi dan keamanan gadget yang gampang dipahami. 🔐

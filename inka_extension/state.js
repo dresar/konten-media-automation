@@ -14,6 +14,7 @@ let activeContentId = 1;
 let activeSlideIdx = 1;
 let isAutopilot = false;
 let accountMode = "acc1";
+let stopTopicId = 35;
 let dbProgress = {};
 let cdnDatabase = {};
 let knownFileIds = new Set();
@@ -121,9 +122,10 @@ function countDone(contentId, total) {
 
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode", "inka_stop_topic"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_account_mode) accountMode = data.inka_account_mode;
+    if (data.inka_stop_topic) stopTopicId = parseInt(data.inka_stop_topic) || 35;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
 
     const range = getAccountTopicRange();
@@ -163,7 +165,8 @@ async function saveDatabase() {
       inka_active_c: activeContentId,
       inka_active_s: activeSlideIdx,
       inka_cdn_db: cdnDatabase,
-      inka_account_mode: accountMode
+      inka_account_mode: accountMode,
+      inka_stop_topic: stopTopicId
     });
   } catch (error) {}
 }

@@ -1,12 +1,28 @@
-💡 GOOGLE REKAM SEMUA OBROLAN KAMU? INI CARA HAPUS RIWAYAT SUARA TERSIMPAN!
+Tenang dulu 😅 Google tidak otomatis merekam semua percakapan di sekitar kamu.
 
-• Setiap kali kamu memanggil Google Assistant dengan perintah suara, tahukah kamu bahwa file rekaman suaramu disimpan di server?
-• Google menyimpan rekaman audio interaksi suara untuk melatih model kecerdasan buatan dan meningkatkan akurasi asisten pintar.
-• Namun arsip rekaman suara yang menumpuk bertahun-tahun bisa menjadi celah privasi jika akun Google kamu diakses orang lain.
-• Buka situs myactivity.google.com lalu pilih tab Aktivitas Web & Aplikasi dan cari menu Pengaturan Riwayat Suara & Audio.
+Yang perlu kamu pahami adalah fitur Voice & Audio Activity. Saat fitur ini aktif, Google dapat menyimpan rekaman audio dari interaksi suara tertentu dengan layanan Google yang mendukungnya. Aktivitas tersebut dapat dikelola melalui My Activity.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+🔎 Cara cek & bersihkan:
+• Buka Google Account
+• Masuk ke Data & privacy
+• Cari Web & App Activity
+• Periksa opsi terkait Voice & Audio Activity
+• Buka My Activity untuk melihat aktivitas yang tersimpan
+• Pilih aktivitas yang ingin dihapus atau gunakan opsi penghapusan berdasarkan rentang waktu
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+⚠️ Yang sering bikin salah paham:
+Menghapus riwayat lama tidak sama dengan mematikan penyimpanan aktivitas suara untuk ke depannya.
+
+Kalau kamu tidak ingin aktivitas suara berikutnya disimpan melalui pengaturan tersebut, review dan ubah opsi Voice & Audio Activity sesuai kebutuhan.
+
+Tapi perlu diingat:
+✅ Nama menu bisa berbeda tergantung bahasa, perangkat, akun, dan versi layanan.
+✅ Menghapus aktivitas dari My Activity tidak berarti seluruh informasi terkait langsung hilang dari semua sistem Google.
+✅ Google dapat menyimpan data tertentu untuk alasan seperti keamanan, penipuan, penagihan, atau kewajiban hukum sesuai kebijakan dan pengaturan layanan.
+✅ Pengaturan privasi bisa berubah, jadi sesekali cek kembali.
+
+🎯 Intinya: bukan berarti Google mendengarkan semua obrolanmu. Tapi kamu tetap punya kontrol atas aktivitas suara yang tersimpan di akun.
+
+Kalau mau, save postingan ini dan cek pengaturan akunmu sekarang. 🔒
+
+Kamu sendiri, pernah cek My Activity belum? 👀

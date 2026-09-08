@@ -1,12 +1,38 @@
-💡 BELI FLASHDISK 64GB KOK CUMA ADA 59GB? BUKAN DITIPU, INI PENJELASANNYA!
+Pernah beli flashdisk 64GB, terus pas dicolok ke laptop malah kelihatan sekitar 59GB?
 
-• Baru beli flashdisk atau harddisk bertuliskan 64 Gigabyte tapi saat dicolok ke laptop kapasitasnya cuma terbaca 59 Gigabyte?
-• Banyak orang mengira mereka tertipu barang palsu, padahal ini murni perbedaan sistem penghitungan angka dalam sains komputer.
-• Pabrik pembuat storage menghitung kapasitas memakai sistem desimal standar di mana 1 Gigabyte setara dengan 1.000 Megabyte.
-• Sedangkan sistem operasi komputer membaca kapasitas menggunakan sistem biner kelipatan dua di mana 1 Gigabyte setara 1.024 Megabyte.
+Tenang, angka itu belum tentu berarti flashdisk kamu ditipu atau kehilangan data. 😄
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Ada perbedaan cara menghitung kapasitas penyimpanan:
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+🔹 Produsen umumnya memakai sistem desimal
+1 GB = 1.000.000.000 byte
+
+Jadi flashdisk 64GB berarti sekitar:
+64 × 1.000.000.000 = 64.000.000.000 byte
+
+🔹 Komputer dapat menampilkan kapasitas menggunakan basis biner
+1 GiB = 1.073.741.824 byte
+
+Maka:
+64.000.000.000 ÷ 1.073.741.824 ≈ 59,60 GiB
+
+🎯 Nah, dari sinilah angka sekitar 59,6 muncul.
+
+Jadi:
+64 GB ≈ 59,6 GiB
+
+Byte-nya bukan tiba-tiba menghilang. Yang berbeda adalah cara kapasitas tersebut dinyatakan.
+
+⚠️ Ada satu hal lagi: filesystem dan struktur internal media juga dapat menggunakan sebagian ruang, sehingga kapasitas yang benar-benar tersedia untuk menyimpan file bisa sedikit lebih rendah lagi.
+
+Makanya jangan langsung panik kalau flashdisk 64GB tidak menunjukkan angka "64" di komputer.
+
+💡 Tips:
+• Cek Properties/Get Info pada drive
+• Perhatikan apakah sistem menampilkan GB atau GiB
+• Bandingkan kapasitas menggunakan unit yang sama
+• Kalau selisihnya jauh lebih besar dari ekspektasi, baru cek kesehatan, keaslian, atau kapasitas sebenarnya dari drive
+
+Jadi sekarang sudah tahu kan kenapa 64GB bisa kelihatan sekitar 59GB? 😎
+
+Kalau kamu baru tahu fakta ini, save & share ke teman yang masih mengira flashdisknya kemakan 5GB! 😂

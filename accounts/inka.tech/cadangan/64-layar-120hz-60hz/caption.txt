@@ -1,12 +1,34 @@
-💡 LAYAR 120HZ BIKIN BATERAI BOROS PARAH? INI PERBANDINGAN DAN CARA HEMATNYA!
+Layar 120Hz memang bisa terasa jauh lebih mulus dibanding 60Hz. Tapi apakah otomatis bikin baterai jebol? 🤔
 
-• Layar refresh rate 120Hz memang terasa super mulus saat scrolling, tapi kenapa persentase baterai jadi lebih cepat turun?
-• Layar 120Hz memperbarui gambar dua kali lebih sering dalam satu detik dibanding layar standar 60Hz konvensional.
-• Prosesor dan chip grafis dipaksa merender frame lebih banyak sehingga konsumsi daya listrik meningkat 20 sampai 30 persen.
-• HP modern kelas menengah ke atas umumnya dibekali teknologi LTPO yang bisa menurunkan refresh rate saat layar statis.
+Jawabannya: bisa meningkatkan konsumsi daya, tetapi efeknya tidak sama di semua HP.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Kenapa?
+• 🔄 60Hz berarti layar dapat melakukan hingga 60 refresh per detik
+• 🔄 120Hz berarti layar dapat melakukan hingga 120 refresh per detik
+• 👆 Refresh rate lebih tinggi bisa membuat scrolling dan animasi terasa lebih halus
+• 🔋 Refresh rate tinggi dapat menambah konsumsi daya display
+• 🤖 HP dengan adaptive refresh dapat menyesuaikan refresh rate sesuai kondisi dan aktivitas
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Yang sering dilupakan: baterai HP bukan cuma dipakai layar.
+
+CPU, GPU, jaringan seluler/Wi-Fi, brightness, aplikasi yang berjalan, gaming, suhu, dan berbagai komponen lain juga memengaruhi battery life.
+
+Jadi 120Hz tidak otomatis berarti baterai akan habis dua kali lebih cepat. Angka refresh rate juga bukan satu-satunya penentu konsumsi daya.
+
+Kalau HP-mu punya mode Adaptive/Auto Refresh Rate, manfaatkan. 👇
+
+Tips simpel biar tetap smooth tapi lebih hemat:
+✅ Gunakan Adaptive/Auto refresh jika tersedia
+✅ Turunkan refresh rate ketika memang tidak membutuhkan kelancaran ekstra
+✅ Atur brightness secukupnya
+✅ Gunakan Battery Saver saat dibutuhkan
+✅ Jangan panik kalau konsumsi baterai sedikit berbeda setelah mengaktifkan refresh rate tinggi
+
+Dan satu hal penting: 120Hz bukan berarti semua konten otomatis berjalan pada 120 frame per detik. Konten, aplikasi, game, sistem, dan kemampuan perangkat tetap menentukan frame rate yang benar-benar tersedia.
+
+Kesimpulannya:
+60Hz = sudah cukup untuk banyak aktivitas.
+120Hz = lebih smooth dan responsif pada penggunaan yang mendukung.
+Adaptive refresh = kompromi menarik antara kelancaran dan efisiensi.
+
+Kalau HP kamu sekarang 120Hz, kamu lebih pilih 120Hz terus atau Adaptive? 😎👇

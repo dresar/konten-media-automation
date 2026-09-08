@@ -1,12 +1,15 @@
-💡 FITUR NFC DI HP BISA DISADAP DARI JARAK JAUH? INI FAKTA SEBENARNYA!
+Katanya NFC di HP bisa disadap dari jarak jauh? 👀 Jangan keburu panik.
 
-• Banyak yang takut menyalakan NFC karena khawatir saldo e-money atau kartu debit disedot orang di tempat umum.
-• Jangkauan sinyal NFC itu sangat pendek maksimal 4 cm dan membutuhkan protokol enkripsi dua arah yang ketat.
-• Risiko asli muncul jika kamu tap poster atau tag NFC palsu di tempat umum yang mengarahkan ke link phishing.
-• Cukup nyalakan fitur NFC saat ingin mengecek saldo atau membayar transaksi, lalu matikan setelahnya.
+NFC memang menggunakan gelombang elektromagnetik, tapi teknologi ini dirancang untuk komunikasi jarak sangat dekat. Jadi, bukan berarti orang bisa membaca NFC HP kamu dari seberang ruangan begitu saja.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Yang perlu dipahami:
+• NFC bekerja pada jarak sangat dekat.
+• Skimming tetap menjadi risiko ketika perangkat atau kartu berada sangat dekat dengan reader yang sesuai.
+• Keamanan HP tetap penting: gunakan lock screen, update sistem, dan perhatikan transaksi atau notifikasi yang mencurigakan.
+• Kalau tidak sedang memakai NFC, mematikannya bisa jadi pilihan tambahan sesuai kebutuhan dan perangkatmu.
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+Intinya: jangan takut sama teknologinya, tapi pahami cara kerjanya. 🔐📱
+
+Simpan konten ini kalau kamu sering pakai NFC dan kirim ke teman yang masih mengira NFC bisa disadap dari jauh.
+
+Follow @inka.tech buat bahas teknologi tanpa bikin kepala berasap! 🚀

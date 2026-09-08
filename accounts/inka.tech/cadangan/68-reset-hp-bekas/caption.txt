@@ -1,12 +1,33 @@
-💡 MAU JUAL HP BEKAS? FACTORY RESET 1 KALI BELUM CUKUP, INI ATURAN AMANNYA!
+HP mau dijual atau dikasih ke orang lain? Jangan cuma mikir: "Udah factory reset, berarti aman." 👀
 
-• Ingin menjual HP lama ke counter atau tukar tambah? Melakukan factory reset biasa ternyata belum tentu aman!
-• Software forensik pemulihan data masih bisa membaca residu foto pribadi dan data login dari memori flash yang hanya di-reset cepat.
-• Sebelum mereset, pastikan fitur enkripsi perangkat aktif dan lakukan logout akun Google atau Apple ID secara manual.
-• Setelah factory reset pertama, isi memori HP dengan file video acak berukuran besar hingga penuh lalu lakukan reset kedua.
+Factory reset memang dirancang untuk menghapus data pengguna dan mengembalikan perangkat ke kondisi awal. Tapi keamanan saat serah-terima HP bukan cuma soal menekan tombol Reset.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Sebelum HP pindah tangan, lakukan urutan ini:
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+💾 1. BACKUP DATA
+Pastikan foto, kontak, dokumen, chat, dan data penting sudah tersimpan di tempat yang kamu kontrol.
+
+🔓 2. LOGOUT AKUN
+Keluar dari akun utama dan layanan penting yang masih terhubung ke perangkat.
+
+🔗 3. UNLINK PERANGKAT
+Pastikan HP sudah dilepas dari daftar perangkat atau fitur perlindungan akun yang relevan. Ini penting karena mekanisme anti-pencurian/activation protection dapat meminta kredensial pemilik sebelumnya setelah reset.
+
+🧹 4. FACTORY RESET
+Gunakan opsi reset resmi dari pengaturan perangkat. Jangan mengandalkan aplikasi pihak ketiga yang mengklaim bisa "membersihkan" semuanya.
+
+🔍 5. VERIFIKASI
+Setelah reset, cek apakah HP masuk ke kondisi setup awal dan tidak lagi meminta akun pemilik sebelumnya.
+
+📦 Jangan lupa cek juga:
+• SIM card
+• eSIM jika relevan
+• microSD
+• File yang tersimpan di media eksternal
+• Aplikasi autentikator atau perangkat keamanan lain
+
+⚠️ Catatan penting: detail proses bisa berbeda tergantung merek, model, versi Android/iOS, konfigurasi keamanan, dan layanan akun yang digunakan.
+
+Intinya: yang kamu jual adalah perangkatnya, bukan identitas digitalmu.
+
+Kalau HP lama kamu mau dijual hari ini, sudah sampai tahap mana: backup, logout, unlink, reset, atau belum mulai? 😅👇

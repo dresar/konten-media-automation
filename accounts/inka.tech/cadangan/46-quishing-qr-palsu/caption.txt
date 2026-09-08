@@ -1,12 +1,15 @@
-💡 SCAN QRIS DI MEJA RESTORAN? AWAS JEBAKAN STIKER QR CODE PALSU!
+Pernah lihat QR code pembayaran ditempel di meja, lalu langsung scan tanpa ngecek lagi? 👀
 
-• Mau bayar makanan atau parkir lewat scan QR tapi uangnya malah masuk ke dompet penipu? Kenali modus quishing!
-• Pelaku kejahatan menempelkan stiker QR code buatan sendiri di atas barcode resmi toko atau meja restoran.
-• Uang transaksi pembayaran masuk ke rekening pelaku atau layar mengarahkan korban ke website palsu berbahaya.
-• Selalu cocokkan nama merchant resmi di layar konfirmasi HP dengan nama restoran sebelum memasukkan PIN.
+Hati-hati sama quishing — phishing yang memanfaatkan QR code untuk mengarahkan korban ke tujuan yang menipu atau tidak sesuai.
 
-Tips teknologi santai dan trik digital gampang dari @inka.tech.
-Simpan postingan ini biar gak lupa pas butuh! Share ke teman-teman kamu juga ya 🙌
-Follow TikTok @inka.tech • Instagram @arif_ex21
+Yang perlu kamu biasakan:
+• 👀 Periksa apakah QR terlihat seperti stiker tambahan atau ditumpuk di atas QR lain.
+• 💳 Setelah scan, cek nama penerima dan nominal sebelum konfirmasi pembayaran.
+• 🌐 Kalau QR mengarah ke website, periksa tujuan/domainnya sebelum memasukkan data apa pun.
+• 🛑 Kalau terasa janggal, jangan lanjut. Konfirmasi QR yang benar kepada kasir/restoran.
 
-#teknologi #tipsit #gadget #inkatech #trikhape #edukasiteknologi #fyp
+QR code sendiri bukan tanda bahwa sesuatu pasti aman. Yang penting adalah tujuan di balik QR tersebut dan apa yang kamu lakukan setelah scan.
+
+Simpan postingan ini biar nggak lupa. Follow @inka.tech untuk tips keamanan gadget & teknologi yang simpel dan kepakai sehari-hari! 🔐📱
+
+#teknologi #tipsit #keamanandigital #cybersecurity #quishing #phishing #QRIS #QRcode #tipskeamanan #tipsgadget

@@ -88,6 +88,18 @@ function renderTopicSelect() {
     if (topicItem.id === activeContentId) opt.selected = true;
     sel.appendChild(opt);
   });
+
+  const selStop = document.getElementById("selStopTopic");
+  if (selStop && window.INKA_TOPICS) {
+    selStop.innerHTML = "";
+    window.INKA_TOPICS.forEach(topicItem => {
+      const opt = document.createElement("option");
+      opt.value = topicItem.id;
+      opt.text = `Stop di #${String(topicItem.id).padStart(2, "0")} • ${topicItem.topic}`;
+      if (topicItem.id === stopTopicId) opt.selected = true;
+      selStop.appendChild(opt);
+    });
+  }
 }
 
 function updateView() {
