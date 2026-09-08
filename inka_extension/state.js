@@ -14,6 +14,7 @@ let activeContentId = 41;
 let activeSlideIdx = 1;
 let isAutopilot = false;
 let accountMode = "batch41_100";
+let selectedEngineId = "auto";
 let stopTopicId = 100;
 let dbProgress = {};
 let cdnDatabase = {};
@@ -190,9 +191,11 @@ function countDone(contentId, total) {
 
 async function initDatabase() {
   try {
-    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode", "inka_stop_topic"]);
+    const data = await chrome.storage.local.get(["inka_db", "inka_active_c", "inka_active_s", "inka_cdn_db", "inka_account_mode", "inka_stop_topic", "inka_engine_mode"]);
     if (data.inka_db) dbProgress = data.inka_db;
     if (data.inka_account_mode) accountMode = data.inka_account_mode;
+    if (data.inka_engine_mode) selectedEngineId = data.inka_engine_mode;
+    if (window.inkaEngineManager) window.inkaEngineManager.setPreferredEngine(selectedEngineId);
     if (data.inka_stop_topic) stopTopicId = parseInt(data.inka_stop_topic) || 100;
     if (data.inka_cdn_db) cdnDatabase = data.inka_cdn_db;
 
@@ -238,18 +241,26 @@ async function saveDatabase() {
       inka_active_s: activeSlideIdx,
       inka_cdn_db: cdnDatabase,
       inka_account_mode: accountMode,
-      inka_stop_topic: stopTopicId
+      inka_stop_topic: stopTopicId,
+      inka_engine_mode: selectedEngineId
     });
   } catch (error) {}
 }
 
-function getCurrentPrompt() {
+function getCurrentPrompt(targetEngineId = null) {
   const currentTopic = window.INKA_TOPICS && window.INKA_TOPICS.find(item => item.id === activeContentId);
   if (!currentTopic) return "";
+  let prompt = "";
   if (currentTopic.prompts && currentTopic.prompts[activeSlideIdx - 1]) {
-    return currentTopic.prompts[activeSlideIdx - 1];
+    prompt = currentTopic.prompts[activeSlideIdx - 1];
+  } else {
+    const total = currentTopic.total_slides || 6;
+    const outline = (currentTopic.slide_outline && currentTopic.slide_outline[activeSlideIdx - 1]) || `Slide ${activeSlideIdx}: ${currentTopic.topic}`;
+    prompt = window.buildSuperMegaPrompt(currentTopic.topic, outline, activeSlideIdx, total, currentTopic.hook_title || currentTopic.topic);
   }
-  const total = currentTopic.total_slides || 6;
-  const outline = (currentTopic.slide_outline && currentTopic.slide_outline[activeSlideIdx - 1]) || `Slide ${activeSlideIdx}: ${currentTopic.topic}`;
-  return window.buildSuperMegaPrompt(currentTopic.topic, outline, activeSlideIdx, total, currentTopic.hook_title || currentTopic.topic);
+  const eng = targetEngineId || selectedEngineId;
+  if (eng === "gemini") {
+    prompt = prompt.replace(/Immediately use DALL-E to generate the image right now for this prompt:/g, "Immediately generate the image right now for this prompt:");
+  }
+  return prompt;
 }

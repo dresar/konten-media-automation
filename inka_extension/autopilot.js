@@ -3,127 +3,21 @@ async function sendPromptToChatGpt(autoSend = true) {
   isSendingPrompt = true;
 
   try {
-    updateEngineStatus(State.INJECTING, `Mengisi chatbox Slide ${activeSlideIdx}...`);
-    const promptText = getCurrentPrompt();
+    const target = await window.inkaEngineManager.getActiveTarget();
+    if (!target.tab || !target.engine) {
+      updateEngineStatus(State.IDLE, "Tab AI tidak terdeteksi");
+      toast("❌ Buka tab ChatGPT atau Google Gemini terlebih dahulu!");
+      return;
+    }
 
-    const res = await executeInTab(async (text, send) => {
-      try {
-        document.querySelectorAll('#modal-conversation-history-rate-limit, [data-testid="modal-conversation-history-rate-limit"], div.fixed.inset-0.z-50').forEach(element => element.remove());
-      } catch (error) {}
+    updateEngineStatus(State.INJECTING, `Mengisi chatbox ${target.engine.shortName} Slide ${activeSlideIdx}...`);
+    const promptText = getCurrentPrompt(target.engine.id);
 
-      const textarea = document.querySelector("#prompt-textarea");
-      if (!textarea) return { ok: false, error: "Chatbox (#prompt-textarea) tidak ditemukan" };
-
-      textarea.focus();
-      try {
-        document.execCommand("selectAll", false, null);
-        document.execCommand("delete", false, null);
-      } catch (error) {}
-
-      try {
-        const transfer = new DataTransfer();
-        transfer.setData("text/plain", text);
-        const pasteEvent = new ClipboardEvent("paste", {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: transfer
-        });
-        textarea.dispatchEvent(pasteEvent);
-      } catch (error) {}
-
-      let currentText = (textarea.innerText || textarea.value || "").trim();
-      if (!currentText || currentText.length < 20) {
-        if (textarea.tagName.toLowerCase() === "textarea") {
-          textarea.value = text;
-        } else {
-          const paragraph = textarea.querySelector("p") || textarea;
-          paragraph.textContent = text;
-        }
-        textarea.dispatchEvent(new Event("input", { bubbles: true }));
-        textarea.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-
-      currentText = (textarea.innerText || textarea.value || "").trim();
-      if (currentText.length < 20) {
-        return { ok: false, error: "Chatbox gagal diisi teks" };
-      }
-
-      if (!send) {
-        return { ok: true, submitted: false };
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 400));
-
-      function findSendButton() {
-        let button = document.querySelector('button[data-testid="send-button"]');
-        if (button) return button;
-
-        button = document.querySelector('button[aria-label*="Kirim" i], button[aria-label*="Send" i]');
-        if (button) return button;
-
-        const allButtons = Array.from(document.querySelectorAll("button"));
-        for (const candidate of allButtons) {
-          if (candidate.getAttribute("data-testid")?.includes("speech") || candidate.getAttribute("aria-label")?.toLowerCase().includes("suara")) continue;
-          if (candidate.querySelector('svg path[d*="M2.5 12"]') || candidate.querySelector('svg path[d*="M12 2.5"]') || candidate.querySelector('svg path[d*="M5 12"]') || candidate.querySelector('svg path[d*="M12 4"]')) {
-            return candidate;
-          }
-          if (candidate.classList.contains("rounded-full") && candidate.closest("#prompt-textarea, form, div.flex.w-full")) {
-            if (candidate.querySelector("svg")) return candidate;
-          }
-        }
-
-        const form = textarea.closest("form");
-        if (form) {
-          const submitButton = form.querySelector('button[type="submit"]');
-          if (submitButton) return submitButton;
-        }
-
-        return null;
-      }
-
-      let isSubmitted = false;
-      for (let attempt = 1; attempt <= 5; attempt++) {
-        const sendButton = findSendButton();
-        if (sendButton && !sendButton.disabled) {
-          sendButton.focus();
-          sendButton.click();
-          isSubmitted = true;
-          break;
-        }
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
-
-      if (!isSubmitted) {
-        const form = textarea.closest("form");
-        if (form && typeof form.requestSubmit === "function") {
-          try {
-            form.requestSubmit();
-            isSubmitted = true;
-          } catch (error) {}
-        }
-      }
-
-      if (!isSubmitted) {
-        const targetElement = textarea.querySelector("p") || textarea;
-        ["keydown", "keypress", "keyup"].forEach(eventType => {
-          targetElement.dispatchEvent(new KeyboardEvent(eventType, {
-            bubbles: true,
-            cancelable: true,
-            key: "Enter",
-            code: "Enter",
-            keyCode: 13,
-            which: 13
-          }));
-        });
-        isSubmitted = true;
-      }
-
-      return { ok: true, submitted: isSubmitted };
-    }, [promptText, autoSend]);
+    const res = await executeInTab(target.engine.getInjectScript(), [promptText, autoSend]);
 
     if (!res || !res.ok) {
       updateEngineStatus(State.IDLE, "Gagal mengisi chatbox");
-      toast(`❌ ${res ? res.error : "Gagal mengisi chatbox. Pastikan ChatGPT terbuka."}`);
+      toast(`❌ ${res ? res.error : "Gagal mengisi chatbox. Pastikan tab terbuka."}`);
       return;
     }
 
@@ -131,11 +25,11 @@ async function sendPromptToChatGpt(autoSend = true) {
       lastPromptSubmitTime = Date.now();
       lastSentTopicId = activeContentId;
       lastSentSlide = activeSlideIdx;
-      updateEngineStatus(State.AWAITING_GENERATION, `Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
-      toast(`Slide ${activeSlideIdx} terkirim. Menunggu DALL-E...`);
+      updateEngineStatus(State.AWAITING_GENERATION, `Slide ${activeSlideIdx} terkirim. Menunggu ${target.engine.shortName}...`);
+      toast(`Slide ${activeSlideIdx} terkirim ke ${target.engine.shortName}...`);
     } else {
-      updateEngineStatus(State.IDLE, "Prompt siap di chatbox");
-      toast(`✓ Prompt Slide ${activeSlideIdx} siap di chatbox`);
+      updateEngineStatus(State.IDLE, `Prompt siap di chatbox ${target.engine.shortName}`);
+      toast(`✓ Prompt Slide ${activeSlideIdx} siap di chatbox ${target.engine.shortName}`);
     }
   } finally {
     isSendingPrompt = false;
@@ -168,13 +62,13 @@ function copyCaption() {
 async function triggerNewChat() {
   lastSentSlide = 0;
   lastSentTopicId = 0;
-  updateEngineStatus(State.SWITCHING_CHAT, "Membuka New Chat...");
-  toast("Membuka New Chat...");
-  await executeInTab(() => {
-    const button = document.querySelector('a[data-testid="new-chat-button"], a[href="/"]');
-    if (button) button.click();
-    else window.location.href = "https://chatgpt.com/";
-  });
+  const target = await window.inkaEngineManager.getActiveTarget();
+  const name = target.engine ? target.engine.shortName : "AI";
+  updateEngineStatus(State.SWITCHING_CHAT, `Membuka New Chat ${name}...`);
+  toast(`Membuka New Chat ${name}...`);
+  if (target.engine) {
+    await executeInTab(target.engine.getNewChatScript());
+  }
 }
 
 function toggleAutopilot() {
@@ -221,19 +115,13 @@ async function transitionToNextTopic() {
     let isTabClean = false;
     for (let attempt = 1; attempt <= 20; attempt++) {
       await new Promise(resolve => setTimeout(resolve, 800));
-      const tabInspection = await executeInTab(() => {
-        const mainContainer = document.querySelector("main") || document.body;
-        const turns = mainContainer.querySelectorAll('[data-message-author-role="assistant"], [data-testid*="conversation-turn"], article, div.agent-turn');
-        const textarea = document.querySelector("#prompt-textarea");
-        return {
-          hasNoTurns: (turns.length === 0),
-          hasTextarea: !!textarea
-        };
-      });
-
-      if (tabInspection && tabInspection.hasNoTurns && tabInspection.hasTextarea) {
-        isTabClean = true;
-        break;
+      const targetCheck = await window.inkaEngineManager.getActiveTarget();
+      if (targetCheck.engine) {
+        const tabInspection = await executeInTab(targetCheck.engine.getCleanTabCheckScript());
+        if (tabInspection && tabInspection.hasNoTurns && tabInspection.hasInput) {
+          isTabClean = true;
+          break;
+        }
       }
     }
 

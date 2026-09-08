@@ -1,9 +1,9 @@
 async function downloadSilentImage(url, filename, slug = "") {
-  if (!url || typeof url !== "string" || !url.startsWith("http")) return false;
+  if (!url || typeof url !== "string" || (!url.startsWith("http") && !url.startsWith("blob:"))) return false;
   const pureFilename = filename.split("/").pop();
   const subfolderPath = slug ? `cadangan/${slug}/${pureFilename}` : pureFilename;
 
-  if (chrome.downloads && chrome.downloads.download) {
+  if (url.startsWith("http") && chrome.downloads && chrome.downloads.download) {
     const chromeDlOk = await new Promise((resolve) => {
       chrome.downloads.download({
         url: url,
@@ -27,7 +27,7 @@ async function downloadSilentImage(url, filename, slug = "") {
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       const blob = await resp.blob();
 
-      if (blob.size < 20000) {
+      if (blob.size < 10000) {
         throw new Error("Blob terlalu kecil (" + blob.size + " bytes)");
       }
 

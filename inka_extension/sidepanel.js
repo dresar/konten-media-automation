@@ -50,6 +50,22 @@ function startRenderSensor() {
   }, 1800);
 }
 
+const selEngineElement = document.getElementById("selPlatformEngine");
+if (selEngineElement) {
+  selEngineElement.addEventListener("change", async (event) => {
+    selectedEngineId = event.target.value;
+    if (window.inkaEngineManager) {
+      window.inkaEngineManager.setPreferredEngine(selectedEngineId);
+    }
+    await saveDatabase();
+    updateView();
+    const target = await window.inkaEngineManager.getActiveTarget();
+    updatePlatformBadge(target);
+    const label = selectedEngineId === "gemini" ? "Google Gemini" : selectedEngineId === "chatgpt" ? "ChatGPT" : "Auto (Deteksi Tab)";
+    toast(`Platform AI: ${label}`);
+  });
+}
+
 const selAccountElement = document.getElementById("selAccountMode");
 if (selAccountElement) {
   selAccountElement.addEventListener("change", async (event) => {

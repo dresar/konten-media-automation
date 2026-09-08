@@ -56,11 +56,37 @@ function toast(msg) {
   if (el) el.innerText = msg;
 }
 
+function updatePlatformBadge(target) {
+  const badge = document.getElementById("txtPlatformBadge");
+  const selEngine = document.getElementById("selPlatformEngine");
+  if (selEngine && selectedEngineId) {
+    selEngine.value = selectedEngineId;
+  }
+  if (!badge) return;
+
+  if (!target || !target.tab || !target.engine) {
+    badge.className = "inka-badge-platform inka-badge-disconnected";
+    badge.innerText = selectedEngineId === "gemini" ? "Gemini (Offline)" : selectedEngineId === "chatgpt" ? "ChatGPT (Offline)" : "Tab AI Offline";
+    return;
+  }
+
+  badge.className = `inka-badge-platform ${target.engine.badgeClass || ""}`;
+  badge.innerText = `● ${target.engine.shortName}`;
+}
+
 function renderUI() {
+  renderPlatformSelect();
   renderTopicSelect();
   renderDownloadCount();
   renderDownloadList();
   updateView();
+}
+
+function renderPlatformSelect() {
+  const selEngine = document.getElementById("selPlatformEngine");
+  if (selEngine) {
+    selEngine.value = selectedEngineId || "auto";
+  }
 }
 
 function renderTopicSelect() {

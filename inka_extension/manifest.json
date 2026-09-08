@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "InkaTech Studio ⚡",
-  "version": "4.6.0",
-  "description": "InkaTech Studio ⚡ v4.6.0: Full 100 Topics Support (Batch 41-100 Autopilot), Multi-Account Profiles, Zero Slide Numbering & Cadangan Asset Sync.",
+  "version": "4.7.0",
+  "description": "InkaTech Studio ⚡ v4.7.0: Dual-Engine AI Architecture (ChatGPT DALL-E & Google Gemini Imagen 3), Full 100 Topics Support & Batch Autopilot.",
   "permissions": [
     "sidePanel",
     "storage",
@@ -13,7 +13,10 @@
   "host_permissions": [
     "https://chatgpt.com/*",
     "https://*.chatgpt.com/*",
-    "https://*.oaiusercontent.com/*"
+    "https://*.oaiusercontent.com/*",
+    "https://gemini.google.com/*",
+    "https://*.google.com/*",
+    "https://*.googleusercontent.com/*"
   ],
   "side_panel": {
     "default_path": "sidepanel.html"

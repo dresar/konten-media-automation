@@ -11,10 +11,22 @@
       <span class="inka-brand-icon">⚡</span>
       <span>Inka Studio</span>
     </div>
-    <span class="inka-badge">v4.6.0</span>
+    <span class="inka-badge">v4.7.0</span>
   </header>
 
   <main class="inka-container">
+    <div>
+      <div class="inka-label">
+        <span>Platform AI</span>
+        <span id="txtPlatformBadge" class="inka-badge-platform">Auto</span>
+      </div>
+      <select id="selPlatformEngine" class="inka-select">
+        <option value="auto">Auto (Deteksi Tab Aktif)</option>
+        <option value="gemini">Google Gemini (gemini.google.com)</option>
+        <option value="chatgpt">ChatGPT (chatgpt.com)</option>
+      </select>
+    </div>
+
     <div>
       <div class="inka-label">
         <span>Profil Akun</span>
@@ -129,6 +141,7 @@
 
   <script src="topics.js"></script>
   <script src="state.js"></script>
+  <script src="engine_provider.js"></script>
   <script src="dom_scanner.js"></script>
   <script src="ui_controller.js"></script>
   <script src="downloader.js"></script>

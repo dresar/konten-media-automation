@@ -496,3 +496,28 @@ body {
 .inka-btn-reset-mini:active {
   transform: scale(0.96);
 }
+.inka-badge-platform {
+  font-size: 10px;
+  font-weight: 700;
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
+  padding: 1px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.inka-badge-gemini {
+  background: #EFF6FF;
+  color: #2563EB;
+  border-color: #BFDBFE;
+}
+.inka-badge-chatgpt {
+  background: #ECFDF5;
+  color: #059669;
+  border-color: #A7F3D0;
+}
+.inka-badge-disconnected {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
