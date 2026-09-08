@@ -23,17 +23,28 @@ from playwright.sync_api import sync_playwright
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 HERMES_PROFILES = os.path.expandvars(r"%LOCALAPPDATA%\hermes\browser_profiles")
 CADANGAN_DIR = os.path.join(BASE_DIR, "accounts", "inka.tech", "cadangan")
-REKOMENDASI_JSON_PATH = os.path.join(BASE_DIR, "accounts", "inka.tech", "40_ide_konten_teknologi_santai.json")
+REKOMENDASI_JSON_PATH = os.path.join(BASE_DIR, "accounts", "inka.tech", "100_ide_konten_teknologi_santai.json")
+if not os.path.exists(REKOMENDASI_JSON_PATH):
+    REKOMENDASI_JSON_PATH = os.path.join(BASE_DIR, "accounts", "inka.tech", "40_ide_konten_teknologi_santai.json")
 if not os.path.exists(REKOMENDASI_JSON_PATH):
     REKOMENDASI_JSON_PATH = os.path.join(BASE_DIR, "accounts", "inka.tech", "20_ide_konten_teknologi_santai.json")
 
 def get_slug(topic: str) -> str:
-    # ui-ux-text: Max 1-2 kata, singkat, padat, bersih
     cleaned = "".join(c if c.isalnum() or c in " _-" else " " for c in topic.strip())
     stopwords = {"dan", "di", "yang", "untuk", "bagi", "cara", "era", "ke", "dari", "pada", "bisa", "ini", "itu"}
     words = [w.lower() for w in cleaned.split() if w.lower() not in stopwords]
     slug = "-".join(words[:2]) if len(words) >= 2 else (words[0] if words else "konten")
     return slug
+
+def get_folder_name_for_item(item: dict) -> str:
+    tid = item.get("id", 1)
+    prefix = f"{tid:02d}-"
+    if os.path.exists(CADANGAN_DIR):
+        for d in os.listdir(CADANGAN_DIR):
+            if d.startswith(prefix) and os.path.isdir(os.path.join(CADANGAN_DIR, d)):
+                return d
+    slug = get_slug(item.get("topic", ""))
+    return f"{prefix}{slug}"
 
 def fetch_20_tech_ideas_from_chatgpt(account_profile: str = "eka") -> list:
     print(f"\n[Step A] Meminta ChatGPT Pro (Profil: {account_profile}) 20 Rekomendasi Ide Konten Teknologi Santai...", flush=True)
@@ -551,8 +562,7 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
     hook_title = item.get("hook_title", topic)
     total_slides = item.get("total_slides", 6)
     slide_outline = item.get("slide_outline", [])
-    slug = get_slug(topic)
-    folder_name = f"{item.get('id', 1):02d}-{slug}"
+    folder_name = get_folder_name_for_item(item)
     content_dir = os.path.join(CADANGAN_DIR, folder_name)
     raw_dir = os.path.join(content_dir, "raw")
     processed_dir = os.path.join(content_dir, "processed")
@@ -564,13 +574,31 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
     print(f"Folder: {content_dir}", flush=True)
     print("=" * 70, flush=True)
 
-    # 1. Prompting via ChatGPT Pro
+    existing_pngs = [f for f in os.listdir(content_dir) if f.endswith(".png")] if os.path.exists(content_dir) else []
+    if len(existing_pngs) >= total_slides:
+        print(f"[Skip] Topik #{item.get('id')} ({folder_name}) SUDAH LENGKAP ({len(existing_pngs)}/{total_slides} slide). Melompat...", flush=True)
+        return {"status": "already_complete", "id": item.get("id"), "folder": folder_name}
+
     prompts = []
     caption = ""
-    try:
-        prompts, caption = generate_prompts_for_topic(item, account_profile=account_profile)
-    except Exception as ge:
-        print(f"[Info] ChatGPT web prompt generator: {ge}. Menggunakan generator outline santai Inka.tech...", flush=True)
+
+    meta_json_path = os.path.join(content_dir, "konten.json")
+    if os.path.exists(meta_json_path):
+        try:
+            with open(meta_json_path, "r", encoding="utf-8-sig") as f:
+                kj = json.load(f)
+            slides = kj.get("slides", [])
+            for s in slides:
+                raw_p = s.get("prompt", "")
+                if raw_p:
+                    if "do not ask questions" not in raw_p.lower():
+                        raw_p = f"Create an image: Do not ask questions or reply with conversational text. Immediately use DALL-E to generate the image right now for this prompt: {raw_p}"
+                    prompts.append(raw_p)
+            c_data = kj.get("caption", {})
+            if isinstance(c_data, dict):
+                caption = c_data.get("body", "")
+        except Exception:
+            pass
 
     if len(prompts) < total_slides:
         print(f"[Info] Menyiapkan {total_slides} Prompt DALL-E presisi dari Outline Santai...", flush=True)
@@ -586,7 +614,7 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
                 f"THE TOP-RIGHT CORNER IS STRICTLY EMPTY AND CLEAN (generous blank negative space for official logo placement). "
                 f"A small cute friendly white-and-green chibi 3D robot mascot (< 15% frame) stands at the bottom corner with a casual friendly expression. "
                 f"At the very bottom, a clean horizontal footer featuring the official 3D glossy TikTok logo icon directly beside '@inka.tech', a subtle separator dot, and the official 3D colorful Instagram camera logo icon directly beside '@arif_ex21', with small text 'Jangan lupa follow akun ini'. Strictly render the recognizable official visual brand logo icons for TikTok and Instagram, NOT the words 'Follow TikTok' or 'Instagram'. "
-                f"Negative constraints: [No dark backgrounds, no black or dark blue background, no realistic human faces, no logo or text in top right, no watermarks, no distorted composition]."
+                f"Negative constraints: [No slide numbers, no pagination indicators, no 1/6 or 2/6 badges, no carousel step counters, no progress dots, no pill counters, no page numbers, no dark backgrounds, no black or dark blue background, no realistic human faces, no logo or text in top right, no watermarks, no distorted composition]."
             )
             prompts.append(p_text)
 
@@ -610,11 +638,11 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
     with open(caption_file, "w", encoding="utf-8") as f:
         f.write(caption.strip() + "\n")
 
-    # 2. Render DALL-E di ChatGPT Pro profil 'eka'
-    print(f"\n[Step C] Merender {len(prompts)} Gambar DALL-E di ChatGPT Pro (Profil: {account_profile})...", flush=True)
+    # 2. Render DALL-E di ChatGPT (Profil: account_profile)
+    print(f"\n[Step C] Merender {len(prompts)} Gambar DALL-E di ChatGPT (Profil: {account_profile})...", flush=True)
     from local_ai_browser import execute_chatgpt_engine
 
-    raw_out_pattern = os.path.join(raw_dir, "slide_{idx:02d}.png")
+    raw_out_pattern = os.path.join(content_dir, f"{folder_name}_{{idx:02d}}.png")
     res = execute_chatgpt_engine(
         prompt=prompts,
         action="image",
@@ -626,29 +654,24 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
     )
     raw_images = res.get("saved_images", [])
     if not raw_images:
-        # Fallback check existing slide files
         for i in range(1, len(prompts) + 1):
-            fpath = os.path.join(raw_dir, f"slide_{i:02d}.png")
+            fpath = os.path.join(content_dir, f"{folder_name}_{i:02d}.png")
             if os.path.exists(fpath):
                 raw_images.append(fpath)
 
-    # 3. Post-Processing (3:4, Logo Top-Right, Strip Metadata)
+    # 3. Post-Processing & Normalisasi (3:4, Logo Top-Right, Strip Metadata)
     print(f"\n[Step D] Post-Processing ({len(raw_images)} Gambar 3:4 + Logo + Bersihkan Metadata)...", flush=True)
-    from local_postprocessor import process_images
-    post_res = process_images(
-        image_paths=raw_images,
-        topic=topic,
-        output_name=f"cadangan_{slug}",
-        mode="photo",
-        aspect="3:4",
-        logo_pos="top-right",
-        out_dir=content_dir
-    )
-    processed_images = post_res.get("processed_images", [])
+    from local_postprocessor import strip_and_resize_image
+    processed_images = []
+    for fpath in raw_images:
+        if os.path.exists(fpath):
+            strip_and_resize_image(fpath, fpath, aspect="3:4", logo_pos="top-right")
+            processed_images.append(fpath)
 
-    # 4. Simpan metadata.json lengkap
+    # 4. Simpan metadata konten.json lengkap
     metadata = {
         "id": item.get("id"),
+        "slug": folder_name,
         "topic": topic,
         "hook_title": hook_title,
         "total_slides": len(processed_images),
@@ -673,9 +696,11 @@ def produce_cadangan_content(item: dict, account_profile: str = "eka") -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sistem Konten Cadangan Teknologi Santai Inka.tech")
     parser.add_argument("--fetch-ideas", action="store_true", help="Ambil 20 ide konten baru dari ChatGPT Pro")
-    parser.add_argument("--content-id", type=int, default=1, help="ID konten yang ingin diproduksi (1 s/d 20)")
-    parser.add_argument("--batch-all", action="store_true", help="Produksi seluruh 20 konten cadangan (100+ gambar)")
-    parser.add_argument("--account", default="eka", help="Profil ChatGPT Pro (default: eka)")
+    parser.add_argument("--content-id", type=int, default=None, help="ID konten tunggal yang ingin diproduksi")
+    parser.add_argument("--batch-all", action="store_true", help="Produksi seluruh konten cadangan")
+    parser.add_argument("--start", type=int, default=None, help="Mulai dari ID topik ini")
+    parser.add_argument("--end", type=int, default=None, help="Berhenti di ID topik ini")
+    parser.add_argument("--account", default="dian", help="Profil ChatGPT (default: dian)")
     args = parser.parse_args()
 
     ideas = []
@@ -685,13 +710,28 @@ if __name__ == "__main__":
     else:
         ideas = fetch_20_tech_ideas_from_chatgpt(account_profile=args.account)
 
-    if args.batch_all:
-        print(f"\n🚀 MEMULAI PRODUKSI SELURUH 20 KONTEN CADANGAN (100+ GAMBAR)...", flush=True)
+    if args.start is not None and args.end is not None:
+        target_ideas = [it for it in ideas if args.start <= it.get("id", 0) <= args.end]
+        print(f"\n🚀 MEMULAI PRODUKSI TOPIK #{args.start} SAMPAI #{args.end} (TOTAL {len(target_ideas)} TOPIK) MENGGUNAKAN AKUN '{args.account}'...", flush=True)
+        for it in target_ideas:
+            tid = it.get("id", 0)
+            folder_name = get_folder_name_for_item(it)
+            content_dir = os.path.join(CADANGAN_DIR, folder_name)
+            existing_pngs = [f for f in os.listdir(content_dir) if f.endswith(".png")] if os.path.exists(content_dir) else []
+            if len(existing_pngs) >= it.get("total_slides", 6):
+                print(f"\n[Skip] Topik #{tid} ({folder_name}) SUDAH LENGKAP ({len(existing_pngs)} slide). Melompat...", flush=True)
+                continue
+            produce_cadangan_content(it, account_profile=args.account)
+            time.sleep(5)
+        print(f"\n🎉 SELESAI! Seluruh target topik #{args.start} sampai #{args.end} selesai diproses.", flush=True)
+    elif args.batch_all:
+        print(f"\n🚀 MEMULAI PRODUKSI SELURUH KONTEN CADANGAN...", flush=True)
         for it in ideas:
             produce_cadangan_content(it, account_profile=args.account)
             time.sleep(5)
     else:
-        selected = next((it for it in ideas if it.get("id") == args.content_id), None)
+        cid = args.content_id or 1
+        selected = next((it for it in ideas if it.get("id") == cid), None)
         if not selected and ideas:
             selected = ideas[0]
         if selected:

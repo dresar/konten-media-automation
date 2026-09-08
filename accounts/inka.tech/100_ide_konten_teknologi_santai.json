@@ -1,0 +1,1403 @@
+[
+  {
+    "id": 1,
+    "topic": "Juice Jacking & Cas HP Sembarangan",
+    "hook_title": "JANGAN ASAL COLOK CASAN DI TEMPAT UMUM! INI BAHAYA JUICE JACKING",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Colok USB di bandara/stasiun bisa bikin data HP dibobol tanpa sadar.",
+      "Slide 2: Cara kerjanya — Kabel USB bukan cuma ngisi daya, tapi juga transfer file otomatis.",
+      "Slide 3: Data apa yang bisa kesedot — Foto galeri, kontak, chat rahasia, sampai token login aplikasi.",
+      "Slide 4: Solusi simpel 1 — Selalu bawa kepala charger sendiri dan colok di stopkontak listrik biasa.",
+      "Slide 5: Senjata rahasia 2 — Pake USB Data Blocker (dongle murah yang cuma izinin aliran listrik tanpa data).",
+      "Slide 6: Rangkuman & CTA — Cas aman, data tenang! Follow @inka.tech buat trik teknologi harian."
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Mode Incognito Bukan Mode Menghilang",
+    "hook_title": "KAMU PIKIR INCOGNITO BIKIN KAMU GAK KELIHATAN? BOHONG BESAR!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Buka incognito berasa udah kayak hacker ninja, padahal masih kebaca jelas.",
+      "Slide 2: Fakta sebenarnya — Incognito cuma hapus riwayat & cookies di perangkat kamu sendiri.",
+      "Slide 3: Siapa yang tetap tahu — Provider WiFi (kantor/sekolah), ISP, dan website yang kamu buka.",
+      "Slide 4: Pelacak iklan tetap jalan — Alamat IP dan sidik jari browser tetap terlacak.",
+      "Slide 5: Solusi privasi beneran — Gunakan DNS aman, private browser, dan VPN tepercaya.",
+      "Slide 6: Rangkuman & CTA — Jangan tertipu mode rahasia palsu! Simpan postingan ini ya."
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Trik Prompting AI Santai Biar Gak Kaku",
+    "hook_title": "AI JAWABNYA KAKU KAYAK ROBOT? COBA 3 MANTRA PROMPT INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Kenapa jawaban ChatGPT kamu kaku banget dan kebaca banget buatan AI?",
+      "Slide 2: Kesalahan umum — Prompt terlalu pendek dan gak ngasih gaya kepribadian.",
+      "Slide 3: Mantra 1 (Role & Tone) — Jawab dengan gaya teman ngopi yang jago teknologi, santai & tanpa istilah ribet.",
+      "Slide 4: Mantra 2 (Negative Constraints) — Jangan pakai kata klise AI seperti tentu, bayangkan, menyelami, mari.",
+      "Slide 5: Mantra 3 (Analogikan) — Jelaskan konsep ini pakai analogi kehidupan sehari-hari anak muda.",
+      "Slide 6: Rangkuman & CTA — Cobain sekarang! Follow @inka.tech buat trik AI selanjutnya."
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Kenapa HP Makin Lama Makin Lemot",
+    "hook_title": "HP BARU SETAHUN KOK UDAH LEMOT? BUKAN DISURUH GANTI HP, INI SEBABNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baru beli setahun tapi buka aplikasi mulai patah-patah? Tenang, belum tentu rusak.",
+      "Slide 2: Penyebab 1: Memori internal di atas 85% bikin sistem swap RAM macet.",
+      "Slide 3: Penyebab 2: Cache aplikasi medsos (TikTok/IG/WA) numpuk sampai puluhan GB.",
+      "Slide 4: Penyebab 3: Fitur background refresh & auto-sync puluhan aplikasi gak guna.",
+      "Slide 5: Cara beresin 5 menit — Bersihin cache WA/TikTok, sisain free storage min 20%, restart HP seminggu sekali.",
+      "Slide 6: Rangkuman & CTA — HP kenceng lagi tanpa modal! Share ke teman yang HP-nya lemot."
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Bahaya WiFi Gratisan Tanpa Password",
+    "hook_title": "LIHAT WIFI GRATIS DI CAFE LANGSUNG KONEK? HATI-HATI JEBAKAN EVIL TWIN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Siapa yang gak suka gratisan? Tapi WiFi terbuka bisa jadi umpan penjahat siber.",
+      "Slide 2: Modus Evil Twin — Hacker bikin nama WiFi persis nama cafe untuk nangkep semua lalu lintas data.",
+      "Slide 3: Data yang terancam — Sesi login, cookie belanja online, password yang gak terenkripsi.",
+      "Slide 4: Aturan wajib saat pakai WiFi cafe — Jangan pernah buka m-banking atau transaksi belanja online.",
+      "Slide 5: Pertahanan instan — Selalu nyalain VPN dan matikan opsi Auto-connect to open networks.",
+      "Slide 6: Rangkuman & CTA — Gratisan enak, tapi keamanan akun nomor satu! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "Kenapa Iklan Bisa Tepat Banget Sama Obrolan Kita",
+    "hook_title": "BARU AJA NGOBROLIN SEPATU, TIBA-TIBA MUNCUL IKLANNYA? HP BENERAN NYADAP?",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering ngerasa HP dengerin omongan kita karena iklan yang muncul pas banget?",
+      "Slide 2: Mitos vs Fakta — HP gak perlu dengerin audio 24 jam; algoritma pelacak data udah jauh lebih canggih.",
+      "Slide 3: Cara kerjanya 1 (Cross-Device Matching) — Teman yang satu jaringan WiFi nyari produk itu, kamu kena imbasnya.",
+      "Slide 4: Cara kerjanya 2 (Micro-Interactions) — Berhenti 2 detik di video tertentu udah kebaca sebagai minat tinggi.",
+      "Slide 5: Cara matikan pelacak — Matikan Personalised Ads di setting Google/Apple & batasi izin mikrofon.",
+      "Slide 6: Rangkuman & CTA — Algoritma lebih tahu kamu dibanding kamu sendiri! Share ke temanmu."
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Rahasia Baterai HP Awet Sampai Bertahun-tahun",
+    "hook_title": "BATTERY HEALTH CEPAT TURUN? JANGAN-JANGAN KAMU MASIH NGELAKUIN INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baterai HP kamu bocor sebelum 2 tahun? Cek kebiasaan ngecas kamu.",
+      "Slide 2: Musuh utama baterai — Panas berlebih! Main game berat sambil ngecas adalah pembunuh baterai tercepat.",
+      "Slide 3: Aturan 20-80 — Usahakan cas saat 20% dan cabut di 80-85% untuk memperpanjang siklus lithium-ion.",
+      "Slide 4: Jangan biarin mati total (0%) — Siklus drop nol bikin voltase kimia stres parah.",
+      "Slide 5: Gunakan charger original & kabel berkualitas — Voltase stabil menjaga kesehatan motherboard.",
+      "Slide 6: Rangkuman & CTA — Rawat baterai HP biar hemat jutaan rupiah! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Password Manager: Satu Kunci Untuk Selamanya",
+    "hook_title": "MASIH PAKE PASSWORD TANGGAL LAHIR DI SEMUA AKUN? BESOK BISA HILANG SEMUA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Mengaku aja: kamu pasti punya 1 password yang dipakai di puluhan website kan?",
+      "Slide 2: Bahaya credential stuffing — Kalau 1 website bocor di dark web, semua akunmu otomatis jebol.",
+      "Slide 3: Solusi cerdas: Password Manager (Bitwarden, 1Password, atau bawaan Google/Apple).",
+      "Slide 4: Cara kerjanya — Bikin password acak 20 karakter rumit untuk tiap website tanpa perlu kamu hapal.",
+      "Slide 5: Kamu cuma perlu hapal 1 Master Password utama yang kuat dan unik.",
+      "Slide 6: Rangkuman & CTA — Amankan hidup digitalmu hari ini juga! Simpan postingan ini."
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "Cara Cek Apakah Datamu Pernah Bocor di Dark Web",
+    "hook_title": "DATA PRIBADIMU UDAH DIJUAL DI DARK WEB? CEK SENDIRI DALAM 1 MENIT!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Banyak kebocoran database besar beberapa tahun terakhir. Akunmu kena gak ya?",
+      "Slide 2: Alat cek resmi & aman — Buka website HaveIBeenPwned.com (gratis dan tepercaya).",
+      "Slide 3: Cara pakainya — Cukup masukkan alamat email atau nomormu, tanpa perlu masukkan password apapun.",
+      "Slide 4: Cara baca hasilnya — Kalau merah (Pwned), dia bakal kasih tahu data apa aja yang bocor.",
+      "Slide 5: Langkah wajib jika bocor — Ganti password akun terkait dan nyalakan verifikasi 2 langkah (2FA).",
+      "Slide 6: Rangkuman & CTA — Cek email kamu sekarang juga sebelum terlambat! Share ke grup keluarga."
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "Format File Rahasia: Kenapa PDF Gak Boleh Sembarangan Diedit",
+    "hook_title": "KIRIM SCAN KTP FORMAT PDF? HATI-HATI JANGAN LUPA DIBERI WATERMARK!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering disuruh upload scan KTP/SIM buat daftar online? Waspada pinjol ilegal!",
+      "Slide 2: Modus pemalsuan — Foto KTP bersih gampang banget disalahgunakan orang lain buat pinjaman tanpa izin.",
+      "Slide 3: Trik aman wajib — Selalu tambahkan watermark digital melintang di atas gambar KTP.",
+      "Slide 4: Contoh tulisan watermark — SCAN KTP UNTUK VERIFIKASI APLIKASI X TANGGAL DD/MM/YYYY.",
+      "Slide 5: Tutup tanda tangan & nomor sensitif jika gak diminta secara resmi.",
+      "Slide 6: Rangkuman & CTA — Jaga identitasmu baik-baik! Follow @inka.tech untuk tips keamanan lainnya."
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "Mitos Radiasi HP: Benarkah Bahaya Saat Tidur?",
+    "hook_title": "TIDUR SEBELAH HP BIKIN KANKER OTAK? INI PENJELASAN SAINS YANG SEBENARNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Sering dimarahin orang tua karena tidur deket HP? Yuk kita bedah faktanya.",
+      "Slide 2: Jenis radiasi HP — Radiasi elektromagnetik non-ionisasi (frekuensi radio), bukan radiasi nuklir.",
+      "Slide 3: Bahaya aslinya bukan radiasi — Tapi cahaya biru (blue light) yang merusak produksi hormon tidur (melatonin).",
+      "Slide 4: Efek nyata — Susah tidur nyenyak, mata lelah, dan bangun tidur tetap merasa capek.",
+      "Slide 5: Tips tidur berkualitas — Jauhkan HP 1-2 meter sebelum tidur atau aktifkan Do Not Disturb.",
+      "Slide 6: Rangkuman & CTA — Tidur sehat, gadget aman! Share ke teman yang suka begadang main HP."
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Cloud Storage Gratisan: Cara Maksimalkan Tanpa Bayar",
+    "hook_title": "GOOGLE DRIVE 15GB PENUH? INI CARA BERSIHIN TANPA PERLU LANGGANAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Muncul notifikasi penyimpanan Google hampir habis? Jangan buru-buru beli langganan.",
+      "Slide 2: Biang kerok 1: Lampiran email besar di Gmail yang udah bertahun-tahun gak dihapus.",
+      "Slide 3: Trik filter Gmail — Ketik size:10m di kotak pencarian Gmail untuk hapus email berbobot besar.",
+      "Slide 4: Biang kerok 2: Video cadangan di Google Photos yang gak pernah ditonton lagi.",
+      "Slide 5: Alternatif backup — Pindahkan file arsip ke harddisk eksternal atau cloud sekunder.",
+      "Slide 6: Rangkuman & CTA — Ruang lega lagi tanpa keluar uang! Simpan postingan ini ya."
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Trik Pintar Google Search yang 90% Orang Gak Tahu",
+    "hook_title": "CARI FILE DI GOOGLE MASIH KETIK BIASA? PAKE 4 SIMBOL RAHASIA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Nyari materi atau ebook di Google tapi yang keluar malah website iklan sampah?",
+      "Slide 2: Simbol 1: filetype:pdf untuk langsung download dokumen PDF resmi tanpa masuk web ribet.",
+      "Slide 3: Simbol 2: site:edu atau site:gov untuk menyaring hanya sumber kampus atau pemerintah.",
+      "Slide 4: Simbol 3: Tanda kutip \"kata kunci\" untuk mencari frasa yang persis dan tidak diacak.",
+      "Slide 5: Simbol 4: Tanda minus -iklan untuk membuang kata yang gak kamu mau dari hasil pencarian.",
+      "Slide 6: Rangkuman & CTA — Riset kilat secepat kilat! Follow @inka.tech buat trik produktivitas."
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "Kenapa Kabel Casan Murah Bisa Ngerusak HP",
+    "hook_title": "BELI KABEL CASAN 15 RIBUAN? HP MAHAL KAMU BISA JADI KORBANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Kabel casan hilang terus beli kabel murah di pinggir jalan? Awas boncos belakangan.",
+      "Slide 2: Komponen yang hilang — Kabel murah biasanya gak punya chip pengatur arus & voltase (e-Marker).",
+      "Slide 3: Bahaya 1: Fluktuasi arus listrik bisa merusak IC Power (chip daya) di motherboard HP.",
+      "Slide 4: Bahaya 2: Kabel gampang panas dan berisiko korsleting sampai memicu percikan api.",
+      "Slide 5: Tips beli kabel awet — Cari yang punya sertifikasi resmi (MFi untuk Apple atau USB-IF tepercaya).",
+      "Slide 6: Rangkuman & CTA — Jangan korbankan HP jutaan demi hemat 20 ribu! Follow @inka.tech."
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Fitur Tersembunyi WhatsApp yang Jarang Dipakai",
+    "hook_title": "SERING PAKE WHATSAPP TAPI GAK TAHU 4 FITUR RAHASIA INI? RUGI BANGET!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Tiap hari buka WA, tapi yakin udah tahu semua fitur canggih terbarunya?",
+      "Slide 2: Fitur 1: Kunci Chat Spesifik pake sidik jari tanpa perlu ngunci seluruh aplikasi WA.",
+      "Slide 3: Fitur 2: Edit Pesan dalam 15 menit setelah terkirim kalau ada typo memalukan.",
+      "Slide 4: Fitur 3: Kirim Foto Kualitas Asli (HD / Document) biar gak buram dan pecah.",
+      "Slide 5: Fitur 4: Senyapkan Telepon dari Nomor Tak Dikenal biar bebas dari spam telemarketing.",
+      "Slide 6: Rangkuman & CTA — Maksimalkan WA kamu sekarang juga! Share ke keluarga dan teman."
+    ]
+  },
+  {
+    "id": 16,
+    "topic": "Trik Mengamankan Akun Instagram dari Hacker",
+    "hook_title": "FOLLOWER SUDAH RIBUAN TAPI AKUN TIBA-TIBA HILANG? AMANKAN DENGAN 3 LANGKAH INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Bangun akun IG bertahun-tahun, jangan sampai dibajak cuma gara-gara teledor.",
+      "Slide 2: Celah paling sering — Ngeklik link DM yang bilang kamu melanggar hak cipta (copyright infringement).",
+      "Slide 3: Langkah 1: Aktifkan 2FA via Aplikasi Authenticator (Google Auth/Duo), BUKAN SMS.",
+      "Slide 4: Langkah 2: Periksa Email Keamanan Resmi di Pengaturan > Keamanan > Email dari Instagram.",
+      "Slide 5: Langkah 3: Cabut akses aplikasi pihak ketiga yang gak dikenal di Pengaturan Akun.",
+      "Slide 6: Rangkuman & CTA — Jangan tunggu akun kena hack baru panik! Amankan sekarang juga."
+    ]
+  },
+  {
+    "id": 17,
+    "topic": "Kenapa Laptop Cepat Panas dan Kipasnya Bising",
+    "hook_title": "LAPTOP BUNYI KAYAK PESAWAT MAU LEPAS LANDAS? INI SOLUSI GAMPANGNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Baru buka Chrome sebentar tapi laptop udah berisik dan panas banget di paha?",
+      "Slide 2: Penyebab 1: Menggunakan laptop di atas kasur atau bantal yang menyumbat ventilasi bawah.",
+      "Slide 3: Penyebab 2: Debu tebal menumpuk di baling-baling kipas pendingin.",
+      "Slide 4: Penyebab 3: Thermal paste (pasta pendingin prosesor) sudah kering dan mengeras.",
+      "Slide 5: Solusi praktis — Gunakan stand laptop agar sirkulasi lancar dan bersihkan kipas berkala.",
+      "Slide 6: Rangkuman & CTA — Laptop adem, performa kenceng! Follow @inka.tech buat tips komputer."
+    ]
+  },
+  {
+    "id": 18,
+    "topic": "Trik Bikin Password Kuat Tapi Gampang Diingat",
+    "hook_title": "BINGUNG BIKIN PASSWORD SUSAH DITEBAK TAPI GAMPANG DIINGAT? PAKE METODE PASSPHRASE!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Password pendek gampang ditebak, password rumit kayak x7#Q9! malah sering lupa.",
+      "Slide 2: Kenalkan: Metode Passphrase — Gabungan 4 kata acak bahasa Indonesia yang punya cerita.",
+      "Slide 3: Contoh Passphrase: Kucing-Oren-Makan-Bakso#24 (Panjang 26 karakter, mustahil dibobol hacker!).",
+      "Slide 4: Kenapa ini super kuat — Komputer hacker butuh ribuan tahun untuk menebak kalimat panjang.",
+      "Slide 5: Sementara otakmu cuma perlu mengingat cerita lucu tentang kucing oren makan bakso.",
+      "Slide 6: Rangkuman & CTA — Password aman tanpa bikin pusing! Simpan dan coba di akun barumu."
+    ]
+  },
+  {
+    "id": 19,
+    "topic": "Kenapa Smart TV di Rumah Bisa Jadi Mata-Mata",
+    "hook_title": "SMART TV KAMU DI RUMAH TERNYATA MEREKAM APA YANG KAMU TONTON!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — Senang punya Smart TV layar lebar? Tahu gak kalau kebiasaan nontonmu dipantau?",
+      "Slide 2: Teknologi ACR (Automated Content Recognition) yang tertanam di sistem operasi Smart TV.",
+      "Slide 3: Apa yang dicatat — Film yang ditonton, siaran yang diputar, sampai iklan yang sering kamu lewati.",
+      "Slide 4: Tujuannya — Dijual ke pengiklan untuk menargetkan iklan yang relevan ke HP dan laptop di rumahmu.",
+      "Slide 5: Cara mematikannya — Buka Pengaturan TV > Privasi > Matikan opsi ACR / Viewing Data Sharing.",
+      "Slide 6: Rangkuman & CTA — Nonton tenang tanpa dimata-matai! Share info ini ke grup keluarga."
+    ]
+  },
+  {
+    "id": 20,
+    "topic": "Masa Depan AI: Pekerjaan Apa yang Paling Aman?",
+    "hook_title": "TAKUT PEKERJAANMU DIGANTIKAN AI? INI SKILL MANUSIA YANG GAK BISA DITIRU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook santai — AI makin pintar bikin gambar, nulis teks, sampai coding. Masa depan kita gimana?",
+      "Slide 2: Yang digantikan AI — Tugas repetitif, olah data rutin, dan hal-hal yang punya pola baku.",
+      "Slide 3: Skill yang aman 1: Empati dan Hubungan Antar Manusia (Leadership, Konseling, Negosiasi).",
+      "Slide 4: Skill yang aman 2: Critical Thinking & Problem Solving dalam situasi yang ambigu dan kompleks.",
+      "Slide 5: Kuncinya — Bukan melawan AI, tapi jadilah orang yang paling jago memanfaatkan AI sebagai asisten.",
+      "Slide 6: Rangkuman & CTA — Manusia + AI = Tak terkalahkan! Follow @inka.tech buat panduan masa depan teknologi."
+    ]
+  },
+  {
+    "id": 21,
+    "topic": "Privasi Kamera & Mikrofon HP",
+    "hook_title": "KAMERA HP BISA NGINTIP SENDIRI? CEK TITIK HIJAU INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Kamera atau mic HP tiba-tiba aktif? Jangan langsung panik, tapi jangan diabaikan juga!",
+      "Slide 2: Fakta/Masalah — Android dan iPhone punya indikator saat kamera atau mikrofon sedang digunakan aplikasi.",
+      "Slide 3: Bahaya/Detail — Aplikasi dengan izin berlebihan bisa mengakses kamera, mic, atau lokasi tanpa alasan yang jelas.",
+      "Slide 4: Solusi 1 — Cek aplikasi mana yang punya izin kamera dan mikrofon, lalu cabut izin yang tidak diperlukan.",
+      "Slide 5: Solusi 2 — Update sistem dan aplikasi, serta hindari instal aplikasi dari sumber yang nggak jelas.",
+      "Slide 6: Rangkuman & CTA — Izin aplikasi itu bukan formalitas. Cek sekarang dan follow @inka.tech buat tips teknologi santai."
+    ]
+  },
+  {
+    "id": 22,
+    "topic": "Pinjol Ilegal & Sadap Kontak",
+    "hook_title": "PINJOL ILEGAL BISA TERORIN KONTAK KAMU? INI YANG HARUS DIWASPADAI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Baru install pinjol, tiba-tiba teman dan keluarga ikut diteror? Kok bisa?",
+      "Slide 2: Fakta/Masalah — Pinjol ilegal bisa meminta akses data pribadi dan kontak yang sebenarnya tidak dibutuhkan.",
+      "Slide 3: Bahaya/Detail — Data kontak dapat disalahgunakan untuk intimidasi, spam, penipuan, atau tekanan saat penagihan.",
+      "Slide 4: Solusi 1 — Jangan asal memberi izin kontak, SMS, file, kamera, atau lokasi kepada aplikasi pinjaman.",
+      "Slide 5: Solusi 2 — Gunakan layanan pinjaman yang legal dan cek status penyelenggara melalui kanal resmi OJK.",
+      "Slide 6: Rangkuman & CTA — Butuh uang bukan berarti harus menyerahkan seluruh isi HP. Follow @inka.tech buat edukasi digital lainnya."
+    ]
+  },
+  {
+    "id": 23,
+    "topic": "Google Search Tricks",
+    "hook_title": "GOOGLE BISA JADI 'MESIN HACKER'? COBA TRIK SEARCH INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Google bukan cuma buat cari jawaban tugas. Dengan trik tertentu, pencarian bisa jauh lebih powerful!",
+      "Slide 2: Fakta/Masalah — Operator seperti tanda kutip, minus, site:, dan filetype: bisa mempersempit hasil pencarian.",
+      "Slide 3: Bahaya/Detail — Informasi publik yang terlalu terbuka kadang bisa membocorkan dokumen, halaman, atau data yang seharusnya tidak mudah ditemukan.",
+      "Slide 4: Solusi 1 — Pakai operator pencarian untuk riset informasi publik secara lebih cepat dan terarah.",
+      "Slide 5: Solusi 2 — Kalau menemukan data pribadi milikmu di hasil pencarian, minta penghapusan atau perbaiki sumber yang membocorkannya.",
+      "Slide 6: Rangkuman & CTA — Google ternyata punya banyak trik tersembunyi. Follow @inka.tech buat tips teknologi yang kepake sehari-hari."
+    ]
+  },
+  {
+    "id": 24,
+    "topic": "Battery Health Mitos vs Fakta",
+    "hook_title": "BATTERY HEALTH 100% HARUS DIPERTAHANKAN TERUS? BELUM TENTU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Takut banget Battery Health turun dari 100%? Santai, baterai memang punya umur.",
+      "Slide 2: Fakta/Masalah — Baterai lithium-ion mengalami degradasi alami setiap kali digunakan dan diisi ulang.",
+      "Slide 3: Bahaya/Detail — Panas berlebihan dan kebiasaan ekstrem bisa mempercepat penurunan kapasitas baterai.",
+      "Slide 4: Solusi 1 — Hindari HP terlalu panas, terutama saat charging sambil menjalankan aktivitas berat.",
+      "Slide 5: Solusi 2 — Manfaatkan fitur optimized charging atau battery protection jika tersedia di perangkat.",
+      "Slide 6: Rangkuman & CTA — Jangan obsesif mengejar angka 100%. Jaga suhu dan kebiasaan charging. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 25,
+    "topic": "HP Panas Saat Gaming",
+    "hook_title": "HP PANAS PAS MAIN GAME? BUKAN CUMA KARENA 'HP JELEK'!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Baru main 20 menit, HP sudah berasa setrika? Ini penyebabnya!",
+      "Slide 2: Fakta/Masalah — Gaming membuat CPU, GPU, layar, jaringan, dan baterai bekerja lebih keras.",
+      "Slide 3: Bahaya/Detail — Suhu tinggi terus-menerus bisa menurunkan performa dan mempercepat degradasi baterai.",
+      "Slide 4: Solusi 1 — Turunkan brightness, frame rate, atau kualitas grafis jika perangkat terlalu panas.",
+      "Slide 5: Solusi 2 — Jangan bermain sambil charging dalam kondisi panas dan lepaskan casing tebal bila menghambat pelepasan panas.",
+      "Slide 6: Rangkuman & CTA — FPS tinggi memang seru, tapi HP juga perlu napas. Follow @inka.tech buat tips gadget lainnya."
+    ]
+  },
+  {
+    "id": 26,
+    "topic": "Rahasia Airplane Mode",
+    "hook_title": "AIRPLANE MODE BUKAN CUMA BUAT NAIK PESAWAT! ADA TRIK YANG BERGUNA BANGET!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Selama ini kamu kira Airplane Mode cuma buat penerbangan? Ternyata banyak gunanya!",
+      "Slide 2: Fakta/Masalah — Mode ini memutus koneksi seluler dan biasanya koneksi nirkabel tertentu sampai dinyalakan kembali.",
+      "Slide 3: Bahaya/Detail — Airplane Mode bukan tombol ajaib yang otomatis mempercepat semua HP atau membuat baterai awet seharian.",
+      "Slide 4: Solusi 1 — Gunakan saat sinyal buruk dan kamu ingin mengurangi aktivitas pencarian jaringan untuk sementara.",
+      "Slide 5: Solusi 2 — Pakai untuk memutus koneksi dengan cepat saat butuh fokus, tidur, atau sedang ingin menghemat daya.",
+      "Slide 6: Rangkuman & CTA — Airplane Mode ternyata lebih berguna dari yang kamu kira. Follow @inka.tech untuk trik gadget lainnya."
+    ]
+  },
+  {
+    "id": 27,
+    "topic": "Cache WhatsApp Membengkak",
+    "hook_title": "WHATSAPP MAKAN STORAGE DIAM-DIAM? CEK FOLDER INI SEKARANG!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Storage penuh padahal merasa nggak punya banyak aplikasi? Bisa jadi WhatsApp pelakunya!",
+      "Slide 2: Fakta/Masalah — Foto, video, dokumen, voice note, dan media dari berbagai chat bisa menumpuk.",
+      "Slide 3: Bahaya/Detail — Grup aktif bisa membuat file media bertambah terus tanpa terasa sampai storage tinggal sedikit.",
+      "Slide 4: Solusi 1 — Buka pengaturan penyimpanan WhatsApp dan lihat chat mana yang paling banyak memakan ruang.",
+      "Slide 5: Solusi 2 — Hapus media besar yang tidak diperlukan dan matikan auto-download untuk jenis file tertentu.",
+      "Slide 6: Rangkuman & CTA — Jangan tunggu storage merah dulu. Bersihkan WhatsApp secara berkala dan follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 28,
+    "topic": "AI Agent Masa Depan",
+    "hook_title": "AI AGENT NANTI BISA KLIK, BELANJA, KIRIM EMAIL SENDIRI?!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Bayangkan AI bukan cuma jawab chat, tapi benar-benar menjalankan tugas untuk kamu.",
+      "Slide 2: Fakta/Masalah — AI agent dirancang untuk merencanakan langkah dan menggunakan tools atau aplikasi yang terhubung.",
+      "Slide 3: Bahaya/Detail — Semakin banyak akses yang diberikan, semakin besar dampaknya kalau instruksi atau data yang diproses ternyata berbahaya.",
+      "Slide 4: Solusi 1 — Berikan akses seminimal mungkin dan pisahkan tugas biasa dari tindakan yang sensitif.",
+      "Slide 5: Solusi 2 — Untuk pembayaran, pengiriman email penting, atau perubahan data, tetap gunakan persetujuan manusia.",
+      "Slide 6: Rangkuman & CTA — Masa depan AI bukan cuma pintar menjawab, tapi bisa bertindak. Follow @inka.tech buat bahas teknologi masa depan!"
+    ]
+  },
+  {
+    "id": 29,
+    "topic": "Fitur Tersembunyi Android",
+    "hook_title": "ANDROID KAMU PUNYA FITUR TERSEMBUNYI? 5 MENIT COBA CEK!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Bisa jadi HP Android kamu punya fitur keren yang selama ini nggak pernah kamu sentuh!",
+      "Slide 2: Fakta/Masalah — Banyak fitur praktis tersebar di Quick Settings, gesture, accessibility, dan pengaturan sistem.",
+      "Slide 3: Bahaya/Detail — Fitur tertentu juga bisa memengaruhi privasi atau akses aplikasi kalau diaktifkan tanpa memahami fungsinya.",
+      "Slide 4: Solusi 1 — Jelajahi Quick Settings dan menu Privacy atau Security untuk mengenali fitur yang tersedia.",
+      "Slide 5: Solusi 2 — Aktifkan fitur yang benar-benar berguna seperti Find My Device, screen pinning, atau privacy controls sesuai kebutuhan.",
+      "Slide 6: Rangkuman & CTA — Jangan cuma pakai HP buat scroll. Kenali fiturnya dan follow @inka.tech buat trik Android lainnya."
+    ]
+  },
+  {
+    "id": 30,
+    "topic": "Fitur Tersembunyi iPhone",
+    "hook_title": "IPHONE KAMU MUNGKIN PUNYA FITUR YANG BELUM PERNAH KAMU COBA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Punya iPhone mahal tapi cuma dipakai chat, kamera, dan TikTok? Rugi dong!",
+      "Slide 2: Fakta/Masalah — iOS punya banyak fitur praktis di Control Center, accessibility, privacy, dan gesture.",
+      "Slide 3: Bahaya/Detail — Beberapa fitur dan izin aplikasi bisa memengaruhi privasi kalau tidak pernah diperiksa.",
+      "Slide 4: Solusi 1 — Cek Privacy & Security untuk melihat izin aplikasi terhadap lokasi, kamera, mic, foto, dan data lainnya.",
+      "Slide 5: Solusi 2 — Eksplorasi fitur seperti Back Tap, Focus, Live Text, atau Safety Check sesuai versi iOS dan kebutuhan.",
+      "Slide 6: Rangkuman & CTA — iPhone bukan cuma soal kamera. Maksimalkan fiturnya dan follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 31,
+    "topic": "APK Mod & Bajakan",
+    "hook_title": "DOWNLOAD APK MOD BIAR GRATIS? DATA & M-BANKING BISA IKUT JADI TARUHAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Game premium gratis, aplikasi unlocked, fitur VIP kebuka semua. Kedengarannya enak, kan?",
+      "Slide 2: Fakta/Masalah — APK dari sumber tidak resmi bisa dimodifikasi dan tidak punya jaminan keamanan seperti aplikasi resmi.",
+      "Slide 3: Bahaya/Detail — File berbahaya dapat mencuri kredensial, membaca data, menampilkan iklan agresif, atau meminta izin berlebihan.",
+      "Slide 4: Solusi 1 — Download aplikasi dari toko resmi atau sumber pengembang yang dapat dipercaya.",
+      "Slide 5: Solusi 2 — Kalau sudah terlanjur instal APK mencurigakan, hapus aplikasi, cek izin, jalankan pemeriksaan keamanan, dan ganti kredensial penting bila perlu.",
+      "Slide 6: Rangkuman & CTA — Gratis belum tentu murah kalau risikonya data kamu. Follow @inka.tech buat tips keamanan gadget."
+    ]
+  },
+  {
+    "id": 32,
+    "topic": "Deepfake Audio & Video",
+    "hook_title": "SUARA TEMAN BISA DIPALSUKAN AI?! JANGAN LANGSUNG PERCAYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Dengar suara orang terdekat minta uang lewat telepon? Bisa jadi bukan dia!",
+      "Slide 2: Fakta/Masalah — AI sekarang dapat menghasilkan audio dan video yang sangat mirip dengan orang asli.",
+      "Slide 3: Bahaya/Detail — Deepfake bisa dipakai untuk penipuan, impersonasi, manipulasi informasi, atau merusak reputasi.",
+      "Slide 4: Solusi 1 — Jangan mengambil keputusan finansial hanya berdasarkan suara, foto, atau video yang diterima.",
+      "Slide 5: Solusi 2 — Verifikasi lewat jalur lain, misalnya menghubungi nomor yang sudah kamu simpan atau membuat pertanyaan verifikasi.",
+      "Slide 6: Rangkuman & CTA — Wajah dan suara sekarang bisa ditiru AI. Verifikasi dulu, percaya belakangan. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 33,
+    "topic": "USB Type-C Palsu & Berbahaya",
+    "hook_title": "USB TYPE-C BENTUKNYA SAMA, TAPI DALAMNYA BISA BEDA JAUH!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Semua kabel USB-C kelihatan sama? Jangan tertipu bentuk konektornya!",
+      "Slide 2: Fakta/Masalah — USB-C adalah bentuk konektor, bukan jaminan bahwa semua kabel punya kemampuan transfer data, charging, atau video yang sama.",
+      "Slide 3: Bahaya/Detail — Kabel berkualitas buruk atau tidak sesuai spesifikasi dapat menyebabkan charging lambat, koneksi bermasalah, atau panas berlebih.",
+      "Slide 4: Solusi 1 — Perhatikan spesifikasi daya, kecepatan data, dan dukungan video sebelum membeli kabel.",
+      "Slide 5: Solusi 2 — Pilih kabel dari produsen terpercaya dan hindari kabel murah dengan klaim spesifikasi yang tidak masuk akal.",
+      "Slide 6: Rangkuman & CTA — USB-C sama bentuk bukan berarti sama kemampuan. Follow @inka.tech buat bahas gadget tanpa bahasa ribet!"
+    ]
+  },
+  {
+    "id": 34,
+    "topic": "Bluetooth Tetap Nyala",
+    "hook_title": "BLUETOOTH NYALA TERUS BIKIN HP GAMPANG DI-HACK? INI FAKTANYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Bluetooth nggak pernah kamu matikan? Haruskah panik setiap keluar rumah?",
+      "Slide 2: Fakta/Masalah — Bluetooth modern punya berbagai mekanisme keamanan, tetapi perangkat tetap perlu dikonfigurasi dengan benar.",
+      "Slide 3: Bahaya/Detail — Risiko bisa muncul ketika perangkat menerima koneksi atau permintaan yang mencurigakan, terutama pada sistem yang tidak diperbarui.",
+      "Slide 4: Solusi 1 — Jangan menerima pairing request atau file Bluetooth dari perangkat yang tidak dikenal.",
+      "Slide 5: Solusi 2 — Update sistem dan hapus perangkat Bluetooth lama yang sudah tidak pernah digunakan.",
+      "Slide 6: Rangkuman & CTA — Bluetooth bukan otomatis bahaya, tapi jangan asal menerima koneksi. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 35,
+    "topic": "Screen Recording & Privasi",
+    "hook_title": "LAGI SCREEN RECORD? DATA SENSITIF BISA IKUT KEREKAM!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Rekam layar buat tutorial atau bukti chat? Hati-hati, semuanya bisa ikut masuk video!",
+      "Slide 2: Fakta/Masalah — Screen recording dapat menangkap tampilan aplikasi, notifikasi, chat, kode, dan informasi lain yang muncul.",
+      "Slide 3: Bahaya/Detail — OTP, pesan pribadi, nomor rekening, atau data sensitif bisa tidak sengaja ikut terekam dan tersebar.",
+      "Slide 4: Solusi 1 — Aktifkan mode jangan ganggu atau sembunyikan notifikasi saat melakukan screen recording.",
+      "Slide 5: Solusi 2 — Sebelum membagikan rekaman, tonton ulang dari awal dan blur bagian yang mengandung informasi pribadi.",
+      "Slide 6: Rangkuman & CTA — Yang terekam bukan cuma layar, tapi bisa juga privasi kamu. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 36,
+    "topic": "Smartphone Tracking & Lokasi",
+    "hook_title": "HP KAMU TAU KAMU ADA DI MANA? CEK SIAPA YANG DAPAT AKSES LOKASI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Pernah heran kenapa aplikasi terasa tahu kamu sering pergi ke mana?",
+      "Slide 2: Fakta/Masalah — Smartphone dan aplikasi dapat menggunakan data lokasi untuk navigasi, rekomendasi, iklan, dan fitur lainnya.",
+      "Slide 3: Bahaya/Detail — Terlalu banyak aplikasi dengan akses lokasi bisa memperbesar jejak data tentang rutinitas dan tempat yang sering kamu kunjungi.",
+      "Slide 4: Solusi 1 — Review izin lokasi dan pilih akses hanya saat digunakan jika fitur tidak membutuhkan lokasi sepanjang waktu.",
+      "Slide 5: Solusi 2 — Matikan akses lokasi untuk aplikasi yang tidak punya alasan jelas untuk mengetahuinya.",
+      "Slide 6: Rangkuman & CTA — Lokasi itu data pribadi juga. Jangan kasih akses ke semua aplikasi. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 37,
+    "topic": "Clipboard HP",
+    "hook_title": "COPY-PASTE DI HP BISA SIMPAN DATA RAHASIA? CEK CLIPBOARD KAMU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Pernah copy OTP, password, atau nomor rekening lalu lupa menghapusnya?",
+      "Slide 2: Fakta/Masalah — Clipboard menyimpan teks yang baru saja disalin agar bisa ditempel kembali.",
+      "Slide 3: Bahaya/Detail — Data sensitif yang tertinggal di clipboard dapat menjadi risiko jika diakses aplikasi atau perangkat yang tidak aman.",
+      "Slide 4: Solusi 1 — Hindari menyalin password dan kode rahasia lebih lama dari yang diperlukan.",
+      "Slide 5: Solusi 2 — Gunakan password manager dan fitur clipboard yang otomatis membersihkan data sensitif jika tersedia.",
+      "Slide 6: Rangkuman & CTA — Copy-paste kelihatan sepele, tapi datanya bisa sensitif. Follow @inka.tech untuk tips privasi lainnya."
+    ]
+  },
+  {
+    "id": 38,
+    "topic": "Notifikasi & OTP",
+    "hook_title": "OTP BISA KEBOCOR CUMA DARI NOTIFIKASI? JANGAN ASAL IZINKAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — HP terkunci tapi pesan OTP tetap muncul di layar? Nah, ini yang perlu kamu pikirkan!",
+      "Slide 2: Fakta/Masalah — Notifikasi dapat menampilkan sebagian isi pesan tanpa pengguna membuka aplikasi.",
+      "Slide 3: Bahaya/Detail — Orang yang melihat layar terkunci bisa mendapatkan informasi sensitif jika preview notifikasi terlalu terbuka.",
+      "Slide 4: Solusi 1 — Sembunyikan preview pesan sensitif di lock screen.",
+      "Slide 5: Solusi 2 — Jangan pernah membagikan OTP kepada siapa pun, termasuk orang yang mengaku dari bank atau layanan tertentu.",
+      "Slide 6: Rangkuman & CTA — OTP itu rahasia, termasuk dari layar lock screen. Atur notifikasi dan follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 39,
+    "topic": "Fake Storage & RAM Booster",
+    "hook_title": "APLIKASI 'RAM BOOSTER' BIKIN HP NGEGAS? BISA JADI CUMA SUGESTI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — RAM tinggal sedikit? Jangan langsung download aplikasi booster yang menjanjikan HP auto ngebut!",
+      "Slide 2: Fakta/Masalah — Sistem operasi modern sudah mengelola memori sendiri dan angka RAM kosong tidak selalu berarti performa buruk.",
+      "Slide 3: Bahaya/Detail — Aplikasi pembersih atau booster pihak ketiga bisa memakai resource tambahan, menampilkan iklan, atau meminta izin berlebihan.",
+      "Slide 4: Solusi 1 — Hapus aplikasi yang benar-benar tidak dipakai dan gunakan fitur bawaan sistem untuk mengelola storage.",
+      "Slide 5: Solusi 2 — Restart perangkat atau update sistem jika performa bermasalah, lalu cari penyebab sebenarnya daripada mengandalkan booster.",
+      "Slide 6: Rangkuman & CTA — RAM kosong bukan otomatis HP lebih kencang. Jangan gampang percaya aplikasi booster. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 40,
+    "topic": "WiFi Publik & Auto Connect",
+    "hook_title": "HP AUTO CONNECT KE WIFI? BISA JADI KEBIASAAN YANG BIKIN KAMU LENGAH!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Slide 1: Hook — Baru masuk kafe, HP langsung nyambung WiFi sendiri? Kamu yakin jaringan itu yang kamu mau?",
+      "Slide 2: Fakta/Masalah — Perangkat dapat mengingat jaringan WiFi dan mencoba terhubung kembali ketika jaringan yang dikenal tersedia.",
+      "Slide 3: Bahaya/Detail — Jaringan publik yang tidak aman dapat membuka peluang penyadapan atau manipulasi koneksi, terutama jika layanan yang digunakan tidak terenkripsi dengan baik.",
+      "Slide 4: Solusi 1 — Matikan auto-join untuk jaringan publik yang tidak diperlukan dan hapus jaringan lama yang mencurigakan.",
+      "Slide 5: Solusi 2 — Hindari aktivitas sensitif di jaringan publik yang meragukan dan gunakan koneksi seluler atau jaringan terpercaya saat memungkinkan.",
+      "Slide 6: Rangkuman & CTA — WiFi gratis memang menggoda, tapi jangan sampai keamanan ikut gratis. Follow @inka.tech buat tips keamanan digital lainnya!"
+    ]
+  },
+  {
+    "id": 41,
+    "topic": "Powerbank Fast Charging",
+    "hook_title": "POWERBANK BIKIN BATERAI HP KEMBUNG? JANGAN ASAL COLOK MERK ABAL-ABAL!",
+    "total_slides": 6,
+    "slide_outline": [
+      "HP kamu tiba-tiba menggelembung atau casing belakang renggang sehabis sering cas pakai powerbank murah?",
+      "Powerbank murah tanpa chip proteksi over-voltage menyalurkan arus listrik yang tidak stabil ke HP.",
+      "Arus liar dan panas berlebih memicu reaksi kimia gas di dalam baterai lithium-ion sampai menggelembung.",
+      "Pilih powerbank yang memiliki sertifikasi keamanan resmi seperti Power Delivery atau Quick Charge berlisensi.",
+      "Hindari bermain game berat sambil mengecas di powerbank saat berada di dalam saku atau tas tertutup.",
+      "Cas aman perangkat awet! Jangan korbankan HP jutaan demi powerbank murah. Follow @inka.tech!"
+    ]
+  },
+  {
+    "id": 42,
+    "topic": "Phishing Link Kurir Paket",
+    "hook_title": "ADA SMS 'PAKET SEDANG DIKIRIM' FORMAT .APK? JANGAN DIKLIK, SALDO BISA HILANG!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Sering terima chat WA dari kurir paket yang melampirkan file Surat_Jalan.apk? Awas jebakan malware berbahaya!",
+      "Penipu menyamarkan malware pencuri SMS perbankan dalam bentuk file instalasi Android (.apk).",
+      "Sekali diinstal, malware meminta izin akses SMS dan langsung meneruskan kode OTP bank ke hacker.",
+      "Ingat aturan emas: kurir resmi tidak pernah mengirim dokumen berformat APK, hanya nomor resi teks biasa.",
+      "Matikan izin install unknown apps di pengaturan keamanan HP kamu sekarang juga untuk mencegah malware.",
+      "Jangan sampai saldo melayang karena paket palsu! Share info penting ini ke orang tua dan keluarga."
+    ]
+  },
+  {
+    "id": 43,
+    "topic": "NFC di HP & Skimming",
+    "hook_title": "FITUR NFC DI HP BISA DISADAP DARI JARAK JAUH? INI FAKTA SEBENARNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Banyak yang takut menyalakan NFC karena khawatir saldo e-money atau kartu debit disedot orang di tempat umum.",
+      "Jangkauan sinyal NFC itu sangat pendek maksimal 4 cm dan membutuhkan protokol enkripsi dua arah yang ketat.",
+      "Risiko asli muncul jika kamu tap poster atau tag NFC palsu di tempat umum yang mengarahkan ke link phishing.",
+      "Cukup nyalakan fitur NFC saat ingin mengecek saldo atau membayar transaksi, lalu matikan setelahnya.",
+      "Gunakan dompet atau sleeve kartu berbahan RFID-blocking untuk perlindungan ekstra pada kartu fisikmu.",
+      "Pakai teknologi dengan pintar dan tenang tanpa panik. Follow @inka.tech buat panduan gadget harian!"
+    ]
+  },
+  {
+    "id": 44,
+    "topic": "Cas HP di Bawah Bantal",
+    "hook_title": "KEBIASAAN TIDUR SAMBIL CAS HP DI BAWAH BANTAL BISA PICU KEBAKARAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Suka menaruh HP yang sedang dicas di bawah bantal agar mudah mendengar alarm pagi? Bahaya besar mengintai!",
+      "Proses pengisian daya menghasilkan panas aktif, sedangkan bantal dan kasur adalah isolator panas yang sangat tebal.",
+      "Panas yang terperangkap tidak bisa keluar, memicu thermal runaway pada sel baterai hingga memicu percikan api.",
+      "Selalu letakkan HP di permukaan yang keras dan dingin seperti meja kayu atau lantai saat sedang diisi daya.",
+      "Jangan pernah menutupi adaptor charger dengan selimut atau tumpukan pakaian saat tercolok di stopkontak.",
+      "Lindungi diri dan kamarmu dari bahaya kebakaran gadget. Bagikan tips ini ke teman yang punya kebiasaan ini!"
+    ]
+  },
+  {
+    "id": 45,
+    "topic": "WhatsApp Web Komputer Kantor",
+    "hook_title": "CHAT PRIBADI DIBACA REKAN KANTOR? JANGAN LUPA LOGOUT WHATSAPP WEB!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Membuka WA Web di komputer kantor lalu ditinggal meeting atau pulang? Chat pribadimu bisa dibaca siapa saja!",
+      "Sesi browser menyimpan login WhatsApp Web secara aktif selama berminggu-minggu jika tidak dikeluarkan manual.",
+      "Siapa pun yang memakai komputer itu bisa membaca chat rahasia, melihat lampiran foto, hingga mengirim pesan palsu.",
+      "Cek menu Linked Devices atau Perangkat Tertaut di aplikasi WhatsApp HP kamu secara berkala setiap minggu.",
+      "Klik tombol keluar dari semua komputer yang tidak lagi berada di bawah pengawasan langsungmu.",
+      "Jaga privasi percakapan dan reputasi kerjamu tetap aman. Follow @inka.tech untuk trik keamanan digital!"
+    ]
+  },
+  {
+    "id": 46,
+    "topic": "Quishing QR Code Palsu",
+    "hook_title": "SCAN QRIS DI MEJA RESTORAN? AWAS JEBAKAN STIKER QR CODE PALSU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mau bayar makanan atau parkir lewat scan QR tapi uangnya malah masuk ke dompet penipu? Kenali modus quishing!",
+      "Pelaku kejahatan menempelkan stiker QR code buatan sendiri di atas barcode resmi toko atau meja restoran.",
+      "Uang transaksi pembayaran masuk ke rekening pelaku atau layar mengarahkan korban ke website palsu berbahaya.",
+      "Selalu cocokkan nama merchant resmi di layar konfirmasi HP dengan nama restoran sebelum memasukkan PIN.",
+      "Raba stiker barcode: jika terasa bertumpuk atau ada stiker tempelan mencurigakan, segera konfirmasi ke kasir.",
+      "Teliti 5 detik sebelum transfer bisa menyelamatkan uangmu. Simpan postingan ini biar gak kecolongan!"
+    ]
+  },
+  {
+    "id": 47,
+    "topic": "AI Voice Cloning Penipuan",
+    "hook_title": "DAPAT TELEPON NANGIS DARI KELUARGA? WASPADA SUARA HASIL CLONING AI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Suara di telepon mirip sekali dengan anggota keluarga yang menangis minta kiriman uang darurat? Waspada rekayasa AI!",
+      "Teknologi voice cloning modern hanya butuh rekaman suara 3 detik dari video sosmed untuk menduplikasi suara manusia.",
+      "Pelaku memanfaatkan rasa panik dan emosi korban agar langsung mentransfer dana tanpa sempat berpikir logis.",
+      "Buat kode sandi darurat rahasia keluarga berupa satu kata unik yang hanya diketahui anggota keluarga inti.",
+      "Segera tutup panggilan telepon, lalu hubungi langsung nomor kontak pribadi keluarga melalui panggilan telepon biasa.",
+      "Waspada teknologi manipulasi suara AI yang semakin canggih. Share info penting ini ke grup keluarga sekarang!"
+    ]
+  },
+  {
+    "id": 48,
+    "topic": "Hotspot Pribadi Aman",
+    "hook_title": "KUOTA INTERNET HABIS MISTERIUS? BISA JADI HOTSPOT HP-MU DIBOBOL TETANGGA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Baru isi kuota puluhan gigabyte tapi mendadak habis dalam 2 hari padahal jarang dipakai? Cek hotspot pribadimu!",
+      "Password hotspot yang terlalu sederhana membuat orang di sekitar bisa menebak dan menyusup ke koneksi HP kamu.",
+      "Perangkat asing yang terhubung bisa menyedot kuota untuk unduhan file raksasa atau update aplikasi otomatis.",
+      "Gunakan protokol keamanan minimal WPA2 atau WPA3-Personal dengan sandi kombinasi huruf acak dan angka unik.",
+      "Aktifkan fitur nonaktifkan hotspot otomatis saat tidak ada perangkat terhubung dan batasi jumlah koneksi.",
+      "Amankan kuota internetmu dari penyusup gratisan! Follow @inka.tech buat trik smartphone harian."
+    ]
+  },
+  {
+    "id": 49,
+    "topic": "Download Browser vs Manager",
+    "hook_title": "KENAPA DOWNLOAD DI CHROME LEBIH LEMOT DIBANDING PAKE DOWNLOAD MANAGER?",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mendownload file ukuran besar di browser sering lambat dan gagal di tengah jalan? Ini alasan teknologinya!",
+      "Browser biasa umumnya hanya menggunakan satu jalur koneksi tunggal untuk mengalirkan file dari server ke perangkat.",
+      "Software download manager memecah satu file menjadi banyak bagian kecil dan mengunduhnya secara paralel bersamaan.",
+      "Download manager memiliki fitur resume yang mampu melanjutkan unduhan terputus tanpa perlu mengulang dari awal.",
+      "Manfaatkan software pengelola unduhan gratis dan open source seperti Free Download Manager di laptopmu.",
+      "Download file berukuran raksasa jadi lebih cepat dan stabil. Follow @inka.tech buat trik teknologi komputer!"
+    ]
+  },
+  {
+    "id": 50,
+    "topic": "Amankan Akun Telegram",
+    "hook_title": "AKUN TELEGRAM TIBA-TIBA KIRIM LINK SPAM? SEGERA AMANKAN DENGAN 2 LANGKAH INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Pernah melihat akun teman mendadak membagikan link grup aneh di Telegram? Akun tersebut kemungkinan besar dibajak!",
+      "Telegram mengizinkan login multi-perangkat hanya dengan kode OTP SMS yang rentan disadap atau dipancing penipu.",
+      "Peretas yang berhasil masuk dapat membaca seluruh arsip pesan, grup percakapan, hingga dokumen di Saved Messages.",
+      "Wajib aktifkan verifikasi dua langkah atau Two-Step Verification dengan password tambahan dan email pemulihan.",
+      "Buka menu Pengaturan lalu pilih Perangkat dan klik Hentikan Semua Sesi Lain untuk mengeluarkan semua penyusup.",
+      "Amankan akun Telegram kamu hari ini juga sebelum disalahgunakan. Follow @inka.tech untuk tips privasi!"
+    ]
+  },
+  {
+    "id": 51,
+    "topic": "Upgrade SSD Laptop Jadul",
+    "hook_title": "LAPTOP JADUL LEMOT MAU DIBUANG? PASANG SSD LANGSUNG NGEBUT KAYAK BARU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Laptop butuh waktu 5 menit hanya untuk masuk ke tampilan Windows? Jangan buru-buru beli laptop baru!",
+      "Harddisk mekanik konvensional bekerja memakai piringan berputar yang lambat membaca sistem operasi modern.",
+      "SSD tidak memiliki bagian mekanik bergerak dan mampu membaca data hingga 10 kali lebih kencang dari harddisk.",
+      "Mengganti harddisk lama dengan SSD SATA membuat proses booting Windows tuntas hanya dalam waktu belasan detik.",
+      "Biaya upgrade SSD sangat terjangkau mulai dari 200 ribuan dan menyelamatkan laptop dari tumpukan sampah elektronik.",
+      "Bikin laptop lawas kembali bertenaga tanpa keluar uang jutaan! Share video ini ke teman yang laptopnya lemot."
+    ]
+  },
+  {
+    "id": 52,
+    "topic": "Bahaya Fake GPS",
+    "hook_title": "SERING PAKE APLIKASI FAKE GPS? INI BAHAYA TERSEMBUNYI BUAT AKUN & HP KAMU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Suka memalsukan lokasi untuk absen kantor online atau game berbasis peta? Ketahui konsekuensi teknisnya!",
+      "Aplikasi Fake GPS membutuhkan izin mock location di developer options yang melemahkan pengamanan sistem Android.",
+      "Banyak aplikasi fake GPS gratisan menyisipkan adware pelacak atau menjual data telemetri ponsel ke pihak asing.",
+      "Algoritma sistem keamanan modern mendeteksi lompatan sinyal satelit yang tidak alami dan dapat memblokir akunmu.",
+      "Penggunaan manipulasi lokasi jangka panjang juga bisa mengacaukan kalibrasi kompas dan sensor GPS bawaan HP.",
+      "Gunakan lokasi asli demi integritas akun dan keawetan sensor ponsel. Follow @inka.tech untuk edukasi gadget!"
+    ]
+  },
+  {
+    "id": 53,
+    "topic": "Ekstensi Browser Berbahaya",
+    "hook_title": "EKSTENSI CHROME INI BISA REKAM PASSWORD & CHAT KAMU! CEK SEKARANG!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Suka menginstal puluhan ekstensi browser untuk download video gratis atau custom kursor? Hati-hati jebakan spyware!",
+      "Banyak ekstensi populer yang diam-diam dijual ke pengembang nakal lalu disusupi kode pelacak berbahaya.",
+      "Ekstensi dengan izin akses read and change all your data on websites bisa merekam ketikan password dan cookie akun.",
+      "Audit menu kelola ekstensi di browser kamu dan segera hapus ekstensi yang sudah jarang atau tidak pernah digunakan.",
+      "Hanya pasang ekstensi resmi yang memiliki lencana Featured dan memiliki reputasi terpercaya di Chrome Web Store.",
+      "Jaga keamanan aktivitas browsing dari intaian kode jahat. Bagikan informasi penting ini ke rekan kerjamu!"
+    ]
+  },
+  {
+    "id": 54,
+    "topic": "Mitos Dark Mode Baterai",
+    "hook_title": "PAKAI DARK MODE BIKIN BATERAI AWET? TERNYATA CUMA BERLAKU DI LAYAR INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Menyalakan mode gelap sepanjang hari dengan harapan baterai HP jadi super hemat? Yuk pahami fakta sainsnya!",
+      "Dark mode hanya terbukti menghemat daya signifikan pada layar jenis OLED atau AMOLED berkat piksel mandiri.",
+      "Pada panel OLED piksel warna hitam pekat benar-benar dimatikan sepenuhnya sehingga tidak mengonsumsi arus daya.",
+      "Sebaliknya pada layar LCD IPS lampu backlight di belakang layar tetap menyala penuh meskipun menampilkan warna hitam.",
+      "Meskipun tidak menghemat daya di layar LCD, dark mode tetap bermanfaat mengurangi kelelahan mata di malam hari.",
+      "Ketahui jenis teknologi layar ponselmu agar tidak salah kaprah. Follow @inka.tech untuk tips teknologi akurat!"
+    ]
+  },
+  {
+    "id": 55,
+    "topic": "Privasi Facebook & Google",
+    "hook_title": "NAMA & FOTO FACEBOOK MUNCUL DI GOOGLE? INI CARA SEMBUNYIKANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Coba ketik namamu di pencarian Google, apakah postingan foto Facebook lamamu langsung terpampang jelas?",
+      "Pengaturan bawaan Facebook mengizinkan mesin pencari di luar aplikasi untuk mengindeks halaman profil pribadimu.",
+      "Orang asing, perekrut kerja, atau calon penipu bisa dengan mudah mengumpulkan data pribadimu dari jejak digital.",
+      "Buka Pengaturan Akun Facebook lalu pilih Privasi dan matikan opsi tautkan mesin pencari di luar Facebook.",
+      "Ubah privasi postingan lama menjadi hanya teman untuk mengamankan arsip kenangan masa lalumu dari publik.",
+      "Kendalikan jejak digitalmu sebelum dimanfaatkan pihak tak bertanggung jawab. Simpan tips privasi ini ya!"
+    ]
+  },
+  {
+    "id": 56,
+    "topic": "Lacak HP Hilang Mati",
+    "hook_title": "HP HILANG DALAM KONDISI MATI BISA DILACAK? AKTIFKAN FITUR RAHASIA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Pencuri HP biasanya langsung mematikan perangkat agar tidak bisa dilacak via GPS? Jangan menyerah dulu!",
+      "Smartphone modern kini dibekali jaringan pelacak Bluetooth offline yang saling berkomunikasi antar perangkat di sekitar.",
+      "Perangkat lain yang berada di dekat HP kamu akan menangkap sinyal terenkripsi dan meneruskannya ke akun pemilik.",
+      "Di Android aktifkan fitur Find My Device Network dan pilih opsi with network in all areas di menu pengaturan Google.",
+      "Di iPhone pastikan opsi Find My Network dan Send Last Location selalu dalam posisi aktif sepanjang waktu.",
+      "Amankan HP kamu sebelum kejadian hilang! Bagikan langkah proteksi penting ini ke keluarga dan sahabat."
+    ]
+  },
+  {
+    "id": 57,
+    "topic": "Bahaya Cloud Backup Otomatis",
+    "hook_title": "FOTO PRIBADI OTOMATIS TERSIMPAN DI CLOUD? WASPADA BOCOR KALAU AKUN JEBOL!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mengambil foto dokumen sensitif di HP lalu kaget saat melihat fotonya otomatis muncul di Google Photos atau iCloud?",
+      "Fitur backup galeri otomatis mengunggah setiap gambar baru di memori ponsel ke server penyimpanan awan.",
+      "Jika akun emailmu dibobol lewat phishing, seluruh arsip foto pribadi dan keluarga bisa diakses oleh orang lain.",
+      "Matikan fitur pencadangan otomatis untuk folder kamera atau kelola folder mana saja yang diizinkan untuk backup.",
+      "Manfaatkan fitur Locked Folder atau Folder Terkunci di galeri agar foto rahasia tidak disinkronkan ke cloud.",
+      "Lindungi foto privasimu dari risiko kebocoran database awan. Follow @inka.tech buat panduan keamanan data!"
+    ]
+  },
+  {
+    "id": 58,
+    "topic": "Deteksi AirTag Pelacak",
+    "hook_title": "MERASA DIBUNTUTI SESEORANG? CARA CEK APAKAH ADA AIRTAG TERSEMBUNYI DI TASMU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Perangkat pelacak mini seperti AirTag sering disalahgunakan oleh penguntit untuk memantau lokasi korban tanpa izin.",
+      "Alat pelacak seukuran koin ini bisa diselipkan diam-diam di saku ransel, sasis kendaraan, atau saku jaket korban.",
+      "Sistem operasi Android dan iOS memiliki sensor bawaan yang otomatis mendeteksi jika ada tracker asing mengikuti perjalananmu.",
+      "Di HP Android buka menu Keselamatan & Darurat lalu aktifkan peringatan pelacak tak dikenal atau gunakan aplikasi Tracker Detect.",
+      "Jika notifikasi pelacak asing berbunyi, buat tracker mengeluarkan suara untuk menemukan posisi fisiknya lalu lepas baterainya.",
+      "Jaga keselamatan fisikmu dari penguntitan berbasis teknologi canggih. Bagikan edukasi ini ke teman wanitamu!"
+    ]
+  },
+  {
+    "id": 59,
+    "topic": "SIM Swap Fraud M-Banking",
+    "hook_title": "SINYAL HP TIBA-TIBA HILANG TOTAL? AWAS REKENING DIKURAS LEWAT SIM SWAP!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Sinyal kartu SIM di ponselmu tiba-tiba mati total padahal orang lain normal? Jangan anggap cuma gangguan provider!",
+      "Modus SIM Swap terjadi saat pelaku memalsukan identitasmu di gerai operator untuk menduplikasi kartu SIM baru.",
+      "Kartu SIM lama otomatis nonaktif dan seluruh pesan SMS OTP perbankan masuk langsung ke nomor kartu di tangan pelaku.",
+      "Jika sinyal hilang mendadak tanpa sebab di area perkotaan, segera hubungi call center bank untuk memblokir akun sementara.",
+      "Hindari memakai SMS sebagai metode verifikasi dua langkah utama dan beralihlah ke aplikasi Authenticator.",
+      "Waspadai pencurian identitas nomor ponsel yang mengancam saldo tabungan. Follow @inka.tech untuk tips finansial digital!"
+    ]
+  },
+  {
+    "id": 60,
+    "topic": "Cek Kecepatan Internet Asli",
+    "hook_title": "SPEEDTEST KENCENG TAPI STREAMING BUFFERING? INI CARA CEK KECEPATAN ASLINYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Hasil tes kecepatan di aplikasi speedtest menunjukkan angka tinggi tapi buka YouTube dan game tetap sering patah-patah?",
+      "Banyak provider internet memberikan prioritas jalur khusus ke server speedtest untuk menampilkan angka performa tinggi.",
+      "Kecepatan sesungguhnya dipengaruhi oleh angka latency atau ping dan stabilitas jitter saat terhubung ke server luar negeri.",
+      "Gunakan website penguji netral seperti Fast.com milik Netflix atau Speed.cloudflare.com untuk hasil pengukuran riil.",
+      "Perhatikan nilai loaded latency: jika angka melonjak tinggi saat jaringan dipakai, itu tanda bufferbloat pada router.",
+      "Jangan tertipu angka tes kecepatan semu di ponselmu! Follow @inka.tech untuk edukasi jaringan internet."
+    ]
+  },
+  {
+    "id": 61,
+    "topic": "Charger USB-C Laptop ke HP",
+    "hook_title": "CHARGER LAPTOP 65W BOLEH DIPAKAI CAS HP? AMAN ATAU BIKIN RUSAK?",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mau bepergian tapi malas bawa banyak kepala charger? Apakah charger USB-C laptop aman dipakai untuk mengisi daya HP?",
+      "Teknologi USB Power Delivery memiliki sistem negosiasi daya pintar antara adaptor charger dan perangkat penerima.",
+      "Adaptor 65 Watt tidak akan memaksakan arus penuh jika ponsel hanya sanggup menerima daya masukan sebesar 18 Watt.",
+      "Kedua perangkat saling berkomunikasi mengatur voltase dan ampere yang pas sehingga aman tanpa risiko korsleting.",
+      "Pastikan kabel yang digunakan memiliki sertifikasi USB-C resmi dan hindari memakai kabel murah tanpa chip e-Marker.",
+      "Satu kepala charger untuk semua gadget tanpa khawatir meledak. Share tips praktis ini ke teman travelling kamu!"
+    ]
+  },
+  {
+    "id": 62,
+    "topic": "Simpan Foto KTP di WA",
+    "hook_title": "MASIH SIMPAN FOTO KTP DI CHAT WHATSAPP? HAPUS SEKARANG SEBELUM MENYESAL!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Pernah kirim foto KTP, KK, atau kartu ATM lewat chat WA lalu dibiarkan tersimpan berbulan-bulan di riwayat percakapan?",
+      "Jika ponselmu hilang dalam keadaan tidak terkunci, penemu HP bisa dengan mudah mencari kata kunci KTP di kolom pencarian.",
+      "Data kependudukan lengkap tersebut merupakan tambang emas bagi sindikat pinjaman online ilegal dan kejahatan finansial.",
+      "Cari kata kunci KTP di pencarian WhatsApp dan pilih opsi hapus media dari galeri dan obrolan untuk kedua belah pihak.",
+      "Jika terpaksa harus mengirim identitas resmi, gunakan fitur View Once atau sekali lihat dan berikan watermark manual.",
+      "Lindungi data identitas dirimu dari bahaya penyalahgunaan data pinjol. Follow @inka.tech untuk edukasi keamanan!"
+    ]
+  },
+  {
+    "id": 63,
+    "topic": "Kenapa Keranjang Belanjaan Ngikut",
+    "hook_title": "BARU LIHAT BARANG DI TOKO ONLINE, IKLANNYA NGIKUTIN TERUS? INI RAHASIANYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Baru saja melihat sepatu di toko online, tiba-tiba foto sepatu yang sama muncul di feed Instagram dan website berita?",
+      "Teknologi pelacak periklanan digital memanfaatkan pixel tracking dan cookies pihak ketiga untuk memantau aktivitasmu.",
+      "Saat kamu membuka halaman produk, kode pelacak mencatat identitas perambanmu dan memasukkanmu ke daftar audiens retargeting.",
+      "Jaringan periklanan otomatis melelang ruang iklan di situs lain agar terus menampilkan produk yang sempat kamu lihat.",
+      "Gunakan browser dengan perlindungan anti-tracking bawaan seperti Brave atau pasang ekstensi pemblokir pelacak digital.",
+      "Pahami cara kerja algoritma periklanan agar tidak mudah tergoda belanja konsumtif. Simpan postingan ini ya!"
+    ]
+  },
+  {
+    "id": 64,
+    "topic": "Layar 120Hz vs 60Hz",
+    "hook_title": "LAYAR 120HZ BIKIN BATERAI BOROS PARAH? INI PERBANDINGAN DAN CARA HEMATNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Layar refresh rate 120Hz memang terasa super mulus saat scrolling, tapi kenapa persentase baterai jadi lebih cepat turun?",
+      "Layar 120Hz memperbarui gambar dua kali lebih sering dalam satu detik dibanding layar standar 60Hz konvensional.",
+      "Prosesor dan chip grafis dipaksa merender frame lebih banyak sehingga konsumsi daya listrik meningkat 20 sampai 30 persen.",
+      "HP modern kelas menengah ke atas umumnya dibekali teknologi LTPO yang bisa menurunkan refresh rate saat layar statis.",
+      "Jika ingin menghemat daya saat bepergian jauh, kunci refresh rate di 60Hz melalui menu tampilan di pengaturan ponsel.",
+      "Sesuaikan performa layar dengan kebutuhan harianmu agar baterai tahan seharian. Follow @inka.tech buat trik baterai!"
+    ]
+  },
+  {
+    "id": 65,
+    "topic": "Bersihkan Speaker HP Air Debu",
+    "hook_title": "SPEAKER HP KEMASUKAN AIR ATAU KRESEK-KRESEK? KELUARKAN PAKE SUARA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "HP tidak sengaja tercebur air dan suara speakernya jadi mendem atau kresek-kresek? Jangan buru-buru ditiup!",
+      "Meniup lubang speaker atau menusuknya dengan jarum justru bisa merobek membran speaker dan mendorong air makin ke dalam.",
+      "Solusi paling aman adalah memutar gelombang suara frekuensi tinggi yang memicu getaran mekanik pada membran speaker.",
+      "Buka website FixMySpeakers.com atau cari video water eject speaker frequency di YouTube lalu putar dengan volume maksimal.",
+      "Getaran frekuensi khusus 165Hz akan mendorong butiran air dan partikel debu halus keluar melalui kisi-kisi speaker.",
+      "Atasi masalah speaker basah dalam waktu singkat tanpa modal bengkel. Bagikan trik berguna ini ke teman-temanmu!"
+    ]
+  },
+  {
+    "id": 66,
+    "topic": "Kembalikan File Terhapus",
+    "hook_title": "FILE TUGAS TERHAPUS DARI FLASHDISK? JANGAN PANIK, KEMBALIKAN DALAM 3 MENIT!",
+    "total_slides": 6,
+    "slide_outline": [
+      "File tugas kuliah atau laporan kerja tidak sengaja terhapus permanen dengan Shift+Delete? Jangan langsung panik!",
+      "Saat file dihapus, sistem operasi sebenarnya hanya menghapus catatan indeks lokasi file dan belum memusnahkan data fisiknya.",
+      "Data asli masih tertidur di blok memori storage selama area penyimpanan tersebut belum tertimpa file baru lainnya.",
+      "Aturan paling penting: segera cabut flashdisk atau jangan simpan file baru apapun di komputer tersebut saat menyadari file hilang.",
+      "Gunakan software data recovery terpercaya seperti Recuva atau PhotoRec untuk memindai dan memulihkan file yang terhapus.",
+      "Selamatkan dokumen pentingmu dari musibah kehilangan data. Simpan tips darurat ini biar gak kelabakan saat butuh!"
+    ]
+  },
+  {
+    "id": 67,
+    "topic": "Ransomware Kunci File",
+    "hook_title": "SATU KLIK SEMUA FILE DI ENKRIPSI? KENALI CARA KERJA VIRUS RANSOMWARE!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Tiba-tiba semua dokumen skripsi dan foto di laptop berubah ekstensi aneh dan tidak bisa dibuka? Itu serangan ransomware!",
+      "Ransomware menyusup melalui lampiran email spam, software bajakan ber-crack, atau link download palsu di internet.",
+      "Sekali aktif, virus mengenkripsi seluruh file berharga menggunakan algoritma militer dan meminta tebusan mata uang kripto.",
+      "Membayar uang tebusan tidak pernah menjamin peretas akan memberikan kunci pembuka data yang terkunci.",
+      "Satu-satunya benteng pertahanan terbaik adalah menerapkan aturan backup 3-2-1 dengan salinan data di harddisk eksternal offline.",
+      "Jaga aset digitalmu dari ancaman pemerasan siber paling berbahaya di dunia. Follow @inka.tech untuk edukasi siber!"
+    ]
+  },
+  {
+    "id": 68,
+    "topic": "Factory Reset HP Bekas",
+    "hook_title": "MAU JUAL HP BEKAS? FACTORY RESET 1 KALI BELUM CUKUP, INI ATURAN AMANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Ingin menjual HP lama ke counter atau tukar tambah? Melakukan factory reset biasa ternyata belum tentu aman!",
+      "Software forensik pemulihan data masih bisa membaca residu foto pribadi dan data login dari memori flash yang hanya di-reset cepat.",
+      "Sebelum mereset, pastikan fitur enkripsi perangkat aktif dan lakukan logout akun Google atau Apple ID secara manual.",
+      "Setelah factory reset pertama, isi memori HP dengan file video acak berukuran besar hingga penuh lalu lakukan reset kedua.",
+      "Metode overwriting ini memastikan blok memori lama tertimpa data baru sehingga data pribadimu mustahil dipulihkan kembali.",
+      "Jual gadget lama dengan tenang tanpa khawatir foto pribadimu bocor ke publik. Bagikan panduan aman ini sekarang!"
+    ]
+  },
+  {
+    "id": 69,
+    "topic": "Ubah Voice Note Jadi Teks",
+    "hook_title": "MALES DENGAR VN 5 MENIT DARI TEMAN? UBAH JADI TEKS OTOMATIS PAKE TRIK INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Lagi di ruang rapat atau kelas tapi dapat kiriman Voice Note panjang dari teman? Jangan bingung cari earphone!",
+      "Mendengarkan rekaman suara panjang sering memakan waktu dan sulit mencari poin inti percakapan dengan cepat.",
+      "WhatsApp versi terbaru kini sudah meluncurkan fitur resmi Voice Message Transcripts langsung di dalam menu obrolan.",
+      "Aktifkan opsi Transkrip Pesan Suara di Pengaturan WhatsApp lalu pilih bahasa Indonesia agar teks transkrip muncul otomatis.",
+      "Kamu juga bisa meneruskan file rekaman audio ke bot transkripsi AI terpercaya untuk merangkum intisarinya dalam detik.",
+      "Baca pesan suara secepat kilat tanpa perlu mengganggu orang di sekitarmu. Follow @inka.tech buat trik chatting cerdas!"
+    ]
+  },
+  {
+    "id": 70,
+    "topic": "Bahaya VPN Gratisan",
+    "hook_title": "PAKAI VPN GRATISAN BUAT AKSES WEB? TERNYATA DATA KAMU DIJUAL KE PIHAK KETIGA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Menginstal aplikasi VPN gratis tanpa batas dari Play Store? Ingat prinsip digital: jika produknya gratis, kamu adalah produknya!",
+      "Menjalankan server VPN global membutuhkan biaya infrastruktur yang sangat mahal setiap bulannya.",
+      "Banyak penyedia VPN gratisan mendanai operasionalnya dengan merekam log riwayat browsing dan menjualnya ke makelar data.",
+      "Beberapa aplikasi VPN nakal bahkan menyisipkan malware injeksi iklan atau menjadikan ponselmu sebagai jaringan proxy botnet.",
+      "Jika membutuhkan koneksi aman, gunakan layanan DNS terenkripsi seperti 1.1.1.1 Cloudflare atau penyedia VPN berbayar teruji.",
+      "Jangan gadaikan data privasimu demi koneksi gratis yang semu. Follow @inka.tech untuk tips internet sehat!"
+    ]
+  },
+  {
+    "id": 71,
+    "topic": "Fitur Rahasia Gboard",
+    "hook_title": "TIAP HARI KETIK PAKE GBOARD TAPI GAK TAHU 4 TRIK RAHASIA INI? RUGI BANGET!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Setiap hari mengetik ribuan kata di keyboard HP tapi masih sering kerepotan menggeser kursor ketikan yang salah?",
+      "Trik pertama: geser jarimu ke kiri atau ke kanan di atas tombol spasi untuk memindahkan kursor teks dengan super presisi.",
+      "Trik kedua: geser tombol backspace ke arah kiri untuk menghapus satu kalimat utuh secara instan tanpa mengetuk berkali-kali.",
+      "Trik ketiga: manfaatkan fitur Clipboard Pin untuk menyimpan template nomor rekening atau alamat rumah agar tidak perlu ketik ulang.",
+      "Trik keempat: ketuk ikon Google Translate di bilah atas keyboard untuk menerjemahkan ketikan bahasa secara langsung saat chatting.",
+      "Ketik lebih cepat dan produktif di ponsel pintarmu setiap hari. Bagikan trik praktis ini ke sahabatmu!"
+    ]
+  },
+  {
+    "id": 72,
+    "topic": "Kamera Depan Mirroring",
+    "hook_title": "FOTO SELFIE KAMU TERLIHAT ANEH & TERBALIK? INI CARA ATUR KAMERA BIAR NATURAL!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Pernah merasa wajahmu terlihat bagus saat melihat layar preview kamera tapi hasilnya mendadak aneh dan terbalik saat disimpan?",
+      "Layar kamera depan secara default menampilkan efek cermin atau mirror view agar gerakan tanganmu terasa alami di layar.",
+      "Namun saat tombol shutter ditekan, sistem kamera secara otomatis membalik hasil foto sesuai sudut pandang orang lain.",
+      "Buka menu pengaturan aplikasi kamera bawaan ponselmu dan cari opsi Simpan selfie seperti yang dipratinjau.",
+      "Mengaktifkan opsi ini membuat hasil akhir jepretan foto persis sama dengan apa yang kamu lihat di layar tanpa efek terbalik.",
+      "Dapatkan hasil foto selfie yang percaya diri dan sesuai harapanmu. Follow @inka.tech untuk trik fotografi smartphone!"
+    ]
+  },
+  {
+    "id": 73,
+    "topic": "Chat WA Tanpa Simpan Nomor",
+    "hook_title": "MAU CHAT WA KE ORANG BARU TANPA SIMPAN NOMOR? PAKE CARA CEPAT INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mau kirim pesan WA ke driver ojek online atau penjual barang tapi malas menyimpan nomornya di kontak ponsel?",
+      "Menyimpan kontak orang asing yang hanya dihubungi sekali bisa membuat mereka melihat foto profil dan status privasimu.",
+      "Cara tercepat: buka browser di ponsel lalu ketik wa.me/ dilanjutkan dengan kode negara dan nomor tujuan (contoh wa.me/62812xxx).",
+      "Atau buka obrolan dengan nomormu sendiri di WhatsApp (Message Yourself) lalu ketik nomor tujuan dan ketuk untuk mulai chat.",
+      "Nomor kontak ponselmu tetap rapi dan bersih dari tumpukan nomor asing yang tidak dikenal.",
+      "Jaga privasi kontak WhatsApp kamu tetap terjaga rapi. Simpan postingan praktis ini buat dipakai sewaktu-waktu!"
+    ]
+  },
+  {
+    "id": 74,
+    "topic": "AI Gambar Gratis Terbaik",
+    "hook_title": "BINGUNG CARI AI GAMBAR GRATIS? INI 3 ALTERNATIF TERBAIK PENGGANTI MIDJOURNEY!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Ingin membuat ilustrasi visual berkualitas tinggi menggunakan AI tapi enggan berlangganan software berbayar mahal?",
+      "Platform berbayar seperti Midjourney memang populer namun kini sudah tidak lagi menyediakan kuota uji coba gratis.",
+      "Alternatif pertama: Microsoft Copilot Designer yang didukung teknologi DALL-E 3 bertenaga dan dapat diakses 100% gratis.",
+      "Alternatif kedua: Recraft.ai yang sangat ahli membuat ikon 3D, ilustrasi vektor profesional, dan aset desain visual modern.",
+      "Alternatif ketiga: Krea.ai yang menyediakan generator gambar real-time beresolusi tajam dengan kontrol gaya artistik fleksibel.",
+      "Ciptakan karya visual menakjubkan tanpa modal biaya langganan. Follow @inka.tech untuk referensi AI tools produktif!"
+    ]
+  },
+  {
+    "id": 75,
+    "topic": "Hapus Riwayat Suara Google",
+    "hook_title": "GOOGLE REKAM SEMUA OBROLAN KAMU? INI CARA HAPUS RIWAYAT SUARA TERSIMPAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Setiap kali kamu memanggil Google Assistant dengan perintah suara, tahukah kamu bahwa file rekaman suaramu disimpan di server?",
+      "Google menyimpan rekaman audio interaksi suara untuk melatih model kecerdasan buatan dan meningkatkan akurasi asisten pintar.",
+      "Namun arsip rekaman suara yang menumpuk bertahun-tahun bisa menjadi celah privasi jika akun Google kamu diakses orang lain.",
+      "Buka situs myactivity.google.com lalu pilih tab Aktivitas Web & Aplikasi dan cari menu Pengaturan Riwayat Suara & Audio.",
+      "Hapus centang pada opsi simpan rekaman suara dan pilih menu hapus semua rekaman aktivitas suara yang sudah tersimpan.",
+      "Kendalikan privasi data percakapanmu bersama layanan raksasa teknologi. Bagikan tips privasi penting ini ke temanmu!"
+    ]
+  },
+  {
+    "id": 76,
+    "topic": "Flashdisk 64GB Terbaca 59GB",
+    "hook_title": "BELI FLASHDISK 64GB KOK CUMA ADA 59GB? BUKAN DITIPU, INI PENJELASANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Baru beli flashdisk atau harddisk bertuliskan 64 Gigabyte tapi saat dicolok ke laptop kapasitasnya cuma terbaca 59 Gigabyte?",
+      "Banyak orang mengira mereka tertipu barang palsu, padahal ini murni perbedaan sistem penghitungan angka dalam sains komputer.",
+      "Pabrik pembuat storage menghitung kapasitas memakai sistem desimal standar di mana 1 Gigabyte setara dengan 1.000 Megabyte.",
+      "Sedangkan sistem operasi komputer membaca kapasitas menggunakan sistem biner kelipatan dua di mana 1 Gigabyte setara 1.024 Megabyte.",
+      "Konversi matematika biner ini menyebabkan total kapasitas terbaca sekitar 7 persen lebih kecil dari angka pada kemasan.",
+      "Pahami sains teknologi di balik perangkat elektronik harianmu. Follow @inka.tech untuk edukasi komputer menyenangkan!"
+    ]
+  },
+  {
+    "id": 77,
+    "topic": "Kunci Aplikasi Pakai Sidik Jari",
+    "hook_title": "INGIN KUNCI APLIKASI PRIBADI TANPA APLIKASI TAMBAHAN? PAKE FITUR BAWAAN INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Takut chat pribadi atau galeri foto dibuka teman yang meminjam HP? Jangan buru-buru download aplikasi AppLock penuh iklan!",
+      "Aplikasi pengunci pihak ketiga sering meminta izin akses berlebihan dan menguras daya baterai karena berjalan terus di background.",
+      "Smartphone modern Android dan iPhone kini sudah menyematkan fitur pengunci aplikasi resmi yang terintegrasi dengan biometrik.",
+      "Di Android buka Pengaturan Keamanan lalu pilih Kunci Aplikasi dan pilih aplikasi apa saja yang wajib scan sidik jari.",
+      "Di iPhone gunakan fitur Lock and Hide App yang otomatis meminta Face ID setiap kali aplikasi pilihan hendak dibuka.",
+      "Amankan rahasia di HP-mu dengan fitur resmi yang ringan dan bebas iklan. Follow @inka.tech untuk tips gadget aman!"
+    ]
+  },
+  {
+    "id": 78,
+    "topic": "Penipuan Undangan Nikah APK",
+    "hook_title": "DAPAT UNDANGAN NIKAH FORMAT APK DI WA? JANGAN DI-KLIK, BISA KURAS REKENING!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Tiba-tiba dapat pesan WhatsApp dari nomor tak dikenal yang mengirim file Surat Undangan Pernikahan berformat .apk?",
+      "Ini adalah varian kejahatan siber social engineering paling berbahaya yang menyasar pengguna ponsel Android di Indonesia.",
+      "File tersebut bukanlah dokumen digital undangan, melainkan aplikasi trojan mata-mata yang dirancang mencuri data ponsel.",
+      "Begitu file diinstal, virus akan membajak akses membaca pesan SMS dan otomatis menyedot kode OTP transaksi mobile banking.",
+      "Pemberitahuan resmi undangan pernikahan selalu berbentuk link website resmi atau gambar foto, bukan aplikasi yang harus diinstal.",
+      "Lindungi tabungan hasil kerja kerasmu dari perangkap penipuan digital. Bagikan peringatan darurat ini ke grup WA keluarga!"
+    ]
+  },
+  {
+    "id": 79,
+    "topic": "Hentikan Notifikasi Spam Chrome",
+    "hook_title": "HP BUNYI TERUS KARENA NOTIFIKASI SPAM BROWSER? MATIKAN DENGAN 3 KLIK INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Layar HP kamu terus-menerus dibanjiri notifikasi iklan vulgar atau peringatan palsu HP Anda Terkena Virus?",
+      "Banyak orang panik mengira ponsel mereka sudah terinfeksi virus parah, padahal penyebabnya cuma izin notifikasi website nakal.",
+      "Saat browsing di situs web gratisan, kamu mungkin tidak sengaja menekan tombol Allow atau Izinkan pada popup yang muncul.",
+      "Buka aplikasi Chrome di HP lalu masuk ke Pengaturan pilih Setelan Situs dan buka menu Notifikasi.",
+      "Cari daftar website mencurigakan yang ada di kolom diizinkan lalu ketuk dan pilih Hapus & Reset izin notifikasi.",
+      "Layar ponselmu kembali bersih dan tenang dari serbuan spam iklan mengganggu. Follow @inka.tech untuk solusi smartphone!"
+    ]
+  },
+  {
+    "id": 80,
+    "topic": "Thermal Throttling Game HP",
+    "hook_title": "MAIN GAME 15 MENIT TIBA-TIBA FRAME DROP PARAH? INI THERMAL THROTTLING!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Awal main game terasa lancar 60 FPS tapi setelah belasan menit tiba-tiba gameplay mendadak patah-patah dan layar meredup?",
+      "Gejala ini dikenal dengan istilah thermal throttling yaitu mekanisme proteksi diri otomatis prosesor saat suhunya terlalu panas.",
+      "Sistem operasi secara paksa menurunkan kecepatan clock prosesor agar komponen chip di motherboard tidak rusak terbakar.",
+      "Penyebab utamanya adalah bermain game dengan grafis rata kanan di ruangan tanpa pendingin atau memakai casing tebal.",
+      "Gunakan phone cooler tambahan, lepaskan casing saat gaming berat, atau turunkan pengaturan grafis ke tingkat seimbang.",
+      "Jaga performa gaming tetap stabil tanpa merusak keawetan prosesor ponselmu. Bagikan info ini ke teman mabar kamu!"
+    ]
+  },
+  {
+    "id": 81,
+    "topic": "Kenapa Jack Audio HP Hilang",
+    "hook_title": "KENAPA HP JAMAN SEKARANG GAK PUNYA COLOKAN EARPHONE? BUKAN CUMA SOAL TIPIS!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Kangen masa-masa saat semua HP masih punya lubang earphone 3.5mm tanpa perlu repot bawa dongle converter?",
+      "Banyak orang mengira produsen menghilangkannya semata-mata agar bodi HP bisa dirancang lebih ramping dan tipis.",
+      "Alasan teknis terbesarnya adalah menghemat ruang internal yang sangat berharga untuk baterai yang lebih besar dan modul kamera canggih.",
+      "Menghilangkan lubang fisik jack audio juga mempermudah produsen mendapatkan sertifikasi tahan air dan debu IP68.",
+      "Selain itu, strategi bisnis ini sukses mendorong penjualan ekosistem earphone nirkabel TWS yang menghasilkan miliaran dolar.",
+      "Pahami arah evolusi desain teknologi gadget masa kini bersama @inka.tech. Follow buat wawasan teknologi menarik!"
+    ]
+  },
+  {
+    "id": 82,
+    "topic": "Kirim File Gede Tanpa Kurang Kualitas",
+    "hook_title": "KIRIM VIDEO BESAR PECAH DI WA? PAKE 3 CARA INI BIAR KUALITAS TETAP ASLI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Merekam video pemandangan indah kualitas 4K tapi begitu dikirim lewat chat WA gambarnya langsung buram dan pecah?",
+      "Aplikasi pesan instan secara agresif mengompres ukuran file media agar hemat kuota server dan cepat terkirim di jaringan lambat.",
+      "Cara pertama: kirim video melalui opsi Dokumen (Send as Document) di WhatsApp agar file dikirim utuh tanpa kompresi piksel.",
+      "Cara kedua: manfaatkan fitur Quick Share bawaan Android atau AirDrop di iPhone untuk transfer data lokal tanpa internet.",
+      "Cara ketiga: unggah file ke Google Drive atau Cloud storage lalu bagikan link unduhan dengan resolusi kualitas penuh.",
+      "Bagikan karya foto dan videomu dengan ketajaman visual maksimal tanpa penurunan kualitas. Simpan panduan praktis ini!"
+    ]
+  },
+  {
+    "id": 83,
+    "topic": "Charger Watt Terlalu Tinggi",
+    "hook_title": "CAS HP PAKE CHARGER 100 WATT BIKIN MELEDAK? INI CARA KERJA SMART CHIP-NYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Punya adaptor charger fast charging 100 Watt tapi ragu memakainya untuk mengecas HP biasa yang hanya mendukung daya 20 Watt?",
+      "Muncul mitos umum bahwa arus listrik 100 Watt akan langsung membanjiri baterai kecil dan membuat komponennya meledak.",
+      "Di era modern, perangkat elektronik dan adaptor charger pintar sudah dibekali chip Power Delivery yang saling berkomunikasi.",
+      "Adaptor bertindak sebagai penyedia daya, sedangkan ponsel bertindak sebagai penentu berapa daya maksimal yang boleh masuk.",
+      "Selama charger yang kamu pakai berasal dari merk resmi dan berkualitas, mengecas dengan watt besar dijamin 100% aman.",
+      "Hilangkan kekhawatiran yang keliru berkat pemahaman sains teknologi yang tepat. Follow @inka.tech buat edukasi gadget!"
+    ]
+  },
+  {
+    "id": 84,
+    "topic": "Cek Layar HP Pernah Ganti",
+    "hook_title": "MAU BELI HP SECOND? CEK APAKAH LAYARNYA MASIH ORIGINAL ATAU SUDAH DIGANTI KW!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mau beli smartphone bekas dengan harga miring? Waspadai layar yang sudah diganti suku cadang tiruan berkualitas rendah!",
+      "Layar pengganti KW non-original biasanya memiliki akurasi warna pucat, sudut pandang sempit, dan respon sentuhan lambat.",
+      "Cek pertama: periksa fitur True Tone di iPhone atau opsi kalibrasi warna di Android; jika hilang, layar kemungkinan besar pernah diganti.",
+      "Cek kedua: uji responsivitas multi-touch dengan mengetik cepat dan perhatikan apakah ada bayangan cahaya bocor di pinggiran bezel.",
+      "Cek ketiga: tempelkan tetesan air kecil di atas kaca layar; pada kaca original dengan lapisan oleophobic, air akan membentuk butiran bulat.",
+      "Jadi pembeli gadget pintar yang teliti agar tidak tertipu barang rekondisi. Bagikan panduan inspeksi ini ke temanmu!"
+    ]
+  },
+  {
+    "id": 85,
+    "topic": "Emergency SOS di HP",
+    "hook_title": "DALAM BAHAYA? TEKAN TOMBOL POWER 5 KALI BUAT PANGGIL BANTUAN DARURAT OTOMATIS!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Berada dalam situasi darurat seperti kecelakaan atau ancaman kejahatan dan tidak sempat membuka kunci layar HP?",
+      "Smartphone yang kamu genggam setiap hari memiliki fitur penyelamat nyawa rahasia bernama Emergency SOS.",
+      "Menekan tombol power sebanyak 5 kali berturut-turut secara cepat akan memicu sirine darurat dan panggilan bantuan otomatis.",
+      "Sistem ponsel akan otomatis mengirimkan pesan SMS darurat berisi koordinat lokasi GPS terkini ke kontak keluarga pilihanmu.",
+      "Buka menu Keselamatan & Darurat di pengaturan HP kamu sekarang juga untuk mendaftarkan nomor telepon darurat keluargamu.",
+      "Fitur sepele yang bisa menyelamatkan nyawamu di saat kritis. Aktifkan sekarang juga dan ingatkan orang-orang tercinta!"
+    ]
+  },
+  {
+    "id": 86,
+    "topic": "WiFi 5GHz vs 2.4GHz",
+    "hook_title": "WIFI 5GHZ KENCENG TAPI SINYAL LEMAH DARI KAMAR? INI PERBEDAANNYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Melihat ada dua nama WiFi di rumah dengan akhiran 2.4G dan 5G tapi bingung mana yang paling cocok untuk gadgetmu?",
+      "Frekuensi 5GHz menawarkan kecepatan transfer data super kencang dan bebas dari gangguan interferensi gelombang elektronik lain.",
+      "Namun kelemahannya gelombang 5GHz memiliki panjang gelombang pendek yang sangat sulit menembus dinding tembok tebal.",
+      "Sebaliknya frekuensi 2.4GHz memiliki daya jangkau yang jauh lebih luas dan mampu menembus sekat ruangan dengan stabil.",
+      "Gunakan jaringan 5GHz saat berada dekat router untuk gaming dan streaming, serta gunakan 2.4GHz saat berada di kamar tidur.",
+      "Optimalkan koneksi internet rumahmu dengan memilih jalur frekuensi yang tepat. Follow @inka.tech untuk trik jaringan!"
+    ]
+  },
+  {
+    "id": 87,
+    "topic": "Sembunyikan Aplikasi Rahasia",
+    "hook_title": "PUNYA APLIKASI PRIBADI YANG GAK BOLEH DILIHAT ORANG? SEMBUNYIKAN PAKE CARA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Memiliki aplikasi finansial, e-commerce, atau obrolan pribadi yang tidak ingin diketahui orang lain saat meminjam HP?",
+      "Tidak perlu menginstal aplikasi pihak ketiga yang mencurigakan karena sistem bawaan ponsel sudah menyediakan fitur sembunyikan aplikasi.",
+      "Di Android buka Pengaturan Layar Utama atau Keamanan lalu pilih opsi Sembunyikan Aplikasi dan centang aplikasi rahasiamu.",
+      "Ikon aplikasi akan lenyap sepenuhnya dari daftar menu dan hanya bisa diakses dengan mengetikkan kode rahasia di dial pad telepon.",
+      "Di iPhone gunakan fitur Remove from Home Screen agar aplikasi hanya tersimpan di App Library tanpa terlihat di layar depan.",
+      "Kendalikan privasi tata letak aplikasimu dengan aman dan elegan. Bagikan trik praktis ini ke teman-temanmu!"
+    ]
+  },
+  {
+    "id": 88,
+    "topic": "Atur Windows Update Otomatis",
+    "hook_title": "LAGI KERJA TIBA-TIBA LAPTOP RESTART SENDIRI? MATIKAN UPDATE OTOMATIS DENGAN AMAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Sedang asyik mengetik dokumen penting tiba-tiba laptop restart otomatis karena proses Windows Update? Bikin emosi jiwa!",
+      "Sistem operasi Windows secara default dijadwalkan mengunduh dan memasang pembaruan sistem secara otomatis di latar belakang.",
+      "Jika tidak diatur dengan benar, proses instalasi bisa memaksa perangkat melakukan restart mendadak di jam-jam sibuk kerja.",
+      "Atur fitur Active Hours di menu Settings Windows Update agar sistem tahu jam produktif kerjamu dan menunda proses restart.",
+      "Kamu juga bisa memilih opsi Pause Updates for 1 week untuk menunda pembaruan sementara saat sedang mengerjakan deadline penting.",
+      "Bekerja dengan tenang tanpa gangguan restart mendadak dari sistem operasi. Follow @inka.tech untuk tips komputer produktif!"
+    ]
+  },
+  {
+    "id": 89,
+    "topic": "Kompres Video Gede Jadi Kecil",
+    "hook_title": "VIDEO 500MB BIKIN MEMORI PENUH? KOMPRES JADI 30MB TANPA BURAM PAKE CARA INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Memori internal ponsel sekarat gara-gara koleksi rekaman video tugas atau dokumentasi yang ukurannya sampai ratusan megabyte?",
+      "Format rekaman kamera bawaan sering menggunakan bitrate berlebih yang membuat ukuran file membengkak tanpa menambah ketajaman mata.",
+      "Gunakan software open source terbaik HandBrake di laptop atau aplikasi kompresi video terpercaya dengan codec H.265 / HEVC.",
+      "Codec H.265 mampu memampatkan ukuran file video hingga 80 persen lebih ringkas tanpa mengorbankan kualitas kejernihan visual.",
+      "Pilih preset Fast 1080p30 dengan pengaturan Constant Quality RF 22 untuk mendapatkan keseimbangan ukuran dan ketajaman terbaik.",
+      "Hemat kapasitas penyimpanan memori gadgetmu tanpa kehilangan kenangan video indah. Simpan trik kompresi ini ya!"
+    ]
+  },
+  {
+    "id": 90,
+    "topic": "Bahaya File Word Ber-Macro",
+    "hook_title": "BUKA FILE EXCEL ATAU WORD DISURUH 'ENABLE MACRO'? AWAS VIRUS MENELUSUP!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mendownload file dokumen Word atau Excel dari internet lalu muncul bilah kuning bertuliskan Enable Content atau Enable Macro?",
+      "Macro adalah fitur otomatisasi script perintah di Microsoft Office yang sayangnya sering dimanfaatkan peretas untuk menyusupkan malware.",
+      "Begitu kamu menekan tombol Enable Content, script jahat di balik dokumen akan langsung mendownload virus trojan ke komputermu.",
+      "Peretas bisa mengambil alih kendali sistem operasi, mencuri dokumen kantor, hingga mengunci seluruh harddisk laptop.",
+      "Jangan pernah mengaktifkan macro pada file dokumen yang berasal dari sumber luar atau email pengirim yang tidak dikenal.",
+      "Tingkatkan kewaspadaan saat membuka file dokumen di lingkungan kerja. Bagikan peringatan penting ini ke rekan kantormu!"
+    ]
+  },
+  {
+    "id": 91,
+    "topic": "Cek Battery Health Android",
+    "hook_title": "PENGGUNA ANDROID MAU CEK KESEHATAN BATERAI? PAKE KODE RAHASIA & APLIKASI INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Iri melihat pengguna iPhone bisa dengan mudah mengecek persentase Battery Health bawaan di menu pengaturan ponsel?",
+      "Pengguna Android juga bisa mengetahui estimasi kesehatan baterai fisik ponsel untuk memantau performa dayanya.",
+      "Cara pertama: buka menu dial telepon lalu ketik kode rahasia *#*#4636#*#* untuk melihat informasi status kesehatan baterai.",
+      "Cara kedua: gunakan aplikasi penganalisis siklus baterai terpercaya seperti AccuBattery selama beberapa hari pemakaian normal.",
+      "Aplikasi akan mengukur kapasitas pengisian arus mAh aktual dan membandingkannya dengan kapasitas baterai baru pabrikan.",
+      "Pantau kondisi kebugaran baterai ponselmu agar tahu kapan saat yang tepat untuk servis. Follow @inka.tech buat trik Android!"
+    ]
+  },
+  {
+    "id": 92,
+    "topic": "Rekam Layar Laptop Bawaan",
+    "hook_title": "REKAM LAYAR LAPTOP GAK PERLU DOWNLOAD SOFTWARE! PAKE FITUR RESMI WINDOWS INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Mau merekam tutorial presentasi atau momen game di laptop tapi bingung cari software screen recorder yang tanpa watermark?",
+      "Jangan buang kuota mendownload software pihak ketiga karena Windows sudah memiliki fitur perekam layar resmi bawaan.",
+      "Tekan kombinasi tombol Windows + Alt + R di keyboard untuk langsung memulai perekaman layar bersih kualitas tinggi.",
+      "Hasil rekaman video otomatis tersimpan rapi di folder Videos dalam subfolder Captures dengan format MP4 beresolusi tajam.",
+      "Di Windows 11 kamu juga bisa memakai aplikasi Snipping Tool bawaan yang kini sudah dilengkapi fitur perekaman area layar fleksibel.",
+      "Rekam aktivitas layar laptop dengan mudah, cepat, dan 100% gratis tanpa watermark. Bagikan trik praktis ini ke temanmu!"
+    ]
+  },
+  {
+    "id": 93,
+    "topic": "Lampu Webcam Nyala Sendiri",
+    "hook_title": "LAMPU WEBCAM LAPTOP TIBA-TIBA MENYALA? TANDA ADA YANG LAGI NGINTIP KAMU!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Sedang asyik browsing santai di laptop tapi mendadak lampu indikator kecil di samping webcam menyala berwarna hijau?",
+      "Lampu LED indikator webcam dirancang terhubung secara sirkuit dengan sensor kamera saat ada aplikasi yang mengakses gambar.",
+      "Jika kamu tidak sedang membuka Zoom atau kamera tapi lampu menyala, ada kemungkinan besar software spyware sedang aktif mengintipmu.",
+      "Buka Task Manager dengan Ctrl+Shift+Esc lalu periksa tab Processes untuk mencari aplikasi latar belakang yang mencurigakan.",
+      "Gunakan penutup fisik webcam atau webcam cover slider untuk perlindungan privasi paling mutlak saat laptop tidak dipakai.",
+      "Jaga privasi ruang pribadimu dari intaian mata-mata siber di dunia maya. Follow @inka.tech untuk edukasi keamanan komputer!"
+    ]
+  },
+  {
+    "id": 94,
+    "topic": "Modus Loker Palsu Telegram",
+    "hook_title": "DAPAT TAWARAN KERJA LIKE VIDEO DAPAT DUIT? AWAS MODUS PENIPUAN INVESTASI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Dihubungi nomor asing di WA atau Telegram yang menawarkan kerja sampingan freelance online dengan komisi ratusan ribu rupiah?",
+      "Modus tugas paruh waktu ini meminta korban menyelesaikan misi sederhana seperti menyukai video YouTube atau memberi ulasan Google Maps.",
+      "Di awal korban memang diberikan transfer uang kecil puluhan ribu untuk membangun rasa percaya semu.",
+      "Setelah itu korban diarahkan masuk ke grup Telegram dan diminta menyetor uang deposit besar dengan iming-iming profit berlipat.",
+      "Begitu uang jutaan rupiah disetorkan korban, pelaku langsung memblokir kontak dan membawa kabur seluruh dana tabungan.",
+      "Jangan mudah tergiur janji uang instan yang tidak masuk akal di internet. Bagikan peringatan ini ke teman pencari kerja!"
+    ]
+  },
+  {
+    "id": 95,
+    "topic": "Browsing Aman Tanpa Jejak",
+    "hook_title": "BOSAN DILACAK GOOGLE? INI REKOMENDASI BROWSER & MESIN PENCARI PALING AMAN!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Merasa risih karena seluruh riwayat pencarian dan minat belanjamu dipantau raksasa teknologi untuk kepentingan iklan?",
+      "Mesin pencari konvensional mencatat alamat IP, lokasi geografis, dan profil perangkatmu setiap kali kamu melakukan pencarian.",
+      "Gunakan mesin pencari ramah privasi seperti DuckDuckGo atau Brave Search yang berkomitmen tidak mengumpulkan profil pengguna.",
+      "Untuk aplikasi peramban internet, beralihlah ke Brave Browser yang secara otomatis memblokir iklan invasif dan pelacak pihak ketiga.",
+      "Aktivitas berselancar di dunia maya jadi terasa jauh lebih ringan, cepat, hemat kuota data, dan bebas dari intaian pelacak.",
+      "Rebut kembali hak privasi digitalmu saat menjelajah dunia internet. Follow @inka.tech untuk rekomendasi tools privasi!"
+    ]
+  },
+  {
+    "id": 96,
+    "topic": "HP Panas Saat Susah Sinyal",
+    "hook_title": "DI TEMPAT TERPENCIL KOK HP CEPAT PANAS & BOROS? INI PENYEBAB SAINS-NYA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Sedang berada di daerah pegunungan atau basement gedung tapi HP mendadak terasa hangat dan baterai turun sangat cepat?",
+      "Bukan karena HP kamu rusak, ini adalah respons alami modul antena radio seluler saat kesulitan menangkap sinyal dari tower BTS.",
+      "Modem ponsel akan otomatis meningkatkan daya pancar pemancar radio ke level maksimal untuk mencari dan mempertahankan sinyal.",
+      "Komponen transmisi radio yang dipaksa bekerja pada voltase tinggi akan menghasilkan pelepasan energi panas dan menguras baterai.",
+      "Solusi cerdas: aktifkan Mode Pesawat atau Airplane Mode sementara waktu jika kamu berada di area yang benar-benar tanpa sinyal.",
+      "Pahami cara kerja perangkat komunikasimu dalam berbagai kondisi lingkungan. Follow @inka.tech untuk wawasan teknologi harian!"
+    ]
+  },
+  {
+    "id": 97,
+    "topic": "Batasi Kuota Hotspot HP",
+    "hook_title": "HOTSPOT DI-SHARE KE TEMAN TAPI TAKUT KUOTA BOBOL? ATUR LIMIT KUOTA DENGAN TRIK INI!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Teman mau numpang hotspot internet tapi kamu khawatir sisa kuota utamamu ludes dipakai nonton video streaming resolusi tinggi?",
+      "Tidak perlu menolak dengan rasa tidak enak, gunakan fitur pembatas penggunaan data hotspot yang ada di pengaturan ponselmu.",
+      "Buka menu Hotspot Portabel lalu pilih opsi Batas Data Sekali Pakai atau One-time data limit di pengaturan sistem Android.",
+      "Tentukan kuota maksimal yang ingin kamu bagikan misalnya 200MB atau 500MB lalu pilih opsi Matikan dan Beri Tahu saat batas tercapai.",
+      "Begitu kuota yang ditentukan habis, pemancar hotspot akan otomatis nonaktif sendiri tanpa membuat kuota utamamu jebol.",
+      "Berbagi koneksi internet tetap ramah dan aman terkendali tanpa rasa cemas. Simpan trik cerdas smartphone ini ya!"
+    ]
+  },
+  {
+    "id": 98,
+    "topic": "Scan Teks Kertas Jadi Tulisan HP",
+    "hook_title": "MALES KETIK ULANG CATATAN DI BUKU? SCAN PAKAI KAMERA HP LANGSUNG JADI TEKS!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Punya tugas menyalin catatan dari buku fisik atau kertas dokumen panjang ke laptop? Jangan diketik manual satu per satu!",
+      "Kamera smartphone masa kini sudah dibekali teknologi Optical Character Recognition (OCR) berbasis kecerdasan buatan cerdas.",
+      "Cukup buka aplikasi Google Lens di ponselmu lalu arahkan lensa kamera ke lembaran kertas tulisan dan pilih tab Teks.",
+      "Ketuk tombol Pilih Semua lalu klik Salin Teks untuk menempelkan seluruh tulisan secara instan ke aplikasi catatan atau WhatsApp.",
+      "Trik ini bisa menghemat waktu belajarmu berjam-jam dan menghindari risiko kesalahan ketik atau typo yang melelahkan.",
+      "Maksimalkan kecerdasan fitur kamera HP kamu untuk produktivitas kerja dan belajar. Follow @inka.tech buat trik cerdas lainnya!"
+    ]
+  },
+  {
+    "id": 99,
+    "topic": "Hapus Bloatware Bawaan Pabrik",
+    "hook_title": "APLIKASI BAWAAN PABRIK GAK BISA DIHAPUS? INI CARA BERSIHIN BIAR HP LEGA!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Baru beli HP baru tapi sudah dipenuhi belasan game sampah dan aplikasi bawaan pabrik yang tidak pernah dipakai?",
+      "Aplikasi bawaan atau bloatware ini sering memakan ruang penyimpanan internal dan diam-diam berjalan membebani RAM ponsel.",
+      "Banyak aplikasi sistem yang tidak menyediakan tombol uninstall langsung pada menu pengaturan aplikasi biasa.",
+      "Untuk aplikasi yang tidak bisa dihapus, pilih opsi Nonaktifkan (Disable) agar aplikasi berhenti berjalan dan tidak memakan RAM.",
+      "Untuk pengguna mahir, gunakan software gratis Universal Android Debloater di laptop via ADB untuk mencabut bloatware permanen tanpa root.",
+      "Bebaskan memori HP kamu dari beban aplikasi tidak berguna agar performa tetap enteng. Bagikan solusi ini ke temanmu!"
+    ]
+  },
+  {
+    "id": 100,
+    "topic": "Check Up Keamanan HP Bulanan",
+    "hook_title": "7 HAL WAJIB KAMU CEK DI HP TIAP BULAN BIAR BEBAS DARI HACKER & SPYWARE!",
+    "total_slides": 6,
+    "slide_outline": [
+      "Merayakan konten ke-100 edukasi teknologi @inka.tech! Ini panduan check-up kesehatan keamanan digital ponselmu setiap bulan.",
+      "Pertama: periksa izin aplikasi sensitif terutama akses Mikrofon, Kamera, dan Lokasi; cabut izin aplikasi yang tidak relevan.",
+      "Kedua: review menu Perangkat Tertaut di WhatsApp, Telegram, dan Google Account untuk mendepak sesi mencurigakan.",
+      "Ketiga: bersihkan tumpukan cache aplikasi media sosial yang membengkak puluhan gigabyte agar memori ponsel tetap lega.",
+      "Keempat: update sistem operasi Android/iOS dan seluruh aplikasi ke versi keamanan terbaru untuk menutup celah eksploitasi peretas.",
+      "Kelima: periksa apakah email pribadimu pernah bocor di database dark web dan ganti password utama secara berkala.",
+      "Amankan kehidupan digitalmu secara konsisten bersama @inka.tech. Terima kasih sudah setia belajar teknologi bareng kami!"
+    ]
+  }
+]

@@ -153,6 +153,17 @@ def download_image_from_element(page, img_element, output_path: str) -> bool:
                         reader.readAsDataURL(blob);
                     });
                 } catch(e) {
+                    try {
+                        const img = document.querySelector(`img[src="${imgUrl}"]`);
+                        if (img && img.naturalWidth) {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.naturalWidth;
+                            canvas.height = img.naturalHeight;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            return canvas.toDataURL('image/png');
+                        }
+                    } catch(e2) {}
                     return null;
                 }
             }
@@ -383,13 +394,14 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                     page.wait_for_timeout(5000)
 
                     saved_path = None
-                    per_image_timeout = max(360, timeout_s // len(prompts_list)) if len(prompts_list) > 1 else timeout_s
+                    per_image_timeout = 240
+                    retried_nudge = False
                     while time.time() - start_t < per_image_timeout:
                         page.wait_for_timeout(3000)
-                        is_stop_btn = page.locator('button[data-testid="stop-button"], button[aria-label*="Stop generating"]').count() > 0
+                        is_stop_btn = page.locator('button[data-testid="stop-button"], button[aria-label*="Stop" i], button[aria-label*="Hentikan" i], button svg rect').count() > 0
 
                         elapsed = time.time() - start_t
-                        if elapsed < 20 or is_stop_btn:
+                        if elapsed < 15 or is_stop_btn:
                             continue
 
                         imgs = page.locator('img').all()
@@ -399,22 +411,23 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                                 src = im.get_attribute("src") or ""
                                 if src in initial_img_srcs:
                                     continue
+                                alt = (im.get_attribute("alt") or "").lower()
                                 is_ready = im.evaluate("""
                                     (el) => {
                                         return el.complete && 
-                                               el.naturalWidth >= 400 && 
-                                               el.naturalHeight >= 400 &&
+                                               el.naturalWidth >= 200 && 
+                                               el.naturalHeight >= 200 &&
                                                !el.src.includes('avatar') &&
                                                !el.src.includes('placeholder');
                                     }
                                 """)
                                 if is_ready:
-                                    if any(k in src.lower() for k in ["backend-api", "estuary", "oaiusercontent", "oaidalle", "blob:"]):
+                                    if any(k in src.lower() for k in ["backend-api", "estuary", "oaiusercontent", "oaidalle", "blob:"]) or any(k in alt for k in ["dall", "generated", "carousel", "slide"]):
                                         valid_imgs.append(im)
                             except Exception:
                                 pass
 
-                        if len(valid_imgs) > 0 and not is_stop_btn:
+                        if len(valid_imgs) > 0:
                             target_img = valid_imgs[-1]
                             img_num = (start_index - 1) + idx + 1
                             if output_path and len(prompts_list) == 1 and start_index == 1:
@@ -431,7 +444,7 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                                 out = os.path.join("outputs", "images", f"chatgpt_{account}_{int(time.time())}_{img_num:02d}.png")
 
                             if download_image_from_element(page, target_img, out):
-                                if os.path.exists(out) and os.path.getsize(out) >= 100000:
+                                if os.path.exists(out) and os.path.getsize(out) >= 30000:
                                     saved_path = os.path.abspath(out)
                                     result["saved_images"].append(saved_path)
                                     print(f"[ChatGPT] Sukses mengunduh gambar [{idx + 1}/{len(prompts_list)}]: {saved_path} ({os.path.getsize(out)} bytes)", flush=True)
@@ -444,12 +457,30 @@ def execute_chatgpt_engine(prompt: str, action: str, output_path: str, account: 
                                         except Exception:
                                             pass
 
+                        if not valid_imgs and not is_stop_btn and elapsed >= 25 and not retried_nudge:
+                            retried_nudge = True
+                            nudge_box = page.locator('#prompt-textarea')
+                            if nudge_box.count() > 0 and nudge_box.is_visible():
+                                nudge_msg = "Create the image now with DALL-E immediately. Do not reply with text."
+                                nudge_box.click()
+                                nudge_box.fill(nudge_msg)
+                                page.wait_for_timeout(500)
+                                send_btn = page.locator('button[data-testid="send-button"]').first
+                                if send_btn.count() > 0 and not send_btn.is_disabled():
+                                    send_btn.click()
+                                else:
+                                    page.keyboard.press("Enter")
+                                start_t = time.time()
+                                continue
+
+                        if not valid_imgs and not is_stop_btn and retried_nudge and elapsed >= 45:
+                            break
+
                     if not saved_path:
                         print(f"[ChatGPT] Peringatan: Gambar [{idx + 1}/{len(prompts_list)}] tidak terdeteksi dalam batas waktu.", flush=True)
 
                     page.wait_for_timeout(3000)
                     if idx + 1 < len(prompts_list):
-                        # Lanjutkan di obrolan yang sama tanpa membuka new-chat agar tidak kena rate-limit
                         prompt_next = page.locator('#prompt-textarea')
                         try:
                             prompt_next.wait_for(state='visible', timeout=25000)
