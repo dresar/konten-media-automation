@@ -17,4 +17,12 @@ Desktop.ini
 # Temporary outputs (all content is managed inside accounts/)
 outputs/
 **/raw/
-*.mp4
+# Large binaries / installers / archives
+*.exe
+*.tar.gz
+*.dmg
+*.iso
+*.zip
+*.pdf
+ChatGPT Image*
+*postman_collection*

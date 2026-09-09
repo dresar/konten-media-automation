@@ -1,0 +1,48 @@
+{
+  "account": "barangunikparty",
+  "mode": "instant_post",
+  "videos": {
+    "51": {
+      "status": "posted",
+      "timestamp": 1788797346,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_051.png"
+    },
+    "52": {
+      "status": "posted",
+      "timestamp": 1788797551,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_052.png"
+    },
+    "53": {
+      "status": "posted",
+      "timestamp": 1788797778,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_053.png"
+    },
+    "54": {
+      "status": "posted",
+      "timestamp": 1788798026,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_054.png"
+    },
+    "55": {
+      "status": "posted",
+      "timestamp": 1788798212,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_055.png"
+    },
+    "56": {
+      "status": "posted",
+      "timestamp": 1788798485,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_056.png"
+    },
+    "57": {
+      "status": "posted",
+      "timestamp": 1788798733,
+      "error": null,
+      "proof": "C:\\Users\\NCN0C\\Videos\\konten\\accounts\\barangunikparty\\post_proof\\post_057.png"
+    }
+  }
+}

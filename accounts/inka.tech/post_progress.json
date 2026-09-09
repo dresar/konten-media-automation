@@ -1,0 +1,107 @@
+{
+  "account": "inka.tech",
+  "mode": "instant_post",
+  "created_at": "2026-09-10 06:20:22",
+  "topics": {
+    "topic_01": {
+      "id": 1,
+      "slug": "01-juice-jacking",
+      "status": "posted",
+      "title": "💡 JANGAN ASAL COLOK CASAN DI TEMPAT UMUM! INI BAHAYA JUICE JACKING",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_001.png",
+      "timestamp": "2026-09-10 06:20:23"
+    },
+    "topic_02": {
+      "id": 2,
+      "slug": "02-mode-incognito",
+      "status": "posted",
+      "title": "💡 KAMU PIKIR INCOGNITO BIKIN KAMU GAK KELIHATAN? BOHONG BESAR!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_002.png",
+      "timestamp": "2026-09-10 06:23:19"
+    },
+    "topic_03": {
+      "id": 3,
+      "slug": "03-trik-prompting",
+      "status": "posted",
+      "title": "💡 AI JAWABNYA KAKU KAYAK ROBOT? COBA 3 MANTRA PROMPT INI!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_003.png",
+      "timestamp": "2026-09-10 06:26:15"
+    },
+    "topic_04": {
+      "id": 4,
+      "slug": "04-hp-lemot",
+      "status": "posted",
+      "title": "💡 HP BARU SETAHUN KOK UDAH LEMOT? BUKAN DISURUH GANTI HP, INI SEBABNYA!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_004.png",
+      "timestamp": "2026-09-10 06:29:01"
+    },
+    "topic_05": {
+      "id": 5,
+      "slug": "05-wifi-gratis",
+      "status": "posted",
+      "title": "💡 LIHAT WIFI GRATIS DI CAFE LANGSUNG KONEK? HATI-HATI JEBAKAN EVIL TWIN!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_005.png",
+      "timestamp": "2026-09-10 06:31:38"
+    },
+    "topic_06": {
+      "id": 6,
+      "slug": "06-iklan-pelacak",
+      "status": "posted",
+      "title": "💡 BARU AJA NGOBROLIN SEPATU, TIBA-TIBA MUNCUL IKLANNYA? HP BENERAN NYADAP?",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_006.png",
+      "timestamp": "2026-09-10 06:34:34"
+    },
+    "topic_07": {
+      "id": 7,
+      "slug": "07-baterai-awet",
+      "status": "posted",
+      "title": "💡 BATTERY HEALTH CEPAT TURUN? JANGAN-JANGAN KAMU MASIH NGELAKUIN INI!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_007.png",
+      "timestamp": "2026-09-10 06:37:16"
+    },
+    "topic_08": {
+      "id": 8,
+      "slug": "08-password-manager",
+      "status": "posted",
+      "title": "💡 MASIH PAKE PASSWORD TANGGAL LAHIR DI SEMUA AKUN? BESOK BISA HILANG SEMUA!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_008.png",
+      "timestamp": "2026-09-10 06:39:50"
+    },
+    "topic_09": {
+      "id": 9,
+      "slug": "09-kebocoran-data",
+      "status": "posted",
+      "title": "💡 DATA PRIBADIMU UDAH DIJUAL DI DARK WEB? CEK SENDIRI DALAM 1 MENIT!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_009.png",
+      "timestamp": "2026-09-10 06:42:25"
+    },
+    "topic_10": {
+      "id": 10,
+      "slug": "10-format-pdf",
+      "status": "posted",
+      "title": "💡 KIRIM SCAN KTP FORMAT PDF? HATI-HATI JANGAN LUPA DIBERI WATERMARK!",
+      "photos_count": 6,
+      "post_url": "https://www.tiktok.com/tiktokstudio/content",
+      "proof_screenshot": "post_010.png",
+      "timestamp": "2026-09-10 06:45:05"
+    }
+  }
+}
