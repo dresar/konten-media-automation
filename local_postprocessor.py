@@ -11,9 +11,9 @@ LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_inkatech.png")
 
 TIKTOK_W = 1080
 TIKTOK_H = 1920
-LOGO_SIZE = 150
-LOGO_MARGIN = 20
-LOGO_OPACITY = 0.85
+LOGO_SIZE = 140
+LOGO_MARGIN = 25
+LOGO_OPACITY = 0.88
 SLIDE_DURATION = 3.0
 FADE_DURATION = 0.5
 FPS = 30
@@ -44,26 +44,48 @@ def strip_and_resize_image(input_path, output_path, aspect="3:4", logo_pos="top-
         img_rgba = img.convert("RGBA")
         if os.path.exists(LOGO_PATH):
             logo_img = Image.open(LOGO_PATH).convert("RGBA")
-            logo_size = int(min(target_w, target_h) * 0.13)
-            logo_img = logo_img.resize((logo_size, logo_size), Image.LANCZOS)
+            logo_img = logo_img.resize((LOGO_SIZE, LOGO_SIZE), Image.LANCZOS)
             r, g, b, a = logo_img.split()
             a = a.point(lambda x: int(x * LOGO_OPACITY))
             logo_img.putalpha(a)
 
-            # Logo placement: TOP-RIGHT (Pojok Kanan Atas)
             if logo_pos == "bottom-right":
-                pos_x = target_w - logo_size - LOGO_MARGIN
-                pos_y = target_h - logo_size - LOGO_MARGIN
-            else:  # default top-right
-                pos_x = target_w - logo_size - LOGO_MARGIN
-                pos_y = LOGO_MARGIN + 15
+                pos_x = target_w - LOGO_SIZE - LOGO_MARGIN
+                pos_y = target_h - LOGO_SIZE - LOGO_MARGIN
+            else:
+                pos_x = target_w - LOGO_SIZE - LOGO_MARGIN
+                pos_y = 40
 
             img_rgba.paste(logo_img, (pos_x, pos_y), logo_img)
         else:
             print(f"[Warn] Logo not found: {LOGO_PATH}", file=sys.stderr)
+
         out_img = img_rgba.convert("RGB")
-        out_img.save(output_path, "PNG", optimize=True)
-        return True
+        clean_img = Image.frombytes("RGB", out_img.size, out_img.tobytes())
+        temp_png = output_path + ".temp_raw.png"
+        clean_img.save(temp_png, "PNG", optimize=True)
+
+        cmd = [
+            "ffmpeg", "-y", "-i", temp_png,
+            "-map_metadata", "-1",
+            "-map_chapters", "-1",
+            "-fflags", "+bitexact",
+            "-flags:v", "+bitexact",
+            output_path
+        ]
+        res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if os.path.exists(temp_png):
+            try:
+                os.remove(temp_png)
+            except Exception:
+                pass
+
+        if res.returncode == 0 and os.path.exists(output_path):
+            return True
+        elif os.path.exists(temp_png):
+            os.replace(temp_png, output_path)
+            return True
+        return False
     except Exception as e:
         print(f"[Error] strip_and_resize_image: {e}", file=sys.stderr)
         return False
@@ -116,22 +138,22 @@ def build_ffmpeg_video(image_paths, output_mp4, topic=""):
         return False
 
 
-def process_images(image_paths, topic, output_name=None, mode="photo", aspect="3:4", logo_pos="top-right", out_dir=None):
+def process_images(image_paths, topic="Edukasi Teknologi", output_name=None, mode="photo", aspect="3:4", logo_pos="top-right", out_dir=None):
     cleaned = "".join(c if c.isalnum() or c in " _-" else " " for c in topic.strip())
     stopwords = {"dan", "di", "yang", "untuk", "bagi", "cara", "era", "ke", "dari", "pada", "bisa", "ini", "itu"}
     words = [w.lower() for w in cleaned.split() if w.lower() not in stopwords]
     safe_slug = "-".join(words[:2]) if len(words) >= 2 else (words[0] if words else "konten")
+    ts = time.strftime("%Y%m%d_%H%M%S")
     if not output_name:
         output_name = f"tiktok_{safe_slug}"
 
-    # Dedicated folder for this content topic
     content_dir = out_dir or os.path.join(BASE_DIR, "accounts", "inka.tech", "photo_carousel", safe_slug)
-    processed_dir = os.path.join(content_dir, "processed")
+    processed_dir = os.path.join(content_dir, "processed") if not out_dir else out_dir
     os.makedirs(processed_dir, exist_ok=True)
 
     processed = []
     for i, img_path in enumerate(image_paths):
-        out_png = os.path.join(processed_dir, f"{output_name}_{i+1:02d}.png")
+        out_png = os.path.join(processed_dir, f"{output_name}_{i+1:02d}.png") if len(image_paths) > 1 else os.path.join(processed_dir, f"{output_name}.png")
         print(f"[Post] {i+1}/{len(image_paths)}: {os.path.basename(img_path)}", flush=True)
         if strip_and_resize_image(img_path, out_png, aspect=aspect, logo_pos=logo_pos):
             processed.append(out_png)
@@ -152,8 +174,11 @@ def process_images(image_paths, topic, output_name=None, mode="photo", aspect="3
         "content_dir": content_dir,
         "images": processed
     }
-    with open(meta_file, "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2, ensure_ascii=False)
+    try:
+        with open(meta_file, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2, ensure_ascii=False)
+    except Exception:
+        pass
 
     if mode == "photo":
         return {
@@ -185,15 +210,15 @@ def process_images(image_paths, topic, output_name=None, mode="photo", aspect="3
 
 
 def main():
-    parser = argparse.ArgumentParser(description="TikTok Image Post-Processor")
-    parser.add_argument("--images", nargs="+")
-    parser.add_argument("--images-dir")
-    parser.add_argument("--topic", required=True)
-    parser.add_argument("--output-name", default=None)
-    parser.add_argument("--logo", default=None)
+    parser = argparse.ArgumentParser(description="TikTok Image Post-Processor & AI Metadata Stripper")
+    parser.add_argument("--images", "--input", "-i", nargs="+", dest="images", help="Daftar file gambar input atau file tunggal")
+    parser.add_argument("--images-dir", help="Direktori berisi gambar mentah")
+    parser.add_argument("--topic", default="Edukasi Teknologi", help="Topik konten (default: Edukasi Teknologi)")
+    parser.add_argument("--output-name", default=None, help="Prefix nama file output")
+    parser.add_argument("--logo", default=None, help="Path ke logo transparan resmi")
     parser.add_argument("--logo-pos", choices=["top-right", "bottom-right"], default="top-right", help="Posisi watermark logo (default: top-right)")
-    parser.add_argument("--out-dir", default=None, help="Direktori khusus output konten")
-    parser.add_argument("--mode", choices=["video", "photo"], default="photo", help="Output mode: photo carousel atau video (default: photo)")
+    parser.add_argument("--out-dir", "--output", "-o", default=None, dest="out_dir", help="Direktori output atau path file target")
+    parser.add_argument("--mode", choices=["video", "photo"], default="photo", help="Output mode: photo atau video (default: photo)")
     parser.add_argument("--aspect", choices=["3:4", "4:3", "1:1", "9:16"], default="3:4", help="Aspect ratio (default: 3:4 portrait 1080x1440)")
     args = parser.parse_args()
 
@@ -201,14 +226,31 @@ def main():
     if args.logo:
         LOGO_PATH = args.logo
 
+    if args.out_dir and (args.out_dir.lower().endswith(".mp4") or args.out_dir.lower().endswith(".png") or args.out_dir.lower().endswith(".jpg")):
+        target_dir = os.path.dirname(os.path.abspath(args.out_dir))
+        file_base = os.path.splitext(os.path.basename(args.out_dir))[0]
+        if not args.output_name:
+            args.output_name = file_base
+        if args.out_dir.lower().endswith(".mp4"):
+            args.mode = "video"
+        args.out_dir = target_dir
+
     image_paths = []
     if args.images:
-        image_paths = [p for p in args.images if os.path.exists(p)]
+        for item in args.images:
+            if os.path.isdir(item):
+                image_paths.extend(sorted([
+                    os.path.join(item, f)
+                    for f in os.listdir(item)
+                    if f.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+                ]))
+            elif os.path.exists(item):
+                image_paths.append(item)
     elif args.images_dir and os.path.isdir(args.images_dir):
         image_paths = sorted([
             os.path.join(args.images_dir, f)
             for f in os.listdir(args.images_dir)
-            if f.lower().endswith((".png", ".jpg", ".jpeg"))
+            if f.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
         ])
 
     if not image_paths:
@@ -229,7 +271,7 @@ def main():
 
     if result["success"]:
         if result["mode"] == "photo":
-            print(f"\n[SUCCESS] {len(result['processed_images'])} foto diproses (3:4 + logo top-right)", flush=True)
+            print(f"\n[SUCCESS] {len(result['processed_images'])} foto diproses (3:4 + logo top-right + 100% metadata AI bersih)", flush=True)
             print(f"FOLDER:{result['content_dir']}", flush=True)
             for p in result['processed_images']:
                 print(f"PHOTO:{p}", flush=True)
