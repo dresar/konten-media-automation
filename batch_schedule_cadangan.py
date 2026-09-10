@@ -145,6 +145,10 @@ def dismiss_modals(page):
             if (cont) cont.click();
             const notNow = btns.find(b => (b.innerText || '').includes('Not now'));
             if (notNow) notNow.click();
+            const closeBtns = btns.filter(b => b.getAttribute('aria-label') === 'Close' || (b.className || '').includes('close') || (b.innerText || '').trim() === '✕');
+            for (const b of closeBtns) {
+                if (b.offsetParent !== null) b.click();
+            }
         }''')
     except Exception:
         pass
@@ -163,6 +167,16 @@ def schedule_single_topic(page, topic_num: int, item: dict, schedule_info: dict)
     dismiss_modals(page)
 
     file_input = page.locator('input[type="file"][accept*="image"]')
+    if file_input.count() == 0:
+        try:
+            page.wait_for_selector('input[type="file"][accept*="image"]', timeout=15000)
+            file_input = page.locator('input[type="file"][accept*="image"]')
+        except Exception:
+            page.goto(TIKTOK_PHOTO_URL, timeout=60000, wait_until="domcontentloaded")
+            page.wait_for_timeout(4000)
+            dismiss_modals(page)
+            file_input = page.locator('input[type="file"][accept*="image"]')
+
     if file_input.count() == 0:
         print(f"[-] File input not found on page for topic {topic_num}!")
         return False
@@ -210,19 +224,24 @@ def schedule_single_topic(page, topic_num: int, item: dict, schedule_info: dict)
         page.wait_for_timeout(2000)
         page.keyboard.press("Escape")
         page.wait_for_timeout(1000)
+        page.evaluate('''() => {
+            const cb = Array.from(document.querySelectorAll('button')).find(b => b.getAttribute('aria-label') === 'Close' || (b.className || '').includes('close') || (b.innerText || '').trim() === '✕');
+            if (cb && cb.offsetParent !== null) cb.click();
+        }''')
+        page.wait_for_timeout(1000)
 
     dismiss_modals(page)
 
     title_input = page.locator('input[placeholder*="title"], input.titleInput-JiU8Rn')
     if title_input.count() > 0:
-        title_input.first.click()
+        title_input.first.click(force=True)
         title_input.first.fill(item["title"])
         print(f"[+] Filled title: {item['title']}")
         page.wait_for_timeout(1000)
 
     caption_editor = page.locator('div.public-DraftEditor-content, div[contenteditable="true"]')
     if caption_editor.count() > 0:
-        caption_editor.first.click()
+        caption_editor.first.click(force=True)
         page.keyboard.press("Control+A")
         page.keyboard.press("Backspace")
         page.wait_for_timeout(500)
@@ -352,7 +371,11 @@ def main():
 
             schedule_info = calculate_schedule_slot(topic_num, start_topic=11)
 
-            success = schedule_single_topic(page, topic_num, item, schedule_info)
+            try:
+                success = schedule_single_topic(page, topic_num, item, schedule_info)
+            except Exception as e:
+                print(f"[ERROR] Exception scheduling topic {topic_num}: {e}", file=sys.stderr)
+                success = False
 
             if success:
                 success_count += 1
