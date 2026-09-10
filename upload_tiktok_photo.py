@@ -396,25 +396,61 @@ def upload_photos_to_tiktok(
                     });
                     if (publicRadio) publicRadio.click();
                 }''')
-                page.wait_for_timeout(500)
+                pre_ss = os.path.join(ss_dir, f"pre_post_{int(time.time())}.png")
+                page.screenshot(path=pre_ss)
 
-                post_btn = page.locator("button.Button__root--type-primary:has-text('Posting'), button.Button__root--type-primary:has-text('Post')").first
-                if post_btn.count() == 0 or not post_btn.is_visible():
+                post_clicked = page.evaluate('''() => {
+                    const btns = Array.from(document.querySelectorAll("button"));
+                    const target = btns.find(b => {
+                        const txt = (b.innerText || "").trim().toLowerCase();
+                        return (txt === "post" || txt === "posting") && !b.disabled;
+                    });
+                    if (target) {
+                        target.scrollIntoView({ behavior: "instant", block: "center" });
+                        target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                        return true;
+                    }
+                    return false;
+                }''')
+                if not post_clicked:
+                    post_btn = page.locator("button.Button__root--type-primary:has-text('Posting'), button.Button__root--type-primary:has-text('Post')").first
+                    if post_btn.count() > 0 and post_btn.is_visible():
+                        post_btn.click()
+                        post_clicked = True
+                if not post_clicked:
                     result["error"] = "Tombol Posting tidak ditemukan"
                     return result
 
-                post_btn.click()
-                page.wait_for_timeout(2500)
+                print(f"[TikTokPhoto] Tombol Posting diklik. Menunggu konfirmasi...", flush=True)
 
-                page.evaluate('''() => {
-                    const btns = Array.from(document.querySelectorAll("button"));
-                    const confirmBtn = btns.find(b => {
-                        const txt = (b.innerText || "").trim().toLowerCase();
-                        return txt === "posting sekarang" || txt.includes("posting sekarang") || txt.includes("post anyway") || txt.includes("lanjut posting");
-                    });
-                    if (confirmBtn) confirmBtn.click();
-                }''')
-                page.wait_for_timeout(3000)
+                for _ in range(10):
+                    page.wait_for_timeout(1500)
+                    if "content" in page.url or "manage" in page.url:
+                        break
+                    confirmed = page.evaluate('''() => {
+                        const keywords = ['post now', 'posting sekarang', 'continue to post', 'lanjut posting', 'tetap posting', 'post anyway'];
+                        const btns = Array.from(document.querySelectorAll("button"));
+                        for (const kw of keywords) {
+                            const btn = btns.find(b => (b.innerText || "").trim().toLowerCase().includes(kw));
+                            if (btn) {
+                                btn.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                                btn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                                return true;
+                            }
+                        }
+                        const dialog = document.querySelector("[role='dialog']");
+                        if (dialog) {
+                            const primary = dialog.querySelector(".TUXButton--primary, [class*='Button__root--type-primary'], [class*='primary']");
+                            if (primary) {
+                                primary.scrollIntoView({ behavior: 'instant', block: 'nearest' });
+                                primary.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                                return true;
+                            }
+                        }
+                        return false;
+                    }''')
+                    if confirmed:
+                        break
 
                 c_post = detect_captcha(page)
                 if c_post["detected"]:
