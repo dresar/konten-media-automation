@@ -1,0 +1,18 @@
+{
+  "account": "inka.tech",
+  "mode": "scheduled_post",
+  "created_at": "2026-09-10 07:04:07",
+  "topics": {
+    "topic_11": {
+      "id": 11,
+      "slug": "11-radiasi-hp",
+      "status": "scheduled",
+      "schedule_date": "2026-09-11",
+      "schedule_time": "08:30",
+      "title": "💡 TIDUR SEBELAH HP BIKIN KANKER OTAK? INI PENJELASAN SAINS YANG SEBENARNYA!",
+      "photos_count": 6,
+      "proof_screenshot": "schedule_011.png",
+      "timestamp": "2026-09-10 07:04:40"
+    }
+  }
+}
