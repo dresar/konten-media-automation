@@ -15,6 +15,29 @@ from local_postprocessor import strip_and_resize_image
 TIKTOK_PHOTO_URL = "https://www.tiktok.com/tiktokstudio/upload?from=webapp&tab=photo"
 
 
+def clear_profile_locks(profile_dir: str):
+    import subprocess
+    try:
+        acc_name = os.path.basename(profile_dir.rstrip(r"\/"))
+        ps_cmd = f'Get-CimInstance Win32_Process -Filter "Name = \'chrome.exe\'" | Where-Object {{ $_.CommandLine -like "*browser_profiles*{acc_name}*" }} | ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force }}'
+        subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", ps_cmd], capture_output=True, timeout=10)
+    except Exception:
+        pass
+    lock_patterns = [
+        os.path.join(profile_dir, "SingletonLock"),
+        os.path.join(profile_dir, "SingletonSocket"),
+        os.path.join(profile_dir, "SingletonCookie"),
+        os.path.join(profile_dir, "lockfile"),
+        os.path.join(profile_dir, "Default", "LOCK"),
+    ]
+    for lp in lock_patterns:
+        if os.path.exists(lp):
+            try:
+                os.remove(lp)
+            except Exception:
+                pass
+
+
 def dismiss_modals(page):
     try:
         page.evaluate('''() => {
@@ -120,6 +143,7 @@ def upload_photos_to_tiktok(
 
     profile_dir = get_profile_dir(account, platform="tiktok")
     profile_name = get_profile_name(account, platform="tiktok")
+    clear_profile_locks(profile_dir)
     print(f"[TikTokPhoto] Menggunakan profil Chrome: {profile_name} ({profile_dir})", flush=True)
     print(f"[TikTokPhoto] Mode: {mode.upper()} | Jumlah foto: {len(valid_photos)}", flush=True)
     if schedule_info:
