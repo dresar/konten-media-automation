@@ -276,6 +276,42 @@ def upload_to_tiktok(processed_image, title, caption, mode="now", schedule_time=
     )
 
 
+def cleanup_folder(folder_path):
+    if not os.path.exists(folder_path):
+        return
+    for fname in os.listdir(folder_path):
+        fpath = os.path.join(folder_path, fname)
+        if os.path.isfile(fpath):
+            if fname in ["image.png", "metadata.json"]:
+                continue
+            if fname.endswith(".txt") or fname.startswith("raw") or fname.endswith(".temp_raw.png") or fname.startswith("temp_") or fname.endswith(".py"):
+                try:
+                    os.remove(fpath)
+                except Exception:
+                    pass
+        elif os.path.isdir(fpath):
+            try:
+                for sub in os.listdir(fpath):
+                    os.remove(os.path.join(fpath, sub))
+                os.rmdir(fpath)
+            except Exception:
+                pass
+
+
+def purge_junk_files(root_dir=NEWS_DIR):
+    if not os.path.exists(root_dir):
+        return
+    for root, dirs, files in os.walk(root_dir):
+        for f in files:
+            if f in ["image.png", "metadata.json"]:
+                continue
+            if f.endswith(".txt") or f.startswith("raw") or f.endswith(".temp_raw.png") or f.startswith("temp_"):
+                try:
+                    os.remove(os.path.join(root, f))
+                except Exception:
+                    pass
+
+
 def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
     stats = get_stats()
     print(f"[NewsBot] Memulai siklus berita per jam ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')})...", flush=True)
@@ -405,6 +441,10 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         "error": upload_res.get("error")
     }
 
+    cleanup_folder(run_dir)
+    purge_junk_files(NEWS_DIR)
+    print(f"[NewsBot] [CLEANUP] Pembersihan otomatis selesai: folder {os.path.basename(run_dir)} hanya menyisakan image.png dan metadata.json.", flush=True)
+
     print(f"[NewsBot] Siklus selesai! Status: {'SUKSES' if record['success'] else 'GAGAL'}", flush=True)
     return record
 
@@ -415,7 +455,13 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Uji alur tanpa memposting final")
     parser.add_argument("--jitter", action="store_true", help="Aktifkan anti-bot jitter natural (10-30 detik)")
     parser.add_argument("--mode", choices=["now", "schedule"], default="now", help="Mode posting TikTok (default: now)")
+    parser.add_argument("--clean", action="store_true", help="Bersihkan seluruh file sampah di folder outputs")
     args = parser.parse_args()
+
+    if args.clean:
+        purge_junk_files(NEWS_DIR)
+        print("[NewsBot] Seluruh folder output telah dibersihkan!", flush=True)
+        return
 
     j_min, j_max = (10, 30) if args.jitter else (0, 0)
     res = run_cycle(dry_run=args.dry_run, jitter_min=j_min, jitter_max=j_max, mode=args.mode)
