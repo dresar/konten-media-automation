@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import json
 import os
 import random
@@ -8,28 +8,20 @@ import sys
 import time
 from datetime import datetime
 
+from news_database import (
+    get_next_target_category,
+    get_blacklist_topics,
+    is_duplicate,
+    insert_news,
+    update_news_status,
+    get_stats
+)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-POSTED_FILE = os.path.join(BASE_DIR, "outputs", "posted_news.json")
 NEWS_DIR = os.path.join(BASE_DIR, "outputs", "hourly_news")
 LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_inkatech.png")
 
 os.makedirs(NEWS_DIR, exist_ok=True)
-os.makedirs(os.path.join(BASE_DIR, "outputs"), exist_ok=True)
-
-
-def load_posted_history():
-    if os.path.exists(POSTED_FILE):
-        try:
-            with open(POSTED_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return []
-    return []
-
-
-def save_posted_history(history):
-    with open(POSTED_FILE, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
 
 
 def slugify(text):
@@ -39,38 +31,44 @@ def slugify(text):
     return text[:40] or f"news_{int(time.time())}"
 
 
-def ask_chatgpt_for_news(blacklist_topics=None):
-    if blacklist_topics is None:
-        blacklist_topics = []
+def ask_chatgpt_for_news():
+    cat_info = get_next_target_category()
+    blacklist = get_blacklist_topics(limit=50)
     
-    bl_str = ", ".join(f"'{t}'" for t in blacklist_topics[-15:]) if blacklist_topics else "belum ada"
-    prompt = f"""Kamu adalah kurator berita teknologi untuk portal edukasi Inka.tech (@inka.tech).
-Tugasmu: Pilih 1 berita teknologi paling baru, aktual, dan berdampak besar bulan ini yang sangat menarik bagi publik.
-PENTING: Jangan pilih topik yang sudah pernah kami bahas berikut ini: [{bl_str}].
+    scope_desc = "Indonesia / Lokal" if cat_info["scope"] == "LOKAL" else "Luar Negeri / Global"
+    bl_str = ", ".join(f"'{t}'" for t in blacklist[-25:]) if blacklist else "belum ada"
+    
+    prompt = f"""Kamu adalah jurnalis dan kurator berita teknologi profesional untuk portal edukasi Inka.tech (@inka.tech).
+Fokus Wilayah: {cat_info['scope']} ({scope_desc})
+Kategori Berita: {cat_info['label']}
+Kata Kunci & Contoh: {cat_info['keywords']}
 
-Berikan jawaban terstruktur dengan format persis di bawah ini:
+TUGAS: Pilih 1 berita teknologi paling baru, aktual, mengejutkan, atau berdampak besar bulan ini sesuai kategori di atas yang sangat menarik bagi publik.
+PENTING: Dilarang keras membahas topik atau judul yang mirip dengan riwayat berikut: [{bl_str}].
+
+Wajib berikan jawaban terstruktur dengan format persis di bawah ini:
 [TOPIK]
-<nama topik berita singkat>
+<tulis topik berita spesifik, contoh: Kasus Phishing Malware APK Surat Tilang Menguras Rekening di Indonesia>
 
 [JUDUL]
-<1 headline berita singkat maksimal 80 karakter yang memancing rasa penasaran publik>
+<1 headline berita singkat < 85 karakter yang memancing rasa penasaran, gaya berita viral>
 
 [HOOK]
-<1 kalimat pembuka yang kuat dan menarik perhatian>
+<1 kalimat pembuka yang kuat dan menghentikan scroll pembaca>
 
 [POIN_BERITA]
-• <poin 1: fakta penting apa yang baru dirilis/terjadi>
-• <poin 2: teknologi atau mekanisme di baliknya>
-• <poin 3: dampak langsung bagi pengguna atau industri>
+• <poin 1: fakta peristiwa atau rilis yang baru terjadi>
+• <poin 2: teknologi, celah, atau mekanisme di baliknya>
+• <poin 3: dampak langsung bagi masyarakat, pengguna, atau industri>
 
 [TIPS_PENGGUNA]
-<1-2 kalimat tips praktis atau takeaways untuk publik>
+<1-2 kalimat tips praktis atau takeaways pencegahan untuk publik>
 
 [HASHTAG]
-#teknologi #beritateknologi #technews #ai #gadget #inovasi #tipsit #cybersecurity #inkatech #fyp
+#teknologi #beritateknologi #technews #gadget #inovasi #tipsit #cybersecurity #inkatech #fyp
 
 [PROMPT_GAMBAR]
-Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]
+Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {cat_info['label']}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]
 """
 
     cmd = [
@@ -83,7 +81,8 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
         "--timeout", "300"
     ]
     
-    print("[NewsBot] Menanyakan berita teknologi terbaru ke ChatGPT (profil dian)...", flush=True)
+    print(f"[NewsBot] [DATABASE] Target Kategori: {cat_info['scope']} - {cat_info['label']}", flush=True)
+    print(f"[NewsBot] Menanyakan berita teknologi ke ChatGPT (profil dian)...", flush=True)
     res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
     stdout = res.stdout or ""
     
@@ -99,28 +98,54 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
         raw_text = stdout
         
     def extract_block(tag):
-        p = r"\[" + tag + r"\]\s*\n(.*?)(?=\n\[|$)"
-        m = re.search(p, raw_text, re.DOTALL)
-        return m.group(1).strip() if m else ""
+        p = r"(?:\[|\*\*\[?)" + tag + r"(?:\]|\:?\]?\*\*?)\s*:?\s*(.*?)(?=\n\s*(?:\[|\*\*\[?)[A-Z_]+|\Z)"
+        m = re.search(p, raw_text, re.DOTALL | re.IGNORECASE)
+        if m:
+            v = m.group(1).strip()
+            v = re.sub(r"^[\*\"\'\`\:\-]+|[\*\"\'\`]+$", "", v).strip()
+            return v
+        return ""
 
-    topik = extract_block("TOPIK") or "Inovasi Teknologi AI Terbaru"
-    judul = extract_block("JUDUL") or f"{topik}: Terobosan Baru Teknologi!"
-    hook = extract_block("HOOK") or "Dunia teknologi kembali dihebohkan dengan pembaruan besar ini!"
-    poin = extract_block("POIN_BERITA") or "• Terobosan baru dalam efisiensi sistem\n• Keamanan data yang ditingkatkan secara signifikan\n• Pengalaman pengguna yang semakin praktis"
-    tips = extract_block("TIPS_PENGGUNA") or "Pastikan kamu selalu memperbarui informasi dan sistem keamanan perangkatmu."
-    hashtag = extract_block("HASHTAG") or "#teknologi #beritateknologi #ai #gadget #inkatech #fyp"
+    topik = extract_block("TOPIK")
+    judul = extract_block("JUDUL")
+    hook = extract_block("HOOK")
+    poin = extract_block("POIN_BERITA")
+    tips = extract_block("TIPS_PENGGUNA")
+    hashtag = extract_block("HASHTAG")
     prompt_img = extract_block("PROMPT_GAMBAR")
 
+    if not topik or len(topik) < 3:
+        topik = f"{cat_info['label']} Terkini"
+    if not judul or len(judul) < 5:
+        judul = f"{topik}: Update Penting yang Wajib Kamu Tahu!"
+    if not hook:
+        hook = "Perkembangan teknologi terbaru ini wajib jadi perhatian kita semua!"
+    if not poin:
+        poin = f"• Perkembangan terbaru dalam {cat_info['label']}\n• Mekanisme sistem dan analisis teknologi terkini\n• Dampak nyata bagi pengguna smartphone dan internet"
+    if not tips:
+        tips = "Selalu waspada dan perbarui pengetahuan teknologi untuk melindungi privasi dan data pribadimu."
+    if not hashtag:
+        hashtag = "#teknologi #beritateknologi #tipsit #inkatech #fyp"
     if not prompt_img or len(prompt_img) < 30:
         prompt_img = f"Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {topik}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]"
 
     caption = f"{hook}\n\nBerikut fakta & perkembangan terbarunya:\n{poin}\n\n💡 Apa yang perlu kamu tahu:\n{tips}\n\n📲 Simpan & bagikan info penting ini ke temanmu!\nFollow @inka.tech & @arif_ex21 untuk update teknologi harian.\n\n{hashtag}"
     
+    dup = is_duplicate(topik, judul)
+    print(f"[NewsBot] [DATABASE] Pengecekan Duplikasi: {'DUPLIKAT TERDETEKSI' if dup else 'AMAN (UNIK)'}", flush=True)
+
     return {
+        "scope": cat_info["scope"],
+        "category": cat_info["category"],
         "topik": topik,
         "judul": judul[:85],
+        "hook": hook,
+        "poin": poin,
+        "tips": tips,
         "caption": caption,
-        "prompt_gambar": prompt_img
+        "hashtag": hashtag,
+        "prompt_gambar": prompt_img,
+        "raw_response": raw_text
     }
 
 
@@ -166,15 +191,27 @@ def upload_to_tiktok(processed_image, title, caption, mode="now", schedule_time=
 
 
 def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
-    history = load_posted_history()
-    blacklist = [item.get("topik", "") for item in history if item.get("topik")]
-    
-    print(f"[NewsBot] Memulai siklus berita teknologi per jam ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')})...", flush=True)
-    print(f"[NewsBot] Total berita sebelumnya dalam riwayat: {len(history)}", flush=True)
+    stats = get_stats()
+    print(f"[NewsBot] Memulai siklus berita per jam ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')})...", flush=True)
+    print(f"[NewsBot] [DATABASE STATS] Total: {stats['total']} | Published: {stats['published']} | Scopes: {stats['by_scope']}", flush=True)
 
-    news = ask_chatgpt_for_news(blacklist)
-    print(f"[NewsBot] Topik Terpilih: {news['topik']}", flush=True)
+    news = ask_chatgpt_for_news()
+    print(f"[NewsBot] Topik Terpilih: [{news['scope']}] {news['topik']}", flush=True)
     print(f"[NewsBot] Judul TikTok: {news['judul']}", flush=True)
+
+    news_id = insert_news(
+        scope=news["scope"],
+        category=news["category"],
+        topic=news["topik"],
+        title=news["judul"],
+        hook=news["hook"],
+        points=news["poin"],
+        tips=news["tips"],
+        caption=news["caption"],
+        hashtags=news["hashtag"],
+        prompt_image=news["prompt_gambar"]
+    )
+    print(f"[NewsBot] [DATABASE] Berita dicatat ke database dengan ID: {news_id} [status=PENDING]", flush=True)
 
     slug = slugify(news["topik"])
     run_dir = os.path.join(NEWS_DIR, f"{int(time.time())}_{slug}")
@@ -189,24 +226,40 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         f.write(news["caption"])
     with open(os.path.join(run_dir, "prompt.txt"), "w", encoding="utf-8") as f:
         f.write(news["prompt_gambar"])
+    if news.get("raw_response"):
+        with open(os.path.join(run_dir, "chatgpt_raw.txt"), "w", encoding="utf-8") as f:
+            f.write(news["raw_response"])
 
     if not generate_image_chatgpt(news["prompt_gambar"], raw_img):
         print("[NewsBot] ERROR: Gagal men-generate gambar di ChatGPT!", flush=True)
+        update_news_status(news_id, "FAILED")
         return {"success": False, "error": "GAGAL_GENERATE_GAMBAR"}
 
     if not process_image(raw_img, proc_img):
         print("[NewsBot] ERROR: Gagal post-process gambar!", flush=True)
+        update_news_status(news_id, "FAILED", raw_image_path=raw_img)
         return {"success": False, "error": "GAGAL_POSTPROCESS"}
+
+    update_news_status(news_id, "PROCESSED", raw_image_path=raw_img, processed_image_path=proc_img)
 
     if jitter_max > 0:
         sleep_sec = random.randint(jitter_min, jitter_max)
-        print(f"[NewsBot] [Anti-Bot Jitter] Menunggu delay acak {sleep_sec} detik agar waktu menit posting natural...", flush=True)
+        print(f"[NewsBot] [Anti-Bot Jitter] Menunggu delay natural {sleep_sec} detik sebelum upload...", flush=True)
         time.sleep(sleep_sec)
 
     upload_res = upload_to_tiktok(proc_img, news["judul"], news["caption"], mode=mode, dry_run=dry_run)
     
+    if upload_res.get("success"):
+        update_news_status(news_id, "PUBLISHED", raw_image_path=raw_img, processed_image_path=proc_img, tiktok_mode=mode, tiktok_post_url=upload_res.get("post_url"))
+        print(f"[NewsBot] [DATABASE] ID {news_id} status diperbarui: PUBLISHED! URL: {upload_res.get('post_url')}", flush=True)
+    else:
+        update_news_status(news_id, "FAILED", raw_image_path=raw_img, processed_image_path=proc_img)
+        print(f"[NewsBot] [DATABASE] ID {news_id} status diperbarui: FAILED ({upload_res.get('error')})", flush=True)
+
     record = {
-        "timestamp": datetime.now().isoformat(),
+        "db_id": news_id,
+        "scope": news["scope"],
+        "category": news["category"],
         "topik": news["topik"],
         "judul": news["judul"],
         "raw_image": raw_img,
@@ -216,22 +269,20 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         "post_url": upload_res.get("post_url"),
         "error": upload_res.get("error")
     }
-    history.append(record)
-    save_posted_history(history)
 
     print(f"[NewsBot] Siklus selesai! Status: {'SUKSES' if record['success'] else 'GAGAL'}", flush=True)
     return record
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Hermes Hourly Tech News Bot for Inka.tech")
+    parser = argparse.ArgumentParser(description="Hermes Hourly Multi-Niche Tech News Bot for Inka.tech")
     parser.add_argument("--run-once", action="store_true", help="Jalankan 1 siklus langsung sekarang")
     parser.add_argument("--dry-run", action="store_true", help="Uji alur tanpa memposting final")
-    parser.add_argument("--jitter", action="store_true", help="Aktifkan anti-bot jitter acak (60-300 detik)")
+    parser.add_argument("--jitter", action="store_true", help="Aktifkan anti-bot jitter natural (10-30 detik)")
     parser.add_argument("--mode", choices=["now", "schedule"], default="now", help="Mode posting TikTok (default: now)")
     args = parser.parse_args()
 
-    j_min, j_max = (60, 300) if args.jitter else (0, 0)
+    j_min, j_max = (10, 30) if args.jitter else (0, 0)
     res = run_cycle(dry_run=args.dry_run, jitter_min=j_min, jitter_max=j_max, mode=args.mode)
     print("PAYLOAD_START" + json.dumps(res) + "PAYLOAD_END", flush=True)
 
