@@ -107,7 +107,7 @@ Wajib berikan jawaban terstruktur dengan format persis di bawah ini:
 #teknologi #beritateknologi #technews #gadget #inovasi #tipsit #cybersecurity #inkatech #fyp
 
 [PROMPT_GAMBAR]
-Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {cat_info['label']}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]
+Infographic 1:1 square orientation (1080x1080), clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {cat_info['label']}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]
 """
 
     cmd = [
@@ -205,7 +205,7 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
     if not hashtag:
         hashtag = "#teknologi #beritateknologi #tipsit #inkatech #fyp"
     if not prompt_img or len(prompt_img) < 30:
-        prompt_img = f"Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {topik}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]"
+        prompt_img = f"Infographic 1:1 square orientation (1080x1080), clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {topik}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]"
 
     credit_str = f"📰 Sumber: {sumber_nama}"
     if short_url:
@@ -258,8 +258,8 @@ def generate_image_chatgpt(prompt, output_path):
 
 def process_image(raw_path, processed_path):
     from local_postprocessor import strip_and_resize_image
-    print(f"[NewsBot] Melakukan post-processing & pembersihan 100% metadata...", flush=True)
-    return strip_and_resize_image(raw_path, processed_path, aspect="3:4", logo_pos="top-right")
+    print(f"[NewsBot] Melakukan post-processing 1:1 & pembersihan 100% metadata...", flush=True)
+    return strip_and_resize_image(raw_path, processed_path, aspect="1:1", logo_pos="top-right")
 
 
 def upload_to_tiktok(processed_image, title, caption, mode="now", schedule_time=None, dry_run=False):
@@ -305,32 +305,68 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
     run_dir = os.path.join(NEWS_DIR, f"{int(time.time())}_{slug}")
     os.makedirs(run_dir, exist_ok=True)
 
-    raw_img = os.path.join(run_dir, "raw.png")
-    proc_img = os.path.join(run_dir, f"tiktok_{slug}.png")
-    
-    with open(os.path.join(run_dir, "title.txt"), "w", encoding="utf-8") as f:
-        f.write(news["judul"])
-    with open(os.path.join(run_dir, "caption.txt"), "w", encoding="utf-8") as f:
-        f.write(news["caption"])
-    with open(os.path.join(run_dir, "prompt.txt"), "w", encoding="utf-8") as f:
-        f.write(news["prompt_gambar"])
-    with open(os.path.join(run_dir, "source.txt"), "w", encoding="utf-8") as f:
-        f.write(f"Media: {news['sumber_nama']}\nURL Asli: {news['url_sumber']}\nShort URL: {news['short_url']}\n")
-    if news.get("raw_response"):
-        with open(os.path.join(run_dir, "chatgpt_raw.txt"), "w", encoding="utf-8") as f:
-            f.write(news["raw_response"])
+    raw_img = os.path.join(run_dir, "raw_temp.png")
+    proc_img = os.path.join(run_dir, "image.png")
+
+    meta_path = os.path.join(run_dir, "metadata.json")
+    metadata = {
+        "id": news_id,
+        "scope": news["scope"],
+        "category": news["category"],
+        "topic": news["topik"],
+        "title": news["judul"],
+        "hook": news["hook"],
+        "points": news["poin"],
+        "tips": news["tips"],
+        "caption": news["caption"],
+        "hashtags": news["hashtag"],
+        "source": {
+            "name": news["sumber_nama"],
+            "url": news["url_sumber"],
+            "short_url": news["short_url"]
+        },
+        "image": {
+            "aspect_ratio": "1:1",
+            "file": "image.png",
+            "prompt": news["prompt_gambar"]
+        },
+        "status": "PENDING",
+        "created_at": datetime.now().isoformat(),
+        "published_at": None,
+        "tiktok": {
+            "mode": mode,
+            "post_url": None
+        }
+    }
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
 
     if not generate_image_chatgpt(news["prompt_gambar"], raw_img):
         print("[NewsBot] ERROR: Gagal men-generate gambar di ChatGPT!", flush=True)
         update_news_status(news_id, "FAILED")
+        metadata["status"] = "FAILED"
+        with open(meta_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2, ensure_ascii=False)
         return {"success": False, "error": "GAGAL_GENERATE_GAMBAR"}
 
     if not process_image(raw_img, proc_img):
         print("[NewsBot] ERROR: Gagal post-process gambar!", flush=True)
         update_news_status(news_id, "FAILED", raw_image_path=raw_img)
+        metadata["status"] = "FAILED"
+        with open(meta_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2, ensure_ascii=False)
         return {"success": False, "error": "GAGAL_POSTPROCESS"}
 
-    update_news_status(news_id, "PROCESSED", raw_image_path=raw_img, processed_image_path=proc_img)
+    if os.path.exists(raw_img):
+        try:
+            os.remove(raw_img)
+        except Exception:
+            pass
+
+    update_news_status(news_id, "PROCESSED", processed_image_path=proc_img)
+    metadata["status"] = "PROCESSED"
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
 
     if jitter_max > 0:
         sleep_sec = random.randint(jitter_min, jitter_max)
@@ -340,11 +376,18 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
     upload_res = upload_to_tiktok(proc_img, news["judul"], news["caption"], mode=mode, dry_run=dry_run)
     
     if upload_res.get("success"):
-        update_news_status(news_id, "PUBLISHED", raw_image_path=raw_img, processed_image_path=proc_img, tiktok_mode=mode, tiktok_post_url=upload_res.get("post_url"))
+        update_news_status(news_id, "PUBLISHED", processed_image_path=proc_img, tiktok_mode=mode, tiktok_post_url=upload_res.get("post_url"))
         print(f"[NewsBot] [DATABASE] ID {news_id} status diperbarui: PUBLISHED! URL: {upload_res.get('post_url')}", flush=True)
+        metadata["status"] = "PUBLISHED"
+        metadata["published_at"] = datetime.now().isoformat()
+        metadata["tiktok"]["post_url"] = upload_res.get("post_url")
     else:
-        update_news_status(news_id, "FAILED", raw_image_path=raw_img, processed_image_path=proc_img)
+        update_news_status(news_id, "FAILED", processed_image_path=proc_img)
         print(f"[NewsBot] [DATABASE] ID {news_id} status diperbarui: FAILED ({upload_res.get('error')})", flush=True)
+        metadata["status"] = "FAILED"
+
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
 
     record = {
         "db_id": news_id,
@@ -355,8 +398,7 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         "sumber_nama": news.get("sumber_nama"),
         "url_sumber": news.get("url_sumber"),
         "short_url": news.get("short_url"),
-        "raw_image": raw_img,
-        "processed_image": proc_img,
+        "image": proc_img,
         "mode": mode,
         "success": upload_res.get("success", False),
         "post_url": upload_res.get("post_url"),
