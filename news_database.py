@@ -1,4 +1,4 @@
-﻿import json
+import json
 import os
 import re
 import sqlite3
@@ -83,6 +83,8 @@ def init_db(db_path=DB_PATH):
                 prompt_image TEXT,
                 raw_image_path TEXT,
                 processed_image_path TEXT,
+                source_name TEXT,
+                source_url TEXT,
                 status TEXT NOT NULL DEFAULT 'PENDING',
                 tiktok_mode TEXT DEFAULT 'now',
                 tiktok_post_url TEXT,
@@ -92,6 +94,13 @@ def init_db(db_path=DB_PATH):
                 published_at TEXT
             )
         """)
+        cur = conn.cursor()
+        cur.execute("PRAGMA table_info(news_history)")
+        cols = [c["name"] for c in cur.fetchall()]
+        if "source_name" not in cols:
+            conn.execute("ALTER TABLE news_history ADD COLUMN source_name TEXT")
+        if "source_url" not in cols:
+            conn.execute("ALTER TABLE news_history ADD COLUMN source_url TEXT")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_news_topic ON news_history(topic)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_news_status ON news_history(status)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_news_scope ON news_history(scope)")
@@ -163,14 +172,14 @@ def is_duplicate(topic, title, db_path=DB_PATH):
     return False
 
 
-def insert_news(scope, category, topic, title, hook, points, tips, caption, hashtags, prompt_image, db_path=DB_PATH):
+def insert_news(scope, category, topic, title, hook, points, tips, caption, hashtags, prompt_image, source_name=None, source_url=None, db_path=DB_PATH):
     init_db(db_path)
     with get_connection(db_path) as conn:
         cur = conn.cursor()
         cur.execute("""
             INSERT INTO news_history (
-                scope, category, topic, title, hook, points, tips, caption, hashtags, prompt_image, created_at, status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING')
+                scope, category, topic, title, hook, points, tips, caption, hashtags, prompt_image, source_name, source_url, created_at, status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING')
         """, (
             scope,
             category,
@@ -182,6 +191,8 @@ def insert_news(scope, category, topic, title, hook, points, tips, caption, hash
             caption,
             hashtags,
             prompt_image,
+            source_name,
+            source_url,
             datetime.now().isoformat()
         ))
         conn.commit()

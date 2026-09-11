@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 import json
 import os
 import random
@@ -31,6 +31,36 @@ def slugify(text):
     return text[:40] or f"news_{int(time.time())}"
 
 
+def shorten_url(url):
+    if not url or not isinstance(url, str):
+        return ""
+    url = url.strip().strip("<>()[]\"'")
+    if not url.startswith("http"):
+        return url
+    if len(url) <= 32:
+        return url
+    try:
+        import urllib.request
+        import urllib.parse
+        api_url = f"https://tinyurl.com/api-create.php?url={urllib.parse.quote(url)}"
+        req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=4) as resp:
+            short = resp.read().decode("utf-8").strip()
+            if short.startswith("http"):
+                return short
+    except Exception:
+        pass
+    try:
+        import urllib.parse
+        p = urllib.parse.urlparse(url)
+        clean_path = p.path.rstrip("/")
+        if len(clean_path) > 20:
+            clean_path = clean_path[:17] + "..."
+        return f"{p.netloc}{clean_path}"
+    except Exception:
+        return url[:35] + "..."
+
+
 def ask_chatgpt_for_news():
     cat_info = get_next_target_category()
     blacklist = get_blacklist_topics(limit=50)
@@ -43,8 +73,11 @@ Fokus Wilayah: {cat_info['scope']} ({scope_desc})
 Kategori Berita: {cat_info['label']}
 Kata Kunci & Contoh: {cat_info['keywords']}
 
-TUGAS: Pilih 1 berita teknologi paling baru, aktual, mengejutkan, atau berdampak besar bulan ini sesuai kategori di atas yang sangat menarik bagi publik.
-PENTING: Dilarang keras membahas topik atau judul yang mirip dengan riwayat berikut: [{bl_str}].
+INSTRUKSI WAJIB PENCARIAN WEB & KREDIT SUMBER:
+1. Gunakan kemampuan pencarian web (Web Search / Browsing) di ChatGPT untuk mencari 1 berita teknologi paling baru, aktual, dan nyata bulan ini dari sumber media kredibel (misalnya: Kompas Tekno, Detikcom, Antara News, CNN Indonesia, BleepingComputer, The Verge, Reuters, Wired, TechCrunch).
+2. Dilarang mengarang berita atau menyajikan berita fiktif. Berita wajib nyata dan terverifikasi.
+3. Wajib cantumkan nama media sumber resmi dan URL tautan artikel asli tempat kamu menemukan berita tersebut.
+4. Dilarang keras membahas topik atau judul yang mirip dengan riwayat berikut: [{bl_str}].
 
 Wajib berikan jawaban terstruktur dengan format persis di bawah ini:
 [TOPIK]
@@ -64,6 +97,12 @@ Wajib berikan jawaban terstruktur dengan format persis di bawah ini:
 [TIPS_PENGGUNA]
 <1-2 kalimat tips praktis atau takeaways pencegahan untuk publik>
 
+[SUMBER_BERITA]
+<nama media sumber resmi terpercaya, misal: Kompas Tekno / Detikcom / The Verge / BleepingComputer>
+
+[URL_SUMBER]
+<url tautan lengkap ke artikel berita asli, contoh: https://tekno.kompas.com/...>
+
 [HASHTAG]
 #teknologi #beritateknologi #technews #gadget #inovasi #tipsit #cybersecurity #inkatech #fyp
 
@@ -82,7 +121,7 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
     ]
     
     print(f"[NewsBot] [DATABASE] Target Kategori: {cat_info['scope']} - {cat_info['label']}", flush=True)
-    print(f"[NewsBot] Menanyakan berita teknologi ke ChatGPT (profil dian)...", flush=True)
+    print(f"[NewsBot] Menanyakan berita teknologi ke ChatGPT via Web Search (profil dian)...", flush=True)
     res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
     stdout = res.stdout or ""
     
@@ -106,11 +145,20 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
             return v
         return ""
 
+    def clean_text(txt):
+        if not txt:
+            return ""
+        txt = re.sub(r"\n[^\n]{1,50}\n\+\d+", "", txt)
+        txt = re.sub(r"\+\d+", "", txt)
+        return txt.strip()
+
     topik = extract_block("TOPIK")
     judul = extract_block("JUDUL")
-    hook = extract_block("HOOK")
-    poin = extract_block("POIN_BERITA")
-    tips = extract_block("TIPS_PENGGUNA")
+    hook = clean_text(extract_block("HOOK"))
+    poin = clean_text(extract_block("POIN_BERITA"))
+    tips = clean_text(extract_block("TIPS_PENGGUNA"))
+    sumber_nama = extract_block("SUMBER_BERITA")
+    url_sumber = extract_block("URL_SUMBER")
     hashtag = extract_block("HASHTAG")
     prompt_img = extract_block("PROMPT_GAMBAR")
 
@@ -124,15 +172,50 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
         poin = f"• Perkembangan terbaru dalam {cat_info['label']}\n• Mekanisme sistem dan analisis teknologi terkini\n• Dampak nyata bagi pengguna smartphone dan internet"
     if not tips:
         tips = "Selalu waspada dan perbarui pengetahuan teknologi untuk melindungi privasi dan data pribadimu."
+    if not sumber_nama:
+        sumber_nama = "Media Teknologi Terverifikasi"
+    MEDIA_DOMAINS = {
+        "reuters": "https://www.reuters.com/technology",
+        "kompas": "https://tekno.kompas.com",
+        "detik": "https://inet.detik.com",
+        "the verge": "https://www.theverge.com",
+        "bleepingcomputer": "https://www.bleepingcomputer.com",
+        "wired": "https://www.wired.com",
+        "techcrunch": "https://techcrunch.com",
+        "antara": "https://www.antaranews.com/tekno",
+        "cnn": "https://www.cnnindonesia.com/teknologi",
+        "bloomberg": "https://www.bloomberg.com/technology",
+        "tempo": "https://tekno.tempo.co",
+        "liputan6": "https://www.liputan6.com/tekno",
+        "cnbc": "https://www.cnbcindonesia.com/tech"
+    }
+
+    if not url_sumber or not url_sumber.startswith("http"):
+        url_match = re.search(r"https?://[^\s\)\"\']+", raw_text)
+        if url_match:
+            url_sumber = url_match.group(0)
+        else:
+            sn_lower = (sumber_nama or "").lower()
+            for k, d in MEDIA_DOMAINS.items():
+                if k in sn_lower:
+                    url_sumber = d
+                    break
+
+    short_url = shorten_url(url_sumber) if url_sumber else ""
     if not hashtag:
         hashtag = "#teknologi #beritateknologi #tipsit #inkatech #fyp"
     if not prompt_img or len(prompt_img) < 30:
         prompt_img = f"Infographic 3:4 portrait vertical orientation, clean pure white background (#FFFFFF), modern tech emerald green accents (#10B981) and dark charcoal text (#1F2937). Clear data visualization illustrating the tech news topic: {topik}. The top-right corner MUST be completely empty and blank with ample negative space reserved for a company logo. A cute friendly chibi robot mascot at the bottom corner pointing at the news bulletin. A clean minimalist horizontal footer bar at the bottom with text: 'Follow TikTok @inka.tech - IG @arif_ex21'. [Negative constraints: no dark background, no photorealistic human faces, no logo or watermark in top-right corner, no distorted text]"
 
-    caption = f"{hook}\n\nBerikut fakta & perkembangan terbarunya:\n{poin}\n\n💡 Apa yang perlu kamu tahu:\n{tips}\n\n📲 Simpan & bagikan info penting ini ke temanmu!\nFollow @inka.tech & @arif_ex21 untuk update teknologi harian.\n\n{hashtag}"
+    credit_str = f"📰 Sumber: {sumber_nama}"
+    if short_url:
+        credit_str += f" ({short_url})"
+
+    caption = f"{hook}\n\nBerikut fakta & perkembangan terbarunya:\n{poin}\n\n💡 Apa yang perlu kamu tahu:\n{tips}\n\n{credit_str}\n\n📲 Simpan & bagikan info penting ini ke temanmu!\nFollow @inka.tech & @arif_ex21 untuk update teknologi harian.\n\n{hashtag}"
     
     dup = is_duplicate(topik, judul)
     print(f"[NewsBot] [DATABASE] Pengecekan Duplikasi: {'DUPLIKAT TERDETEKSI' if dup else 'AMAN (UNIK)'}", flush=True)
+    print(f"[NewsBot] Sumber Terdeteksi: {sumber_nama} | URL: {short_url or url_sumber or 'N/A'}", flush=True)
 
     return {
         "scope": cat_info["scope"],
@@ -142,6 +225,9 @@ Infographic 3:4 portrait vertical orientation, clean pure white background (#FFF
         "hook": hook,
         "poin": poin,
         "tips": tips,
+        "sumber_nama": sumber_nama,
+        "url_sumber": url_sumber,
+        "short_url": short_url,
         "caption": caption,
         "hashtag": hashtag,
         "prompt_gambar": prompt_img,
@@ -209,7 +295,9 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         tips=news["tips"],
         caption=news["caption"],
         hashtags=news["hashtag"],
-        prompt_image=news["prompt_gambar"]
+        prompt_image=news["prompt_gambar"],
+        source_name=news["sumber_nama"],
+        source_url=news["url_sumber"]
     )
     print(f"[NewsBot] [DATABASE] Berita dicatat ke database dengan ID: {news_id} [status=PENDING]", flush=True)
 
@@ -226,6 +314,8 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         f.write(news["caption"])
     with open(os.path.join(run_dir, "prompt.txt"), "w", encoding="utf-8") as f:
         f.write(news["prompt_gambar"])
+    with open(os.path.join(run_dir, "source.txt"), "w", encoding="utf-8") as f:
+        f.write(f"Media: {news['sumber_nama']}\nURL Asli: {news['url_sumber']}\nShort URL: {news['short_url']}\n")
     if news.get("raw_response"):
         with open(os.path.join(run_dir, "chatgpt_raw.txt"), "w", encoding="utf-8") as f:
             f.write(news["raw_response"])
@@ -262,6 +352,9 @@ def run_cycle(dry_run=False, jitter_min=0, jitter_max=0, mode="now"):
         "category": news["category"],
         "topik": news["topik"],
         "judul": news["judul"],
+        "sumber_nama": news.get("sumber_nama"),
+        "url_sumber": news.get("url_sumber"),
+        "short_url": news.get("short_url"),
         "raw_image": raw_img,
         "processed_image": proc_img,
         "mode": mode,
