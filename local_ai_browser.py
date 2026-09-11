@@ -845,12 +845,12 @@ def main():
     parser.add_argument("--lyrics", default="", help="Custom song lyrics for FlowMusic")
     parser.add_argument("--title", default="", help="Custom song title for FlowMusic")
     parser.add_argument("--instrumental", action="store_true", help="Toggle instrumental mode for music")
-    parser.add_argument("--output", help="Output file path for text (.txt/.json), image (.png), or music (.mp3)")
-    parser.add_argument("--account", default="dian", help="Profile account name (default: dian)")
+    parser.add_argument("--output", default=None, help="Output file path for text (.txt/.json), image (.png), or music (.mp3)")
+    parser.add_argument("--account", "--user", default="dian", dest="account", help="Profile account name (default: dian)")
     parser.add_argument("--visible", action="store_true", help="Run browser in visible mode (default: offscreen stealth)")
     parser.add_argument("--timeout", type=int, default=1800, help="Timeout in seconds (default: 1800)")
 
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     if not args.prompt or not args.prompt.strip():
         print(json.dumps({"error": "PROMPT_EMPTY: Prompt tidak boleh kosong. Harap berikan pertanyaan atau instruksi yang jelas sebelum menjalankan browser AI."}))
@@ -865,11 +865,17 @@ def main():
         else:
             action = "ask"
 
+    output_path = args.output
+    if action == "image" and output_path:
+        base, ext = os.path.splitext(output_path)
+        if ext.lower() not in [".png", ".jpg", ".jpeg", ".webp"]:
+            output_path = base + ".png"
+
     res = run_with_fallback(
         target=args.target,
         prompt=args.prompt,
         action=action,
-        output_path=args.output,
+        output_path=output_path,
         primary_account=args.account,
         visible=args.visible,
         timeout_s=args.timeout,
